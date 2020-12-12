@@ -6,7 +6,7 @@ description: >-
   Want to make your own SMS Classifier? Here I will guide you step-by-step on
   how I assembled an Indonesian SMS Classifier.
 date: '2019-07-30T16:46:56.055Z'
-categories: []
+categories: ['tech']
 keywords: []
 slug: /making-an-indonesian-message-classifier
 header:
@@ -20,11 +20,11 @@ comments:
 Ever got a spam message on your phone? Annoying right?!   
 I mean from all of the things that could irritate me spam message is one of them. It especially ticks me off when I am waiting for an important text from a special someone and when my phone _lit_ guess what? Some random numbers texted me offering me a free loan. Wonderful.
 
-![](/assets/img/0__OOA21LWp__huhJtxN.jpg)
+![]({{ site.url }}/assets/img/0__OOA21LWp__huhJtxN.jpg)
 
 As a computer scientist, I thought I could tackle the problem while using the project as a college assignment. So essentially I am killing two birds with one stone.
 
-![](/assets/img/0__Yas__UXmkZ4JvqL__x.png)
+![]({{ site.url }}/assets/img/0__Yas__UXmkZ4JvqL__x.png)
 
 [**Which is More Promising: Data Science or Software Engineering? | Data Driven Investor**  
 _About a month back, while I was sitting at a café and working on developing a website for a client, I found this woman…_www.datadriveninvestor.com](https://www.datadriveninvestor.com/2019/01/23/which-is-more-promising-data-science-or-software-engineering/ "https://www.datadriveninvestor.com/2019/01/23/which-is-more-promising-data-science-or-software-engineering/")[](https://www.datadriveninvestor.com/2019/01/23/which-is-more-promising-data-science-or-software-engineering/)

@@ -6,7 +6,7 @@ description: >-
   Software engineering is one of the most confusing jobs anyone can do, here are
   5 facts why sharing should be the norm
 date: '2020-09-11T11:20:37.000Z'
-categories: []
+categories: ['tech']
 keywords: []
 slug: /software-engineering-is-all-about-sharing
 header:
@@ -14,7 +14,7 @@ header:
 ---
 When I started my first job as a software engineer I would have never realized how narrow my world view regarding tech was. In my mind, the world of software is as large a pool when it is an ocean.
 
-![](/assets/img/0__hqcdsOSzhIQ3LQXk.jpg)
+![]({{ site.url }}/assets/img/0__hqcdsOSzhIQ3LQXk.jpg)
 
 ### 1\. Everyone Starts Confused
 

@@ -4,7 +4,7 @@ author: Agustinus Theodorus
 title: How To Choose Your First Techstack
 description: 'So many frameworks, with so little time. Save yourself the trouble and choose!'
 date: '2020-11-18T13:01:31.000Z'
-categories: []
+categories: ['tech']
 keywords: []
 slug: /how-to-choose-your-first-techstack
 header:
@@ -12,7 +12,7 @@ header:
 ---
 For all these years in the tech industry. I assure you that I have had my fair share of technology. A multitude of different frameworks aiming to achieve the same thing with their own different takes. Teams that prefer different tech stacks. It doesn’t matter what you learn but how fast can you adapt.
 
-![](/assets/img/0__9RPiaNqFjBvZay__Q.jpg)
+![]({{ site.url }}/assets/img/0__9RPiaNqFjBvZay__Q.jpg)
 
 In this article, I might not give you **exact** answers to what you should choose. Because I believe that you should find what is comfortable for yourself. I would just explain what my ideas were when I chose my stack.
 
@@ -100,11 +100,11 @@ For front-end purposes, I use Javascript frameworks. This limits my capabilities
 
 Furthermore, Javascript has another benefit of being **a free tech stack**. Here’s what I mean. There is a service called [Netlify](https://www.netlify.com/). Netlify hosts JAM Stack applications, and if you have reasonably small traffic, Netlify covers the costs for free. JAM stands for Javascript, APIs, Markup. Add to that Netlify also has a service called [Netlify Functions](https://www.netlify.com/products/functions/).
 
-![](/assets/img/1__Sjwe6yN2B25zJI91MAqMmA.png)
+![]({{ site.url }}/assets/img/1__Sjwe6yN2B25zJI91MAqMmA.png)
 
 Netlify Functions utilize serverless technologies to make simple APIs using Javascript using [AWS Lambda](https://aws.amazon.com/lambda/) as their base. You are only charged after 125k~ requests or so.
 
-![](/assets/img/1__wl90hwJrFDI7__UW1jHQfjQ.png)
+![]({{ site.url }}/assets/img/1__wl90hwJrFDI7__UW1jHQfjQ.png)
 
 My next statement might sound controversial, but in my opinion, adding Javascript to your knowledge repository can help you get a job. It is very popular and very flexible. Being multiplatform it is cost-effective and the choice of many modern startups. Some corporations are also planning to migrate to Javascript environments.
 

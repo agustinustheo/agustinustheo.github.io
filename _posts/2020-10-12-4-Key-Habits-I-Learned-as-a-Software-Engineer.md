@@ -6,7 +6,7 @@ description: >-
   Somethings better to know sooner than later, here are the 4 key habits I
   learned as a software engineer.
 date: '2020-10-12T16:15:31.910Z'
-categories: []
+categories: ['tech']
 keywords: []
 slug: /4-key-habits-i-learned-as-a-software-engineer
 header:
@@ -14,7 +14,7 @@ header:
 ---
 I am almost 3 years into software engineering. Honestly, I don’t think I am **that** good at it yet (I don’t know if I’ll ever be). But there are times when I wished that I knew somethings sooner than later. I thought it would be fun for me to reflect on those subjects and try to convey them to you as best as I can in this article. So here are the 4 key habits I learned as a software engineer.
 
-![](/assets/img/1__u18ToVTMMZ8AN1M4fur0xw.jpeg)
+![]({{ site.url }}/assets/img/1__u18ToVTMMZ8AN1M4fur0xw.jpeg)
 
 ### 1\. Write Clean Code (Obviously!)
 
