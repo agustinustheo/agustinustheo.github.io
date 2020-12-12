@@ -1,0 +1,45 @@
+---
+layout: splash
+permalink: /
+hidden: true
+header:
+  overlay_color: "#5e616c"
+excerpt: >
+  Welcome to my personal site. I re-post my tech blogs, and share my portfolios here.<br />
+feature_row:
+  - image_path: /assets/img/steego-link.png
+    alt: "steego link"
+    title: "Steego Link"
+    excerpt: "Steego is a URL organizing website. Steego allows to save single and multiple links. Single links result in a URL redirect while saving multiple links can result in an orderly list of links."
+    url: https://steego.link/
+    btn_class: "btn--primary"
+    btn_label: "See project"
+  - image_path: /assets/img/booksjs.gif
+    alt: "booksjs"
+    title: "BooksJS"
+    excerpt: "📖 BooksJS or books.js is an open-source JavaScript library for building interactive book previews on the web. The code is licensed under the MIT License."
+    url: https://booksjs.github.io/
+    btn_class: "btn--primary"
+    btn_label: "See project"
+  - image_path: /assets/img/portluv.png
+    alt: "portluv"
+    title: "Portluv"
+    excerpt: "Portluv is a portfolio sharing app, I made this because I feel I needed a platform to share my designs. It can be integrated with LinkedIn."
+    url: https://portluv.herokuapp.com/
+    btn_class: "btn--primary"
+    btn_label: "See project"    
+---
+
+<h1>Portfolio</h1>
+{% include feature_row %}
+
+<h1><a href="/tech-blog" style="text-decoration: none; color: #3D4144">Tech Blog</a></h1>
+<ul>
+  {% for post in site.posts %}
+  <li>
+    {{ post.teaser }}
+    <h2><a href="{{ post.url }}">{{ post.title }}</a></h2>
+    {{ post.excerpt }}
+  </li>
+  {% endfor %}
+</ul>

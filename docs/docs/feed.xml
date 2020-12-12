@@ -1,0 +1,718 @@
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.1.1">Jekyll</generator><link href="agustinustheo.github.io/agustinustheo.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="agustinustheo.github.io/agustinustheo.github.io/" rel="alternate" type="text/html" /><updated>2020-12-12T11:40:43+07:00</updated><id>agustinustheo.github.io/agustinustheo.github.io/feed.xml</id><title type="html">Agustinus Theodorus</title><subtitle>I am primarily a web app developer. Most of my coding time is spent making new web apps, web APIs or bug fixing. My current hobby is writing, I usually spare time to write every month.</subtitle><author><name>Agustinus Theodorus</name></author><entry><title type="html">How To Choose Your First Techstack</title><link href="agustinustheo.github.io/agustinustheo.github.io/2020/11/18/how-to-choose-your-first-techstack.html" rel="alternate" type="text/html" title="How To Choose Your First Techstack" /><published>2020-11-18T20:01:31+07:00</published><updated>2020-11-18T20:01:31+07:00</updated><id>agustinustheo.github.io/agustinustheo.github.io/2020/11/18/how-to-choose-your-first-techstack</id><content type="html" xml:base="agustinustheo.github.io/agustinustheo.github.io/2020/11/18/how-to-choose-your-first-techstack.html">&lt;p&gt;For all these years in the tech industry. I assure you that I have had my fair share of technology. A multitude of different frameworks aiming to achieve the same thing with their own different takes. Teams that prefer different tech stacks. It doesn’t matter what you learn but how fast can you adapt.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/img/0__9RPiaNqFjBvZay__Q.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;In this article, I might not give you &lt;strong&gt;exact&lt;/strong&gt; answers to what you should choose. Because I believe that you should find what is comfortable for yourself. I would just explain what my ideas were when I chose my stack.&lt;/p&gt;
+
+&lt;h3 id=&quot;the-jobstack&quot;&gt;The Job Stack&lt;/h3&gt;
+
+&lt;p&gt;When you first started working as a software engineer, you would realize that you can’t decide what tech stack your company would use, initially. You would need a lot more rep and power to be making those decisions.&lt;/p&gt;
+
+&lt;p&gt;So, there you are stuck with a legacy system using &lt;a href=&quot;https://winworldpc.com/product/microsoft-visual-bas/60&quot;&gt;VB 6.0&lt;/a&gt;. Probably that shouldn’t be your choice. If you have ever used &lt;a href=&quot;https://winworldpc.com/product/microsoft-visual-bas/60&quot;&gt;VB 6.0&lt;/a&gt; damn, how programming has improved over the years. No, this is not an endorsement for &lt;a href=&quot;https://winworldpc.com/product/microsoft-visual-bas/60&quot;&gt;VB 6.0&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;In my company, we mainly use C# and PHP. I was mentored using C# and &lt;a href=&quot;https://dotnet.microsoft.com/apps/aspnet/mvc&quot;&gt;ASP.NET MVC&lt;/a&gt; when I was first starting, then continued to use PHP and CodeIgniter in my second year. So the choices were between these two.&lt;/p&gt;
+
+&lt;p&gt;I chose C#. Why? Well here comes the subjective part. PHP is not a language for me. It is too flexible and there are too many syntaxes that do the same thing. My experience was with PHP5, now it’s with PHP7 things have improved but I have already invested more time on C#.&lt;/p&gt;
+
+&lt;p&gt;The point here is that you can choose to deepen your skill in a modern language used by your current employer. It would be easier and you can suggest implementations of some cool stuff using your employer’s language of choice.&lt;/p&gt;
+
+&lt;p&gt;For example, recently when being tasked with making a multithreaded background service. Using C# and &lt;a href=&quot;https://dotnet.microsoft.com/download&quot;&gt;.NET Core&lt;/a&gt; really helped me craft a perfect solution for my employer.&lt;/p&gt;
+
+&lt;p&gt;The best part is not the solution, the best part would be the fact that anyone in your team can maintain your application. Collaboration would be easy because the language used is universally understood by engineers in your company.&lt;/p&gt;
+
+&lt;p&gt;The only downside would be the lack of freedom. You can’t force your will upon your employer, and if you try to master a different language, you end up learning 2 things at the same time. It depends on you personally but I would prefer to avoid that.&lt;/p&gt;
+
+&lt;h3 id=&quot;the-swiss-armystack&quot;&gt;The Swiss Army Stack&lt;/h3&gt;
+
+&lt;p&gt;Ooh, swiss army stack! That sounds cool, doesn’t it?&lt;/p&gt;
+
+&lt;p&gt;This particular stack consists of mainly one language with multiple different frameworks for different situations. A good example here would be the Javascript/&lt;a href=&quot;https://nodejs.org/en/&quot;&gt;NodeJS&lt;/a&gt; ecosystem.&lt;/p&gt;
+
+&lt;h4 id=&quot;javascript&quot;&gt;Javascript&lt;/h4&gt;
+
+&lt;p&gt;Who here doesn’t know NodeJS? Look it up.&lt;/p&gt;
+
+&lt;p&gt;Using a front-end framework like &lt;a href=&quot;https://reactjs.org/&quot;&gt;React&lt;/a&gt;, &lt;a href=&quot;https://vuejs.org/&quot;&gt;Vue&lt;/a&gt;, or &lt;a href=&quot;https://angularjs.org/&quot;&gt;Angular&lt;/a&gt; has been the norm. They all use Javascript/&lt;a href=&quot;https://www.typescriptlang.org/&quot;&gt;Typescript&lt;/a&gt;. So why bother learning a different language other than Javascript? Just use &lt;a href=&quot;https://expressjs.com/&quot;&gt;Express&lt;/a&gt; for the backend and your all set. Fullstack Javascript here we go.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Hey, do you know Javascript can do AI too? It can, there is a library called &lt;a href=&quot;https://www.tensorflow.org/js&quot;&gt;Tensorflow.js&lt;/a&gt;. Now don’t tell me that isn’t amazing?!&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;To be clear, I am not advocating for Javascript. It is just one of those languages that have a lot of functionality. Another example would be Python, and probably &lt;a href=&quot;https://dart.dev/&quot;&gt;Dart&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h4 id=&quot;python&quot;&gt;Python&lt;/h4&gt;
+
+&lt;p&gt;I don’t know about you, but Python is still looking hot nowadays. It still hasn’t lost it’s easy to use appeal. You can make a ton of things with Python, web applications, APIs, AI applications, background services, etc.&lt;/p&gt;
+
+&lt;p&gt;As far as I know, the Javascript ecosystem’s AI libraries aren’t as mature as Python. Python is the main go-to language for AI. Youtube AI programming tutorials usually are done using Python. Some exceptions are using Javascript but my argument still stands.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;But Python does suck at frontend programming. Javascript beat Python in GUI building by a longshot.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h4 id=&quot;dart&quot;&gt;Dart&lt;/h4&gt;
+
+&lt;p&gt;Honestly, this should be an honorable mention. But because the environment is quite interesting and has some potential, I thought I would bring it to light.&lt;/p&gt;
+
+&lt;p&gt;So, the main powerhouse behind &lt;a href=&quot;https://dart.dev/&quot;&gt;Dart&lt;/a&gt; is Google’s &lt;a href=&quot;https://flutter.dev/&quot;&gt;Flutter&lt;/a&gt;. The prospect of a multiplatform frontend framework for Desktop, Mobile, and Web is very promising, to say the least.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Sure, Javascript has a multiplatform framework. There’s &lt;a href=&quot;https://reactnative.dev/&quot;&gt;React Native&lt;/a&gt;. But it’s only for &lt;a href=&quot;https://reactjs.org/&quot;&gt;React&lt;/a&gt;. So, mobile and web. How about &lt;a href=&quot;https://www.electronjs.org/&quot;&gt;Electron.js&lt;/a&gt;? Sure it would work for Desktop. But &lt;a href=&quot;https://flutter.dev/&quot;&gt;Flutter&lt;/a&gt; alone compasses all three.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;Backend though. It isn’t as promising. The only backend framework I know that uses Dart is probably &lt;a href=&quot;https://aqueduct.io/&quot;&gt;Aqueduct&lt;/a&gt;. Though to be honest, I haven’t had time to research that. So I don’t know if it is already production-ready.&lt;/p&gt;
+
+&lt;p&gt;Out of the three languages, I would say Dart is the least mature tech stack. An immature tech stack can bring opportunities for new developers to contribute to the open-source ecosystem, but the downside would be very unstable ecosystem wise.&lt;/p&gt;
+
+&lt;h3 id=&quot;the-maturestack&quot;&gt;The Mature Stack&lt;/h3&gt;
+
+&lt;p&gt;Mature by what definition? These tech stacks have been around for a while. Has been battle-tested and many applications are using them.&lt;/p&gt;
+
+&lt;p&gt;For example, in the case of web frameworks, a mature framework would be C#’s ASP.NET, Java’s Spring, Python’s Django, PHP’s CodeIgniter, Symfony, and Ruby on Rails. These are some of the oldest tech stacks, developed between 2002–2006. Many corporate applications use these frameworks.&lt;/p&gt;
+
+&lt;p&gt;Being knowledgeable about these tech stacks are only good if you want to join large corporations. New startups have a very different tech stack, not because these frameworks are bad. But because there exist more production-ready options today.&lt;/p&gt;
+
+&lt;p&gt;I personally have tried 3 of the previously mentioned frameworks. ASP.NET, Django, and Ruby on Rails. &lt;strong&gt;My favorite was Ruby on Rails&lt;/strong&gt;. Django was always too complicated for me, I prefer to use Flask for Python web development. It’s hard to host ASP.NET applications on Linux so I also passed on that.&lt;/p&gt;
+
+&lt;h3 id=&quot;so-which-should-ichoose&quot;&gt;So, which should I choose?&lt;/h3&gt;
+
+&lt;p&gt;Now, this is where it gets opinionated.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Take this with a grain of salt, try it out yourself. There are many more technologies available than what I have written here.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;If you dislike your job stack, well you can use it for professional purposes only, and try to find another job with a tech stack you like. Nothing you can do about it.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;My simple guide would be to master one object-oriented language and one scripting language, and if you’re lucky both of them would be multiplatform.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;I on the other hand love C# and .NET Core, so it has not been a problem for me. I prefer it over Java because C# libraries are helpful and are already all too familiar to me. .NET Core is also multiplatform, and unlike previous ASP.NET releases, it runs seamlessly on Linux.&lt;/p&gt;
+
+&lt;p&gt;My scripting language of choice would be Python. Writing in Python has been so wonderfully easy. I am very comfortable with the amount of flexibility the language gives me. The libraries are also mature and because I have an obsession with AI, implementing an AI model in a web application is seamless.&lt;/p&gt;
+
+&lt;p&gt;Seeing my choices you might be wondering. “Hmm, so C# and Python. Aren’t both of them backend languages?”, and you are right. Well, apart from C# Blazor. But I don’t use Blazor that much so I’ll turn a blind eye to that.&lt;/p&gt;
+
+&lt;p&gt;For front-end purposes, I use Javascript frameworks. This limits my capabilities to pure web applications because Javascript frameworks are mostly well known for its front-end web frameworks. But another benefit of learning Javascript is that it is an in-demand skill. Javascript can have production-ready environments for both front-end and back-end most companies take advantage of that.&lt;/p&gt;
+
+&lt;p&gt;Furthermore, Javascript has another benefit of being &lt;strong&gt;a free tech stack&lt;/strong&gt;. Here’s what I mean. There is a service called &lt;a href=&quot;https://www.netlify.com/&quot;&gt;Netlify&lt;/a&gt;. Netlify hosts JAM Stack applications, and if you have reasonably small traffic, Netlify covers the costs for free. JAM stands for Javascript, APIs, Markup. Add to that Netlify also has a service called &lt;a href=&quot;https://www.netlify.com/products/functions/&quot;&gt;Netlify Functions&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/img/1__Sjwe6yN2B25zJI91MAqMmA.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Netlify Functions utilize serverless technologies to make simple APIs using Javascript using &lt;a href=&quot;https://aws.amazon.com/lambda/&quot;&gt;AWS Lambda&lt;/a&gt; as their base. You are only charged after 125k~ requests or so.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/img/1__wl90hwJrFDI7__UW1jHQfjQ.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;My next statement might sound controversial, but in my opinion, adding Javascript to your knowledge repository can help you get a job. It is very popular and very flexible. Being multiplatform it is cost-effective and the choice of many modern startups. Some corporations are also planning to migrate to Javascript environments.&lt;/p&gt;
+
+&lt;h3 id=&quot;conclusion&quot;&gt;Conclusion&lt;/h3&gt;
+
+&lt;p&gt;So? Found your calling yet? Don’t rush. It’s fine. Do what you think is right. If you want to learn them all, be my guest. I am already at a stage where I want to master concepts rather than frameworks so I can say I understand how it feels. Be slow but sure, you won’t master it all overnight.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;“The master has failed more times than the beginner has even tried.” — &lt;a href=&quot;https://www.goodreads.com/quotes/1252243-the-master-has-failed-more-times-than-the-beginner-has&quot;&gt;Stephen McCranie&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;Don’t be afraid to try. Failure is only a step. Thank you and have a nice day!&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;Originally published at&lt;/em&gt; &lt;a href=&quot;https://www.datadriveninvestor.com/2020/11/18/how-to-choose-your-first-techstack/&quot;&gt;&lt;em&gt;https://www.datadriveninvestor.com&lt;/em&gt;&lt;/a&gt; &lt;em&gt;on November 18, 2020.&lt;/em&gt;&lt;/p&gt;</content><author><name>Agustinus Theodorus</name></author><summary type="html">For all these years in the tech industry. I assure you that I have had my fair share of technology. A multitude of different frameworks aiming to achieve the same thing with their own different takes. Teams that prefer different tech stacks. It doesn’t matter what you learn but how fast can you adapt.</summary></entry><entry><title type="html">How To Deploy Your .NET Core App on an IIS Server</title><link href="agustinustheo.github.io/agustinustheo.github.io/2020/10/20/how-to-deploy-net-core-on-iis.html" rel="alternate" type="text/html" title="How To Deploy Your .NET Core App on an IIS Server" /><published>2020-10-20T20:51:54+07:00</published><updated>2020-10-20T20:51:54+07:00</updated><id>agustinustheo.github.io/agustinustheo.github.io/2020/10/20/how-to-deploy-net-core-on-iis</id><content type="html" xml:base="agustinustheo.github.io/agustinustheo.github.io/2020/10/20/how-to-deploy-net-core-on-iis.html">&lt;p&gt;When you work in an enterprise environment you can’t choose where you would want to publish your application, especially if you enter a very established company. There would be times that you have to publish in a Linux environment, but in this case publishing in a Windows environment.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/img/0__QkuSb8wVpC5wY7kj.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;configure-yournet-coreproject&quot;&gt;Configure your .NET Core project&lt;/h3&gt;
+
+&lt;p&gt;When trying to deploy on an IIS Server, make sure you already configure your Startup.cs and Program.cs accordingly. On the &lt;strong&gt;Startup.cs&lt;/strong&gt; you should add this config:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/img/0__WH3WzOX03__rPBePK.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;On the &lt;strong&gt;Program.cs&lt;/strong&gt; add this config:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/img/0__7ndyVaQEnF108l4V.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;configure-your-iisserver&quot;&gt;Configure your IIS Server&lt;/h3&gt;
+
+&lt;h4 id=&quot;downloading-the-requiredpackages&quot;&gt;Downloading the required packages&lt;/h4&gt;
+
+&lt;p&gt;Install the required packages before configuration.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;https://www.microsoft.com/download/details.aspx?id=52685&quot;&gt;Microsoft Visual C++ 2015 Redistributable Update 3.&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://support.microsoft.com/help/2533623/microsoft-security-advisory-insecure-library-loading-could-allow-remot&quot;&gt;Windows Server Patch KB2533623.&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&quot;downloading-the-dotnetsdk&quot;&gt;Downloading the dotnet SDK&lt;/h4&gt;
+
+&lt;p&gt;Deployments only need runtime, but if you want to have a more flexible environment that allows you to build and publish &lt;strong&gt;dll&lt;/strong&gt; files rather than only running it you would want to install the latest dotnet SDK, &lt;a href=&quot;https://dotnet.microsoft.com/download/dotnet-core&quot;&gt;here&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h4 id=&quot;install-the-azure-artifacts-credential-provider&quot;&gt;Install the Azure Artifacts Credential Provider&lt;/h4&gt;
+
+&lt;p&gt;Next, install the Azure Artifacts Credential Provider, full instructions can be seen &lt;a href=&quot;https://github.com/Microsoft/artifacts-credprovider&quot;&gt;here&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h4 id=&quot;azure-artifacts-credential-provider-manual-installation-guide&quot;&gt;Azure Artifacts Credential Provider Manual Installation Guide&lt;/h4&gt;
+
+&lt;p&gt;Find the latest release &lt;a href=&quot;https://github.com/Microsoft/artifacts-credprovider/releases&quot;&gt;here&lt;/a&gt;, and download the .zip package.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/img/0__tlJiw8J58KyBZk1D.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;After downloading the zip archive, copy the plugins folder to &lt;strong&gt;%USERPROFILE%/.nuget&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/img/0__DNrZNycYxJ7EmmAK.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Set your environment variables, open &lt;strong&gt;User Variables&lt;/strong&gt; and create a new entry.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/img/0__jPaoP30GSXaE__mvK.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Set the variable name to &lt;strong&gt;NUGET_PLUGIN_PATHS&lt;/strong&gt;, and because in this case, we are going to be using the dotnet credential provider, so set the value to&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;%USERPROFILE%\.nuget\plugins\netcore\CredentialProvider.Microsoft\CredentialProvider.Microsoft.dll&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/img/0__1IbSM3kmog2__9kWl.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Then finish the setup by clicking &lt;strong&gt;OK&lt;/strong&gt; on the &lt;strong&gt;Environment Variables&lt;/strong&gt; dialog.&lt;/p&gt;
+
+&lt;h3 id=&quot;publish-yournet-core-application&quot;&gt;Publish your .NET Core application&lt;/h3&gt;
+
+&lt;h4 id=&quot;pull-the-project-fromdevops&quot;&gt;Pull the project from DevOps&lt;/h4&gt;
+
+&lt;p&gt;Get into the directory where you want to put the application.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/img/1__JdLjczILQMnVA9QutYSYog.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Get inside the newly formed folder and run the dotnet publish command. Further info regarding the commands can be seen &lt;a href=&quot;https://docs.google.com/document/d/14YRTCJ8XO7yumjwmwyN67ZrEpc4LDrbg6UXlGC4noI0/edit#heading=h.eyphkxwv1b7&quot;&gt;here&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/img/1__bVpZ052xiPvEIl34UfVtfg.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;If an authorization prompt to &lt;a href=&quot;https://microsoft.com/devicelogin&quot;&gt;https://microsoft.com/devicelogin&lt;/a&gt; pops up, login using the &lt;a href=&quot;https://azure.microsoft.com/en-us/services/devops/&quot;&gt;Azure DevOps&lt;/a&gt; account and enter the code shown in the window.&lt;/p&gt;
+
+&lt;p&gt;Otherwise, it should show a successful build like so:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/img/1__9x3fssWVV25Ks0JUIHOaWw.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;In this case, &lt;strong&gt;D:\deploy\api.test\bin\Release\netcoreapp3.1\publish&lt;/strong&gt; is the &lt;strong&gt;&lt;em&gt;physical path&lt;/em&gt;&lt;/strong&gt;&lt;em&gt;.&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;This will be the path used when configuring your app on an IIS application.&lt;/p&gt;
+
+&lt;h3 id=&quot;run-yournet-core-oniis&quot;&gt;Run your .NET Core on IIS&lt;/h3&gt;
+
+&lt;h4 id=&quot;add-the-application-pool&quot;&gt;Add the application pool&lt;/h4&gt;
+
+&lt;p&gt;Right-click on the &lt;strong&gt;Application Pools&lt;/strong&gt; option.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/img/0__Ntuy9f755WVik0zY.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Choose the &lt;strong&gt;Add Application Pool&lt;/strong&gt; option&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/img/0__KW3cmVX3rTQ7Lwjs.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Name your application pool and set the .NET CLR version to &lt;strong&gt;No Managed Code.&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/img/0__yZqj4kWhU7wpVDp1.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Then click &lt;strong&gt;OK&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;h4 id=&quot;add-the-iis-website-optional&quot;&gt;Add the IIS website (Optional)&lt;/h4&gt;
+
+&lt;p&gt;&lt;strong&gt;&lt;em&gt;This configuration is optional as you can use a pre-existing site.&lt;/em&gt;&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Right-click on the &lt;strong&gt;Site&lt;/strong&gt; option&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/img/0__fOXUHP0QgMyt__NXO.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Click &lt;strong&gt;Add Website&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/img/0__ZFzoqMNSIj7Mmwb5.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Set the &lt;strong&gt;Site name&lt;/strong&gt; and the physical path to the .NET Core build.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/img/0__IHxAaO__VohU2op1x.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Click the &lt;strong&gt;Connect as…&lt;/strong&gt; button, to connect as a specific user. Set your user credentials and click &lt;strong&gt;OK&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/img/0__hqYDTod9W9vsmTgM.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Click &lt;strong&gt;Test Settings&lt;/strong&gt; and it should show a pop up like this&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/img/0__6zwI7X__4N98nhBPn.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Then on the &lt;strong&gt;Add Website&lt;/strong&gt; dialog click &lt;strong&gt;OK&lt;/strong&gt; to finish the setup.&lt;/p&gt;
+
+&lt;h4 id=&quot;add-the-application-on-the-iiswebsite&quot;&gt;Add the Application on the IIS website&lt;/h4&gt;
+
+&lt;p&gt;On the site’s homepage, click on the &lt;strong&gt;View Applications&lt;/strong&gt; button.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/img/0__xZT4AhnRwDe3__EjL.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Click on the &lt;strong&gt;Add Application&lt;/strong&gt; action&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/img/0__dInCu25X3VsVexlZ.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Set your alias, this will be the path on the Url. Then, set the physical path to the .NET Core build.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/img/0__n0yJiu4l94muBAXB.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Next, select the application pool you previously made, then click &lt;strong&gt;OK&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/img/0__RWYhIfs7zUhkEePs.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Click the &lt;strong&gt;Connect as…&lt;/strong&gt; button. Set your user credentials and click &lt;strong&gt;OK&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/img/0__60abQOP6lDndEYGS.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Click &lt;strong&gt;Test Settings&lt;/strong&gt; and it should show a pop up like this&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/img/0__yDHFWEiPupCSrfsL.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Then on the &lt;strong&gt;Add Application&lt;/strong&gt; dialog click &lt;strong&gt;OK&lt;/strong&gt; to finish the setup.&lt;/p&gt;
+
+&lt;p&gt;When all steps are done, your application should be running. Test this by opening a browser and put &lt;strong&gt;localhost/*your application alias*&lt;/strong&gt; in the search bar.&lt;/p&gt;
+
+&lt;h3 id=&quot;summary&quot;&gt;Summary&lt;/h3&gt;
+
+&lt;p&gt;In this tutorial, you have learned how to serve a .NET Core application using IIS.&lt;/p&gt;
+
+&lt;p&gt;To recap what we have done:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;We have configured our .NET Core web app before deploying it on IIS.&lt;/li&gt;
+  &lt;li&gt;We have installed the prerequisites for the IIS server.&lt;/li&gt;
+  &lt;li&gt;We installed the required dotnet SDKs and the corresponding Azure authentication providers.&lt;/li&gt;
+  &lt;li&gt;We have configured IIS to deploy our .NET Core app.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;You now have an open playbook to use when you want to deploy dotnet applications on IIS. Hope this tutorial was of help and have a nice day!&lt;/p&gt;</content><author><name>Agustinus Theodorus</name></author><summary type="html">When you work in an enterprise environment you can’t choose where you would want to publish your application, especially if you enter a very established company. There would be times that you have to publish in a Linux environment, but in this case publishing in a Windows environment.</summary></entry><entry><title type="html">4 Key Habits I Learned as a Software Engineer</title><link href="agustinustheo.github.io/agustinustheo.github.io/2020/10/12/4-key-habits-i-learned-as-a-software-engineer.html" rel="alternate" type="text/html" title="4 Key Habits I Learned as a Software Engineer" /><published>2020-10-12T23:15:31+07:00</published><updated>2020-10-12T23:15:31+07:00</updated><id>agustinustheo.github.io/agustinustheo.github.io/2020/10/12/4-key-habits-i-learned-as-a-software-engineer</id><content type="html" xml:base="agustinustheo.github.io/agustinustheo.github.io/2020/10/12/4-key-habits-i-learned-as-a-software-engineer.html">&lt;p&gt;I am almost 3 years into software engineering. Honestly, I don’t think I am &lt;strong&gt;that&lt;/strong&gt; good at it yet (I don’t know if I’ll ever be). But there are times when I wished that I knew somethings sooner than later. I thought it would be fun for me to reflect on those subjects and try to convey them to you as best as I can in this article. So here are the 4 key habits I learned as a software engineer.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/img/1__u18ToVTMMZ8AN1M4fur0xw.jpeg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;1-write-clean-code-obviously&quot;&gt;1. Write Clean Code (Obviously!)&lt;/h3&gt;
+
+&lt;p&gt;Bear with me here.&lt;/p&gt;
+
+&lt;p&gt;So I haven’t always been the cleanest coder in the team. Through my struggles, I always find it annoying that people don’t understand what I wrote. Heck, I am annoyed that I can’t understand what I wrote a month ago.&lt;/p&gt;
+
+&lt;p&gt;I thought, “Hey, why don’t I try to write &lt;em&gt;cleaner&lt;/em&gt;?”. Well, sometimes cleaner code doesn’t always mean someone else will understand what the code means at first glance. Because there are other factors at play like the business process, etc. But it helps — &lt;em&gt;I guess.&lt;/em&gt;&lt;/p&gt;
+
+&lt;h4 id=&quot;dont-repeat-yourselfdry&quot;&gt;Don’t Repeat Yourself (DRY)&lt;/h4&gt;
+
+&lt;p&gt;Let me tell you, no one annoys me more than &lt;em&gt;myself.&lt;/em&gt; I honestly can’t explain how frustrated I am when I read old code that has multiple copies.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Trying to understand multiple copies of the same lines of code at different points in the documentation is &lt;strong&gt;really confusing&lt;/strong&gt;.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;So ever since I realized that I tried to write functions for code that I would be reusing often. &lt;em&gt;Boy did that save a lot of headaches&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;If you don’t do that you might have to change multiple documents that literally have the same line of code just to let’s say — add a new condition to an if-else statement. Take it from me, sometimes you can forget and bugs will happen. So please, write code you going to reuse in a function.&lt;/p&gt;
+
+&lt;p&gt;Speaking of functions…&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://www.datadriveninvestor.com/2020/02/03/how-an-ai-based-chatbot-can-help-you-form-better-long-term-habits/&quot; title=&quot;https://www.datadriveninvestor.com/2020/02/03/how-an-ai-based-chatbot-can-help-you-form-better-long-term-habits/&quot;&gt;&lt;strong&gt;How an AI-based Chatbot Can Help You Form Better Long-Term Habits | Data Driven Investor&lt;/strong&gt;&lt;br /&gt;
+_When we think about our everyday behaviors, we often do not realize, how big is the percentage of the actions we do…_www.datadriveninvestor.com&lt;/a&gt;&lt;a href=&quot;https://www.datadriveninvestor.com/2020/02/03/how-an-ai-based-chatbot-can-help-you-form-better-long-term-habits/&quot;&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;h4 id=&quot;code-purposeful-functions&quot;&gt;Code Purposeful Functions&lt;/h4&gt;
+
+&lt;p&gt;What I meant by &lt;strong&gt;purposeful&lt;/strong&gt; is that you have to write functions that have one exact purpose. For example, I want to hash passwords so I would obviously write a function specifically to hash passwords.&lt;/p&gt;
+
+&lt;p&gt;This will add even more readability to your code and it will save you a lot of headaches when you need to say — change the hashing algorithms &lt;em&gt;or whatever&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;But don’t go too overboard, if you feel that you don’t need to write a function for that &lt;strong&gt;.ToString()&lt;/strong&gt; method in C# than don’t. It’s already readable. Don’t overdo it.&lt;/p&gt;
+
+&lt;h3 id=&quot;2-learn-designpatterns&quot;&gt;2. Learn Design Patterns&lt;/h3&gt;
+
+&lt;p&gt;Like writing clean code wasn’t enough! Well, to be frank, it isn’t. I have tried to maintain and develop a lot of software in the 3 years I have been a software engineer, and sometimes I would say the default design pattern doesn’t do me any good.&lt;/p&gt;
+
+&lt;p&gt;That’s why sometimes micro web frameworks like Flask are my favorites. I can go full creative in how I want my project to be, either by using repository patterns or otherwise.&lt;/p&gt;
+
+&lt;p&gt;Find the best fit for you, try to catch up using materials &lt;a href=&quot;https://refactoring.guru/design-patterns&quot;&gt;here&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h3 id=&quot;3-automatetasks&quot;&gt;3. Automate Tasks&lt;/h3&gt;
+
+&lt;p&gt;If possible, you should automate everything. Automation might be the best thing I have ever done in my entire career. One time I wrote an application to write APIs for me, so I wouldn’t have to write code anymore.&lt;/p&gt;
+
+&lt;p&gt;Well to be fair, it was templated so I still have to code if the app isn’t a simple CRUD application, but it was a good start. This “code generator” coincides with the second point of learning design patterns. I would not have been able to make it if I didn’t implement a design pattern that was comfortable for me.&lt;/p&gt;
+
+&lt;p&gt;Another idea would be if your office has a ticketing system of some kind automating those to be added to your Agile boards might be a good idea. Well, it depends, but it is possible.&lt;/p&gt;
+
+&lt;p&gt;Other things you might want to automate probably would be menial tasks such as server monitoring and app deployments.&lt;/p&gt;
+
+&lt;h3 id=&quot;4-be-as-passionate-about-writing-ascoding&quot;&gt;4. Be as Passionate About Writing as Coding&lt;/h3&gt;
+
+&lt;p&gt;Let me explain, probably your job as a software engineer does not always involve code. Sometimes it will involve writing.&lt;/p&gt;
+
+&lt;p&gt;Maybe some companies have KPIs for writing on their engineering blog on Medium. But usually, the writing you would be doing involves documentation.&lt;/p&gt;
+
+&lt;p&gt;It is kind of related to coding but rather than writing code, you are writing &lt;strong&gt;about&lt;/strong&gt; your code. In my personal experience, I would try to write the best documentation I can in the limited amount of time I would give myself. It helped tremendously when I had to handover projects to other teams.&lt;/p&gt;
+
+&lt;p&gt;For me, I write good documentation for myself, because I don’t want to be bothered by other people.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Good documentation means fewer people asking for your help to understand your code. Which means more time for you.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;Keep that in mind the next time your boss asks you to document your code.&lt;/p&gt;
+
+&lt;h3 id=&quot;conclusion&quot;&gt;Conclusion&lt;/h3&gt;
+
+&lt;p&gt;&lt;strong&gt;TL;DR&lt;/strong&gt; Write clean code, try to implement the Don’t Repeat Yourself (DRY) mindset to your code. Write purposeful functions that are easy to read. Learn design patterns, find a pattern that you personally like. Also if possible try to automate your tasks. Finally, never be a lazy documentation writer. It can save you more time than you think.&lt;/p&gt;
+
+&lt;p&gt;In the end, we all have our own variety of lessons learned. These 4 are just mine. I am writing this not to persuade you rather share with you my personal opinions. Anyway, I hope you have a nice day!&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;Originally published at&lt;/em&gt; &lt;a href=&quot;https://www.datadriveninvestor.com/2020/10/12/4-key-habits-i-learned-as-a-software-engineer/&quot;&gt;&lt;em&gt;https://www.datadriveninvestor.com&lt;/em&gt;&lt;/a&gt; &lt;em&gt;on October 12, 2020.&lt;/em&gt;&lt;/p&gt;
+
+&lt;h4 id=&quot;gain-access-to-expert-viewsubscribe-to-ddiintel&quot;&gt;Gain Access to Expert View — &lt;a href=&quot;https://datadriveninvestor.com/ddi-intel&quot;&gt;Subscribe to DDI Intel&lt;/a&gt;&lt;/h4&gt;</content><author><name>Agustinus Theodorus</name></author><summary type="html">I am almost 3 years into software engineering. Honestly, I don’t think I am that good at it yet (I don’t know if I’ll ever be). But there are times when I wished that I knew somethings sooner than later. I thought it would be fun for me to reflect on those subjects and try to convey them to you as best as I can in this article. So here are the 4 key habits I learned as a software engineer.</summary></entry><entry><title type="html">Software Engineering Is All About Sharing</title><link href="agustinustheo.github.io/agustinustheo.github.io/2020/09/11/software-engineering-is-all-about-sharing.html" rel="alternate" type="text/html" title="Software Engineering Is All About Sharing" /><published>2020-09-11T18:20:37+07:00</published><updated>2020-09-11T18:20:37+07:00</updated><id>agustinustheo.github.io/agustinustheo.github.io/2020/09/11/software-engineering-is-all-about-sharing</id><content type="html" xml:base="agustinustheo.github.io/agustinustheo.github.io/2020/09/11/software-engineering-is-all-about-sharing.html">&lt;p&gt;When I started my first job as a software engineer I would have never realized how narrow my world view regarding tech was. In my mind, the world of software is as large a pool when it is an ocean.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/img/0__hqcdsOSzhIQ3LQXk.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;1-everyone-startsconfused&quot;&gt;1. Everyone Starts Confused&lt;/h3&gt;
+
+&lt;p&gt;It is commonly said that most software engineers don’t know what exactly their profession would be in the tech world. It becomes more complicated today as more branches of software engineering emerge. The fast emergence of AI has opened many branches of software engineering roles such as Data Scientist, Machine Learning Engineer, and Deep Learning Engineer. Each role is different and needs exceptional skills in their own right.&lt;/p&gt;
+
+&lt;p&gt;This coincides with previously available roles like Database Administrators, System Administrators, Networking Engineer. Heck, even Software Engineers have sub-roles like Frontend Engineer and Backend Engineers now because of how complicated software is nowadays. I don’t think I have even touched on the security roles yet.&lt;/p&gt;
+
+&lt;p&gt;I honestly entered the tech world thinking I would end up as a Frontend Engineer. Today I am mainly focusing on backend services, system administration, and machine learning. If you’ve ever &lt;em&gt;touched&lt;/em&gt; any one of these skills you would understand how different these 4 roles are.&lt;/p&gt;
+
+&lt;p&gt;I ended up learning everything I can. Though I am currently focusing more on machine learning than any other field. I find making computers do menial and repetitive jobs amusing.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://www.datadriveninvestor.com/2020/06/26/understanding-software-project-management/&quot; title=&quot;https://www.datadriveninvestor.com/2020/06/26/understanding-software-project-management/&quot;&gt;&lt;strong&gt;Thoughts About Being A Software Project Manager | Data Driven Investor&lt;/strong&gt;&lt;br /&gt;
+_I have been a programmer for 3 years now and I think it’s about time I led my own team. As project manager I now can…_www.datadriveninvestor.com&lt;/a&gt;&lt;a href=&quot;https://www.datadriveninvestor.com/2020/06/26/understanding-software-project-management/&quot;&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;2-your-not-in-a-poolyour-in-anocean&quot;&gt;2. Your Not In A Pool — Your In An Ocean&lt;/h3&gt;
+
+&lt;p&gt;As you might have already noticed, there are many flavors to software engineering. Some roles might be more enticing than others. But it doesn’t make those other roles less important.&lt;/p&gt;
+
+&lt;p&gt;Every role in the software department needs to work together. Either you’re the networking engineer to the backend engineer. As you progress forward you would respect your colleagues for their contribution. Because in the end, they know things that you may not know, as well as you knowing things they do not know. Respect should be mutual.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Mentorship should not always be a relation between seniors to juniors, rather peers from different backgrounds.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;In my opinion, you should always take every opportunity for a sharing session with your peers. You would never know what you would get out of it.&lt;/p&gt;
+
+&lt;h3 id=&quot;3-software-engineering-is-a-sharingculture&quot;&gt;3. Software Engineering Is A Sharing Culture&lt;/h3&gt;
+
+&lt;p&gt;Ever heard of the term open-source? Open-source software is software projects that allow for contributions from anyone. Contributions to an open-source project come in many forms. If you are a highly skilled engineer that has an interest in the project, you may contribute your time to help develop the project altogether. Otherwise, you can usually support the project maintainers by donating money to them directly.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;In this culture sharing is the norm. We contribute to the field and everyone in it while being open and transparent about it.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;Even though software engineering has an open culture it doesn’t mean plagiarism would be left unchecked, don’t ever steal someone else’s source code and claim it as your own.&lt;/p&gt;
+
+&lt;p&gt;Originality is always appreciated!&lt;/p&gt;
+
+&lt;h3 id=&quot;4-mentorship-is-essential&quot;&gt;4. Mentorship Is Essential&lt;/h3&gt;
+
+&lt;p&gt;My first years as a software engineer began with mentorship. I entered a trainee program to make apps that solve real-world problems while learning.&lt;/p&gt;
+
+&lt;p&gt;It was one of the most formative years of my life. I have always wondered how my life would be like after my trainee years have passed. It has been 2 years since then, I can say it helped me through a lot.&lt;/p&gt;
+
+&lt;p&gt;Just as in any field, mentorship gives you a boost in learning. It helps you skim through the less important skills and gives you an insight into what skills you need to improve to reach your end goal.&lt;/p&gt;
+
+&lt;p&gt;It is completely forgivable if you don’t know what role you would be focusing on specifically. Precisely why every new software engineer should go through some sort of mentorship with more senior software engineers, to help them go learn faster.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;For example, a backend engineer does not necessarily need to learn artificial intelligence. Though it might be a useful skill, there are more important things at hand.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&quot;5-sharing-helps-you-learntoo&quot;&gt;5. Sharing Helps You Learn Too&lt;/h3&gt;
+
+&lt;p&gt;Some people might not know this, but sharing helps you learn. When you are sharing what you know with other people, you get the chance to review your knowledge and probably patch holes in your knowledge that previously was unbeknownst to you.&lt;/p&gt;
+
+&lt;p&gt;Sharing also gives you the opportunity of being questioned by inquiring minds. As the saying goes, &lt;em&gt;“Two heads are better than one”&lt;/em&gt;.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;If you encounter a question that you have never thought about, you gain a plus there. A new insight.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;When given the responsibility of sharing your knowledge, of course, you want to perform your best. You should be aware of the big responsibility of teaching. You wouldn’t want to disappoint. Given, it would improve your sense of responsibility to your own words.&lt;/p&gt;
+
+&lt;h3 id=&quot;conclusion&quot;&gt;Conclusion&lt;/h3&gt;
+
+&lt;p&gt;So you think you are ready for the tech world? Don’t ever be afraid to ask for help. It is completely normal to not know about somethings in this field. You don’t have to be the know-it-all.&lt;/p&gt;
+
+&lt;p&gt;Be humble! It may be one of the most important traits you would ever need. If you know something your desk neighbor doesn’t it wouldn’t hurt to share a bit. Being a mentor can get you further than you would ever expect.&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;Originally published at&lt;/em&gt; &lt;a href=&quot;https://www.datadriveninvestor.com/2020/09/11/software-engineering-is-all-about-sharing/&quot;&gt;&lt;em&gt;https://www.datadriveninvestor.com&lt;/em&gt;&lt;/a&gt; &lt;em&gt;on September 11, 2020.&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Gain Access to Expert View —&lt;/strong&gt; &lt;a href=&quot;https://datadriveninvestor.com/ddi-intel&quot;&gt;&lt;strong&gt;Subscribe to DDI Intel&lt;/strong&gt;&lt;/a&gt;&lt;/p&gt;</content><author><name>Agustinus Theodorus</name></author><summary type="html">When I started my first job as a software engineer I would have never realized how narrow my world view regarding tech was. In my mind, the world of software is as large a pool when it is an ocean.</summary></entry><entry><title type="html">What I’ve Learned On Azure Data Factory</title><link href="agustinustheo.github.io/agustinustheo.github.io/2020/03/31/a-simple-tutorial-on-azure-data-factory.html" rel="alternate" type="text/html" title="What I’ve Learned On Azure Data Factory" /><published>2020-03-31T03:54:55+07:00</published><updated>2020-03-31T03:54:55+07:00</updated><id>agustinustheo.github.io/agustinustheo.github.io/2020/03/31/a-simple-tutorial-on-azure-data-factory</id><content type="html" xml:base="agustinustheo.github.io/agustinustheo.github.io/2020/03/31/a-simple-tutorial-on-azure-data-factory.html">&lt;p&gt;Azure functions can now be added as a step in Azure Data Factory (ADF). It makes it easier to synchronize data and to make trigger functions that can help data engineering. I have had to use this technology for an upcoming project and my time was misspent on Google searches, that’s why I decided to share with you what I have learned after painstakingly trying to comprehend ADF in 2 days. The tutorial will cover &lt;strong&gt;the specific&lt;/strong&gt; things that I needed to implement.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/img/1__V8Y31hS__cE39__liIeSDfnw.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;TL;DR&lt;/strong&gt; You can &lt;strong&gt;Ctrl + F&lt;/strong&gt; this:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;Creating an Azure Data Factory (ADF)&lt;/strong&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Pipelines in ADF&lt;/strong&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Adding a new Pipeline in ADF&lt;/strong&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Adding a Lookup block in the Pipeline&lt;/strong&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Changing First-row only response to All in Lookup&lt;/strong&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Adding a source dataset to a Lookup&lt;/strong&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Adding an Azure Function block in the Pipeline&lt;/strong&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Lookup to Azure Function Best Practice&lt;/strong&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Connecting Azure Function in Pipeline&lt;/strong&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Adding a ForEach block in the Pipeline&lt;/strong&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Connecting Pipeline Blocks&lt;/strong&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Connect a Lookup with ForEach&lt;/strong&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Using Dynamic Contents to add Object inside Object in ADF&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;creating-an-azure-data-factoryadf&quot;&gt;Creating an Azure Data Factory (ADF)&lt;/h3&gt;
+
+&lt;p&gt;First, go to create an Azure Data Factory resource on portal.azure.com&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/img/1__2LsoqiXiWLy6UVflgM0MkQ.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Fill in this New data factory form to generate one:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Fill in the name of the data factory.&lt;/li&gt;
+  &lt;li&gt;Choose the resource group, if you haven’t made one click the &lt;strong&gt;Create new&lt;/strong&gt; button.&lt;/li&gt;
+  &lt;li&gt;You can connect this to a GIT repository but I prefer to configure it later, thus I unchecked the &lt;strong&gt;Enable GIT&lt;/strong&gt; checkbox.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;pipelines-inadf&quot;&gt;Pipelines in ADF&lt;/h3&gt;
+
+&lt;h4 id=&quot;adding-a-new-pipeline-inadf&quot;&gt;Adding a new Pipeline in ADF&lt;/h4&gt;
+
+&lt;p&gt;Then open the ADF author page on adf.azure.com and add a new pipeline&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/img/1__CzYCd__WREpn2dUsBZCxDuQ.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;To add a new pipeline click the &lt;strong&gt;+&lt;/strong&gt; sign and click Pipeline.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/img/1__1VINUUJqRE39md1WqQA1hQ.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;Voila&lt;/em&gt;! There is your pipeline.&lt;/p&gt;
+
+&lt;h4 id=&quot;adding-a-lookup-block-in-thepipeline&quot;&gt;Adding a Lookup block in the Pipeline&lt;/h4&gt;
+
+&lt;p&gt;There is an &lt;strong&gt;Activities&lt;/strong&gt; tab on the left side of the screen, drag Lookup Activities to the center Canvas&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/img/1__MdzXV__Ong1N7hZN8eDjjzA.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;At the bottom of the page, there are 3 tabs. Click on the &lt;strong&gt;Settings&lt;/strong&gt; tab&lt;/p&gt;
+
+&lt;h4 id=&quot;changing-first-row-only-response-to-all-inlookup&quot;&gt;&lt;strong&gt;Changing First-row only response to All in Lookup&lt;/strong&gt;&lt;/h4&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/img/1__mrWIOTEOON__So2SRTziQsg.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Uncheck the &lt;strong&gt;First row only&lt;/strong&gt; checkbox. &lt;strong&gt;The first row only&lt;/strong&gt; will enable us to lookup the first row of data, unchecking this will allow us to get all of the data available.&lt;/p&gt;
+
+&lt;h4 id=&quot;adding-a-source-dataset-to-alookup&quot;&gt;Adding a source dataset to a Lookup&lt;/h4&gt;
+
+&lt;p&gt;The next thing you have to do is to add or select a dataset. Click the &lt;strong&gt;New&lt;/strong&gt; button to create a new dataset source.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/img/1__d__x3bQ2rKvw5GpAko8__aIA.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Assuming that you already have pre-existing knowledge of configuring an SQL Database on Azure.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;For this tutorial, we will be using an &lt;strong&gt;Azure SQL Database&lt;/strong&gt; for simplicity’s sake. Click &lt;strong&gt;Continue&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/img/1__KHV1jQ0pL__v__A12vA3qDAg.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;The pipeline requires a dataset to be processed. Even though in this tutorial we are connecting to an Azure SQL Database it is also possible to connect to different databases like Postgres, MySQL, MariaDB, etc.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/img/1__8WI9z2aUz0bzdGniyHJzNA.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Then click &lt;strong&gt;New&lt;/strong&gt; to add a new &lt;strong&gt;Linked service&lt;/strong&gt;. &lt;strong&gt;Linked service&lt;/strong&gt; is used to sync the Lookup action to a database table.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/img/1__A__2XqoX6wgU2GPNCYYE7hg.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;An Azure subscription is required. Choose the subscription you want to use and choose the server name. In my regard, I chose the Azure SQL Server I had and the &lt;strong&gt;TrainingFunctions&lt;/strong&gt; database.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/img/1__B5kqy9QRHW1xzGaO8qmd__w.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Assuming you have filled in the form, click &lt;strong&gt;Create&lt;/strong&gt; to connect to a database of your choosing. With this done, all we have to do is to change the Source Dataset directly at the &lt;strong&gt;Settings&lt;/strong&gt; tab.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/img/1__0QiGXFEt36MWgIqMspRvWA.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;The last thing to do is to determine what kind of action you would like your lookup to do, in my case I want it to select from a table called Attachments.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/img/1__GBLPcDNc5zoZvYF3SlhjwA.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Thus, the query would be like in the picture above. Otherwise, you can do other complex things such as joins and so on.&lt;/p&gt;
+
+&lt;h4 id=&quot;adding-an-azure-function-block-in-thepipeline&quot;&gt;Adding an Azure Function block in the Pipeline&lt;/h4&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/img/1__Q7d10F59LAUAC8vi5__6uMg.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Adding the Azure Function block is just as easy, just drag and drop from the &lt;strong&gt;Activities &amp;gt; Azure Function&lt;/strong&gt; tab to the main canvas.&lt;/p&gt;
+
+&lt;h4 id=&quot;lookup-to-azure-function-bestpractice&quot;&gt;Lookup to Azure Function Best Practice&lt;/h4&gt;
+
+&lt;p&gt;It is not recommended to send the whole Lookup output to an Azure Function. It is recommended to add a ForEach block beforehand. This is what we are going to do in this tutorial.&lt;/p&gt;
+
+&lt;h4 id=&quot;connecting-azure-function-inpipeline&quot;&gt;Connecting Azure Function in Pipeline&lt;/h4&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/img/1__bsnFpOYrG4sYdGaMuytk8Q.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;In the Azure Function go to the &lt;strong&gt;Settings&lt;/strong&gt; tab.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Select the linked service to link to the Azure Function. To add a new linked service, click &lt;strong&gt;New&lt;/strong&gt; link.&lt;/li&gt;
+  &lt;li&gt;Fill in the &lt;strong&gt;Azure Function name&lt;/strong&gt; in the Function name textbox, make sure the Function name is the same in the linked service.&lt;/li&gt;
+  &lt;li&gt;Fill in the method used by the selected Azure Function. Usually, HTTP Methods like &lt;strong&gt;GET&lt;/strong&gt; and &lt;strong&gt;POST&lt;/strong&gt; are used.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Otherwise, to make a new linked service click the &lt;strong&gt;+ New&lt;/strong&gt; button&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/img/1__Pia7TKWUNLhHKWvEm__dUzg.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Connecting to an Azure Function through a linked service is similar to connecting to a dataset.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/img/1__BjDKMEcf____SbReEjSINS0w.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Fill in the linked service form to connect to your Azure Function, select a subscription and then pick the selected function. The next thing is to get your Function key.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/img/0__p5fp8V8tDE__nkNCk.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;You can get your Function Key in &lt;strong&gt;Home &amp;gt; All Services &amp;gt; Function App &amp;gt; Function Project &amp;gt; Functions &amp;gt; {Function Name} &amp;gt; Manage&lt;/strong&gt; at portal.azure.com.&lt;/p&gt;
+
+&lt;h4 id=&quot;adding-a-foreach-block-in-thepipeline&quot;&gt;Adding a ForEach block in the Pipeline&lt;/h4&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/img/1__6E4YzT0lppfUn7X5GQURZQ.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Adding the ForEach block is as simple as just dragging and dropping from the &lt;strong&gt;Activities &amp;gt; Iterations &amp;amp; conditionals&lt;/strong&gt; tab to the main canvas.&lt;/p&gt;
+
+&lt;h3 id=&quot;connecting-pipelineblocks&quot;&gt;Connecting Pipeline Blocks&lt;/h3&gt;
+
+&lt;h4 id=&quot;connect-a-lookup-withforeach&quot;&gt;Connect a Lookup with ForEach&lt;/h4&gt;
+
+&lt;p&gt;In this premise, we need to connect the Lookup block to the ForEach block. Sending the Lookup output to be iterated and processed in the ForEach block.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/img/1__KJVw5D0XJ8gyORaSpBoT7g.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;First, we need to connect the two blocks by activity, there are 4 types of activities: Success, Failure, Completion and Skipped. You can see this when you click on the &lt;strong&gt;+&lt;/strong&gt; symbol on the &lt;strong&gt;bottom-right side&lt;/strong&gt; of the Lookup box.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/img/1__hpxMSYVSUpDjkb4C5O2nSQ.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;In this example, we will be using Success activity. After connecting, click on the &lt;strong&gt;ForEach&lt;/strong&gt; block, go to the &lt;strong&gt;Settings&lt;/strong&gt; tab.&lt;/p&gt;
+
+&lt;h4 id=&quot;using-dynamic-contents-to-add-object-inside-object-inadf&quot;&gt;Using Dynamic Contents to add Object inside Object in ADF&lt;/h4&gt;
+
+&lt;p&gt;Dynamic contents are used to customize the input.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/img/1__SGuttyb9WFy9S__oNwsmSJQ.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Click on the Items textbox and click the &lt;strong&gt;Add dynamic content&lt;/strong&gt; button.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/img/1__v3KHCoOkxTzEugAPtK__SlA.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;In the &lt;strong&gt;Add dynamic content&lt;/strong&gt; sub-page scroll to the bottom and click on the Lookup output expression, this will add the Lookup output to the ForEach input to be processed.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/img/1__84tIcfl7B3yRbCAnLnr2Ow.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;This example is how you could join two lookup items together as one input using string Concat function, then converting them again to JSON to be then passed to the Azure Function. In the example above, the input will be passing 5 attributes &lt;strong&gt;ID, Description, PIC, Attachments, and IsComplete&lt;/strong&gt;. With the &lt;strong&gt;Attachment&lt;/strong&gt; attribute being a list of JSON objects from the previous lookup.&lt;/p&gt;
+
+&lt;h3 id=&quot;final-thoughts&quot;&gt;Final Thoughts&lt;/h3&gt;
+
+&lt;p&gt;Azure Data Factory is a good tool for data engineering and it is very beneficial in the long term, when your database grows so large until it is almost unmanageable ADF may be a choice for you. With the addition of Azure Functions, the potentials are endless. Even connecting to databases that are not Microsoft related is possible! I hope you found this tutorial useful.&lt;/p&gt;</content><author><name>Agustinus Theodorus</name></author><summary type="html">Azure functions can now be added as a step in Azure Data Factory (ADF). It makes it easier to synchronize data and to make trigger functions that can help data engineering. I have had to use this technology for an upcoming project and my time was misspent on Google searches, that’s why I decided to share with you what I have learned after painstakingly trying to comprehend ADF in 2 days. The tutorial will cover the specific things that I needed to implement.</summary></entry><entry><title type="html">Making an Indonesian Message Classifier</title><link href="agustinustheo.github.io/agustinustheo.github.io/2019/07/30/making-an-indonesian-message-classifier.html" rel="alternate" type="text/html" title="Making an Indonesian Message Classifier" /><published>2019-07-30T23:46:56+07:00</published><updated>2019-07-30T23:46:56+07:00</updated><id>agustinustheo.github.io/agustinustheo.github.io/2019/07/30/making-an-indonesian-message-classifier</id><content type="html" xml:base="agustinustheo.github.io/agustinustheo.github.io/2019/07/30/making-an-indonesian-message-classifier.html">&lt;p&gt;Ever got a spam message on your phone? Annoying right?! &lt;br /&gt;
+I mean from all of the things that could irritate me spam message is one of them. It especially ticks me off when I am waiting for an important text from a special someone and when my phone &lt;em&gt;lit&lt;/em&gt; guess what? Some random numbers texted me offering me a free loan. Wonderful.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/img/0__OOA21LWp__huhJtxN.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;As a computer scientist, I thought I could tackle the problem while using the project as a college assignment. So essentially I am killing two birds with one stone.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/img/0__Yas__UXmkZ4JvqL__x.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://www.datadriveninvestor.com/2019/01/23/which-is-more-promising-data-science-or-software-engineering/&quot; title=&quot;https://www.datadriveninvestor.com/2019/01/23/which-is-more-promising-data-science-or-software-engineering/&quot;&gt;&lt;strong&gt;Which is More Promising: Data Science or Software Engineering? | Data Driven Investor&lt;/strong&gt;&lt;br /&gt;
+_About a month back, while I was sitting at a café and working on developing a website for a client, I found this woman…_www.datadriveninvestor.com&lt;/a&gt;&lt;a href=&quot;https://www.datadriveninvestor.com/2019/01/23/which-is-more-promising-data-science-or-software-engineering/&quot;&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;To start it all of we are going to use python as our programming language, and we will need to install the required libraries, the libraries used for this build are as follows.&lt;/p&gt;
+
+&lt;p&gt;nltk&lt;br /&gt;
+sklearn&lt;br /&gt;
+numpy&lt;br /&gt;
+pandas&lt;/p&gt;
+
+&lt;p&gt;Copy these to the requirements.txt file on your project’s root folder and run this command.&lt;/p&gt;
+
+&lt;p&gt;For Windows:&lt;/p&gt;
+
+&lt;p&gt;pip install -r requirements.txt&lt;/p&gt;
+
+&lt;p&gt;For Linux (install pip3 first):&lt;/p&gt;
+
+&lt;p&gt;pip3 install -r requirements.txt&lt;/p&gt;
+
+&lt;p&gt;If you have followed these steps, you are ready to train the SMS classifier model. The model will classify SMS into three categories normal, spam, and promo messages. To create the models there needs to be a dataset, and like all datasets, it needs to be normalized to remove noise.&lt;/p&gt;
+
+&lt;h3 id=&quot;step-1-making-an-indonesian-text-tokenizer&quot;&gt;Step 1: Making an Indonesian Text Tokenizer&lt;/h3&gt;
+
+&lt;p&gt;Before we can train the SMS classifier we will need to make an Indonesian Sentence Tokenizer. To do this we will use NLTK’s &lt;strong&gt;PunktSentenceTokenizer&lt;/strong&gt;. Other libraries include:&lt;/p&gt;
+
+&lt;p&gt;Libraries imported for this build.&lt;/p&gt;
+
+&lt;p&gt;First, a huge corpus filled with Indonesian literature will need to be loaded After we opened them we will need to read and process the texts to remove noise such as symbols, numbers, and emails to replace them with texts easily understood by the classifier.&lt;/p&gt;
+
+&lt;p&gt;Function to replace symbols, numbers, and email used in the text.&lt;/p&gt;
+
+&lt;p&gt;After processing the texts using the function above, we can train the tokenizer.&lt;/p&gt;
+
+&lt;p&gt;Training the PunktSentenceTokenizer.&lt;/p&gt;
+
+&lt;h3 id=&quot;step-2-lets-process-thedataset&quot;&gt;Step 2: Let’s process the dataset&lt;/h3&gt;
+
+&lt;p&gt;To train the classifier we will need a dataset, luckily I have made a dataset of about 200+ spam, promo, and normal SMS each.&lt;/p&gt;
+
+&lt;p&gt;Loading dataset into a data frame.&lt;/p&gt;
+
+&lt;p&gt;When loading the dataset into a data frame, as always we should remove the noise in the data. To remove noise in an SMS we can use this function.&lt;/p&gt;
+
+&lt;p&gt;Function to replace symbols, numbers, and email used in the text.&lt;/p&gt;
+
+&lt;h3 id=&quot;step-3-collecting-the-bag-ofwords&quot;&gt;Step 3: Collecting the Bag of Words…&lt;/h3&gt;
+
+&lt;p&gt;To separate classifiers between words, we can use a popular algorithm called Bag of Words. This algorithm will put words into a bag, and get the most used words.&lt;/p&gt;
+
+&lt;p&gt;Creating a bag-of-words to then find the features.&lt;/p&gt;
+
+&lt;p&gt;After collecting the bag-of-words we need to extract the word features and pair them with their corresponding class.&lt;/p&gt;
+
+&lt;p&gt;Attaching features to their corresponding sets.&lt;/p&gt;
+
+&lt;p&gt;This algorithm will put words of each class into a bag, making a correspondence between the word and the class involved. Before we can use this bag-of-words as a training set we need to randomize the data so that the classifier would train accurately.&lt;/p&gt;
+
+&lt;p&gt;Randomizing the features sets, to increase the accuracy of the classifier when training.&lt;/p&gt;
+
+&lt;h3 id=&quot;step-4-start-training-the-classifier&quot;&gt;Step 4: Start Training the Classifier!&lt;/h3&gt;
+
+&lt;p&gt;First, we must define the classifying algorithms that we will use.&lt;/p&gt;
+
+&lt;p&gt;Determining algorithms that are going to be used in the classifier.&lt;/p&gt;
+
+&lt;p&gt;Then all we need to do is to train the classifiers!&lt;/p&gt;
+
+&lt;p&gt;Training classifiers to generate the model.&lt;/p&gt;
+
+&lt;h3 id=&quot;step-5-last-but-not-least-start-classifying&quot;&gt;Step 5: Last but not least, start classifying!&lt;/h3&gt;
+
+&lt;p&gt;Because we have trained the model, we just need to open it and start classifying with it.&lt;/p&gt;
+
+&lt;p&gt;Opening the model and classifying text.&lt;/p&gt;
+
+&lt;p&gt;There are all kinds of characters used in a standard spam SMS. In this case, there is a unique characteristic in Indonesian spam messages. Spammers like to replace letters with words, for example:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;1 = i&lt;/li&gt;
+  &lt;li&gt;3 = e&lt;/li&gt;
+  &lt;li&gt;4 = a&lt;/li&gt;
+  &lt;li&gt;5 = s&lt;/li&gt;
+  &lt;li&gt;6 = g&lt;/li&gt;
+  &lt;li&gt;7 = t&lt;/li&gt;
+  &lt;li&gt;8 = b&lt;/li&gt;
+  &lt;li&gt;9 = g&lt;/li&gt;
+  &lt;li&gt;0 = o&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;To normalize these types of texts we just need to create a function to decode it.&lt;/p&gt;
+
+&lt;p&gt;Function to replace rogue numbers used in the text as a replacement for letters.&lt;/p&gt;
+
+&lt;p&gt;In the function above the numbers that don’t have the ‘ribu’, ‘rbu’ or ‘rb’ in the back of the numbers will be replaced with normal letters (‘ribu’, ‘rbu’ or ‘rb’ is the Indonesian shortened slang for thousand).&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;Voilà!&lt;/em&gt; these are the 5 steps to make your own Indonesian SMS Classifier.&lt;/p&gt;
+
+&lt;p&gt;If you want to check out my git repo on this subject, click &lt;a href=&quot;https://github.com/agustinustheo/sms-classifier-model&quot;&gt;here&lt;/a&gt;! I hope you understood this tutorial, have a nice spam-free day!&lt;/p&gt;</content><author><name>Agustinus Theodorus</name></author><summary type="html">Ever got a spam message on your phone? Annoying right?!  I mean from all of the things that could irritate me spam message is one of them. It especially ticks me off when I am waiting for an important text from a special someone and when my phone lit guess what? Some random numbers texted me offering me a free loan. Wonderful.</summary></entry></feed>

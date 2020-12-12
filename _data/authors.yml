@@ -1,0 +1,17 @@
+Agustinus Theodorus:
+  name     : "Agustinus Theodorus"
+  bio      : "I am primarily a web app developer. Most of my coding time is spent making new web apps, web APIs or bug fixing. My current hobby is writing, I usually spare time to write every month."
+  avatar   : "/assets/img/bio-photo.jpg"
+  links:
+    - label: "Website"
+      icon: "fas fa-fw fa-link"
+      url: "https://steego.link"
+    - label: "LinkedIn"
+      icon: "fab fa-fw fa-linkedin"
+      url: "https://id.linkedin.com/in/agustinus-theodorus"
+    - label: "GitHub"
+      icon: "fab fa-fw fa-github"
+      url: "https://github.com/agustinustheo"
+    - label: "Twitter"
+      icon: "fab fa-fw fa-twitter-square"
+      url: "https://twitter.com/agustinustheoo"
