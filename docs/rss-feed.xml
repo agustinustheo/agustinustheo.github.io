@@ -1659,5 +1659,727 @@ if __name__ == &quot;__main__&quot;:
         <guid isPermaLink="true">https://agustinustheo.github.io//tech/2020/04/21/5-awesome-open-source-software-in-2020.html</guid>
       </item>
     
+      <item>
+        <title>What I’ve Learned On Azure Data Factory</title>
+        <description>&lt;p&gt;Azure functions can now be added as a step in Azure Data Factory (ADF). It makes it easier to synchronize data and to make trigger functions that can help data engineering. I have had to use this technology for an upcoming project and my time was misspent on Google searches, that’s why I decided to share with you what I have learned after painstakingly trying to comprehend ADF in 2 days. The tutorial will cover &lt;strong&gt;the specific&lt;/strong&gt; things that I needed to implement.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://cdn-images-1.medium.com/max/600/1*V8Y31hS-cE39-liIeSDfnw.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;TL;DR&lt;/strong&gt; You can &lt;strong&gt;Ctrl + F&lt;/strong&gt; this:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;Creating an Azure Data Factory (ADF)&lt;/strong&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Pipelines in ADF&lt;/strong&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Adding a new Pipeline in ADF&lt;/strong&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Adding a Lookup block in the Pipeline&lt;/strong&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Changing First-row only response to All in Lookup&lt;/strong&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Adding a source dataset to a Lookup&lt;/strong&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Adding an Azure Function block in the Pipeline&lt;/strong&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Lookup to Azure Function Best Practice&lt;/strong&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Connecting Azure Function in Pipeline&lt;/strong&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Adding a ForEach block in the Pipeline&lt;/strong&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Connecting Pipeline Blocks&lt;/strong&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Connect a Lookup with ForEach&lt;/strong&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Using Dynamic Contents to add Object inside Object in ADF&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;creating-an-azure-data-factoryadf&quot;&gt;Creating an Azure Data Factory (ADF)&lt;/h3&gt;
+
+&lt;p&gt;First, go to create an Azure Data Factory resource on portal.azure.com&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://cdn-images-1.medium.com/max/1200/1*2LsoqiXiWLy6UVflgM0MkQ.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Fill in this New data factory form to generate one:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Fill in the name of the data factory.&lt;/li&gt;
+  &lt;li&gt;Choose the resource group, if you haven’t made one click the &lt;strong&gt;Create new&lt;/strong&gt; button.&lt;/li&gt;
+  &lt;li&gt;You can connect this to a GIT repository but I prefer to configure it later, thus I unchecked the &lt;strong&gt;Enable GIT&lt;/strong&gt; checkbox.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;pipelines-inadf&quot;&gt;Pipelines in ADF&lt;/h3&gt;
+
+&lt;h4 id=&quot;adding-a-new-pipeline-inadf&quot;&gt;Adding a new Pipeline in ADF&lt;/h4&gt;
+
+&lt;p&gt;Then open the ADF author page on adf.azure.com and add a new pipeline&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://cdn-images-1.medium.com/max/1200/1*CzYCd_WREpn2dUsBZCxDuQ.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;To add a new pipeline click the &lt;strong&gt;+&lt;/strong&gt; sign and click Pipeline.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://cdn-images-1.medium.com/max/1200/1*1VINUUJqRE39md1WqQA1hQ.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;Voila&lt;/em&gt;! There is your pipeline.&lt;/p&gt;
+
+&lt;h4 id=&quot;adding-a-lookup-block-in-thepipeline&quot;&gt;Adding a Lookup block in the Pipeline&lt;/h4&gt;
+
+&lt;p&gt;There is an &lt;strong&gt;Activities&lt;/strong&gt; tab on the left side of the screen, drag Lookup Activities to the center Canvas&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://cdn-images-1.medium.com/max/1200/1*MdzXV-Ong1N7hZN8eDjjzA.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;At the bottom of the page, there are 3 tabs. Click on the &lt;strong&gt;Settings&lt;/strong&gt; tab&lt;/p&gt;
+
+&lt;h4 id=&quot;changing-first-row-only-response-to-all-inlookup&quot;&gt;&lt;strong&gt;Changing First-row only response to All in Lookup&lt;/strong&gt;&lt;/h4&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://cdn-images-1.medium.com/max/1200/1*mrWIOTEOON-So2SRTziQsg.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Uncheck the &lt;strong&gt;First row only&lt;/strong&gt; checkbox. &lt;strong&gt;The first row only&lt;/strong&gt; will enable us to lookup the first row of data, unchecking this will allow us to get all of the data available.&lt;/p&gt;
+
+&lt;h4 id=&quot;adding-a-source-dataset-to-alookup&quot;&gt;Adding a source dataset to a Lookup&lt;/h4&gt;
+
+&lt;p&gt;The next thing you have to do is to add or select a dataset. Click the &lt;strong&gt;New&lt;/strong&gt; button to create a new dataset source.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://cdn-images-1.medium.com/max/1200/1*d-x3bQ2rKvw5GpAko8_aIA.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Assuming that you already have pre-existing knowledge of configuring an SQL Database on Azure.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;For this tutorial, we will be using an &lt;strong&gt;Azure SQL Database&lt;/strong&gt; for simplicity’s sake. Click &lt;strong&gt;Continue&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://cdn-images-1.medium.com/max/1200/1*KHV1jQ0pL-v_A12vA3qDAg.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;The pipeline requires a dataset to be processed. Even though in this tutorial we are connecting to an Azure SQL Database it is also possible to connect to different databases like Postgres, MySQL, MariaDB, etc.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://cdn-images-1.medium.com/max/1200/1*8WI9z2aUz0bzdGniyHJzNA.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Then click &lt;strong&gt;New&lt;/strong&gt; to add a new &lt;strong&gt;Linked service&lt;/strong&gt;. &lt;strong&gt;Linked service&lt;/strong&gt; is used to sync the Lookup action to a database table.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://cdn-images-1.medium.com/max/1200/1*A-2XqoX6wgU2GPNCYYE7hg.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;An Azure subscription is required. Choose the subscription you want to use and choose the server name. In my regard, I chose the Azure SQL Server I had and the &lt;strong&gt;TrainingFunctions&lt;/strong&gt; database.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://cdn-images-1.medium.com/max/1200/1*B5kqy9QRHW1xzGaO8qmd-w.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Assuming you have filled in the form, click &lt;strong&gt;Create&lt;/strong&gt; to connect to a database of your choosing. With this done, all we have to do is to change the Source Dataset directly at the &lt;strong&gt;Settings&lt;/strong&gt; tab.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://cdn-images-1.medium.com/max/1200/1*0QiGXFEt36MWgIqMspRvWA.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;The last thing to do is to determine what kind of action you would like your lookup to do, in my case I want it to select from a table called Attachments.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://cdn-images-1.medium.com/max/1200/1*GBLPcDNc5zoZvYF3SlhjwA.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Thus, the query would be like in the picture above. Otherwise, you can do other complex things such as joins and so on.&lt;/p&gt;
+
+&lt;h4 id=&quot;adding-an-azure-function-block-in-thepipeline&quot;&gt;Adding an Azure Function block in the Pipeline&lt;/h4&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://cdn-images-1.medium.com/max/1200/1*Q7d10F59LAUAC8vi5_6uMg.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Adding the Azure Function block is just as easy, just drag and drop from the &lt;strong&gt;Activities &amp;gt; Azure Function&lt;/strong&gt; tab to the main canvas.&lt;/p&gt;
+
+&lt;h4 id=&quot;lookup-to-azure-function-bestpractice&quot;&gt;Lookup to Azure Function Best Practice&lt;/h4&gt;
+
+&lt;p&gt;It is not recommended to send the whole Lookup output to an Azure Function. It is recommended to add a ForEach block beforehand. This is what we are going to do in this tutorial.&lt;/p&gt;
+
+&lt;h4 id=&quot;connecting-azure-function-inpipeline&quot;&gt;Connecting Azure Function in Pipeline&lt;/h4&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://cdn-images-1.medium.com/max/1200/1*bsnFpOYrG4sYdGaMuytk8Q.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;In the Azure Function go to the &lt;strong&gt;Settings&lt;/strong&gt; tab.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Select the linked service to link to the Azure Function. To add a new linked service, click &lt;strong&gt;New&lt;/strong&gt; link.&lt;/li&gt;
+  &lt;li&gt;Fill in the &lt;strong&gt;Azure Function name&lt;/strong&gt; in the Function name textbox, make sure the Function name is the same in the linked service.&lt;/li&gt;
+  &lt;li&gt;Fill in the method used by the selected Azure Function. Usually, HTTP Methods like &lt;strong&gt;GET&lt;/strong&gt; and &lt;strong&gt;POST&lt;/strong&gt; are used.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Otherwise, to make a new linked service click the &lt;strong&gt;+ New&lt;/strong&gt; button&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://cdn-images-1.medium.com/max/1200/1*Pia7TKWUNLhHKWvEm-dUzg.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Connecting to an Azure Function through a linked service is similar to connecting to a dataset.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://cdn-images-1.medium.com/max/1200/1*BjDKMEcf--SbReEjSINS0w.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Fill in the linked service form to connect to your Azure Function, select a subscription and then pick the selected function. The next thing is to get your Function key.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://cdn-images-1.medium.com/max/1200/0*p5fp8V8tDE-nkNCk&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;You can get your Function Key in &lt;strong&gt;Home &amp;gt; All Services &amp;gt; Function App &amp;gt; Function Project &amp;gt; Functions &amp;gt; {Function Name} &amp;gt; Manage&lt;/strong&gt; at portal.azure.com.&lt;/p&gt;
+
+&lt;h4 id=&quot;adding-a-foreach-block-in-thepipeline&quot;&gt;Adding a ForEach block in the Pipeline&lt;/h4&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://cdn-images-1.medium.com/max/1200/1*6E4YzT0lppfUn7X5GQURZQ.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Adding the ForEach block is as simple as just dragging and dropping from the &lt;strong&gt;Activities &amp;gt; Iterations &amp;amp; conditionals&lt;/strong&gt; tab to the main canvas.&lt;/p&gt;
+
+&lt;h3 id=&quot;connecting-pipelineblocks&quot;&gt;Connecting Pipeline Blocks&lt;/h3&gt;
+
+&lt;h4 id=&quot;connect-a-lookup-withforeach&quot;&gt;Connect a Lookup with ForEach&lt;/h4&gt;
+
+&lt;p&gt;In this premise, we need to connect the Lookup block to the ForEach block. Sending the Lookup output to be iterated and processed in the ForEach block.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://cdn-images-1.medium.com/max/1200/1*KJVw5D0XJ8gyORaSpBoT7g.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;First, we need to connect the two blocks by activity, there are 4 types of activities: Success, Failure, Completion and Skipped. You can see this when you click on the &lt;strong&gt;+&lt;/strong&gt; symbol on the &lt;strong&gt;bottom-right side&lt;/strong&gt; of the Lookup box.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://cdn-images-1.medium.com/max/1200/1*hpxMSYVSUpDjkb4C5O2nSQ.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;In this example, we will be using Success activity. After connecting, click on the &lt;strong&gt;ForEach&lt;/strong&gt; block, go to the &lt;strong&gt;Settings&lt;/strong&gt; tab.&lt;/p&gt;
+
+&lt;h4 id=&quot;using-dynamic-contents-to-add-object-inside-object-inadf&quot;&gt;Using Dynamic Contents to add Object inside Object in ADF&lt;/h4&gt;
+
+&lt;p&gt;Dynamic contents are used to customize the input.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://cdn-images-1.medium.com/max/1200/1*SGuttyb9WFy9S_oNwsmSJQ.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Click on the Items textbox and click the &lt;strong&gt;Add dynamic content&lt;/strong&gt; button.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://cdn-images-1.medium.com/max/1200/1*v3KHCoOkxTzEugAPtK-SlA.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;In the &lt;strong&gt;Add dynamic content&lt;/strong&gt; sub-page scroll to the bottom and click on the Lookup output expression, this will add the Lookup output to the ForEach input to be processed.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://cdn-images-1.medium.com/max/1200/1*84tIcfl7B3yRbCAnLnr2Ow.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;This example is how you could join two lookup items together as one input using string Concat function, then converting them again to JSON to be then passed to the Azure Function. In the example above, the input will be passing 5 attributes &lt;strong&gt;ID, Description, PIC, Attachments, and IsComplete&lt;/strong&gt;. With the &lt;strong&gt;Attachment&lt;/strong&gt; attribute being a list of JSON objects from the previous lookup.&lt;/p&gt;
+
+&lt;h3 id=&quot;final-thoughts&quot;&gt;Final Thoughts&lt;/h3&gt;
+
+&lt;p&gt;Azure Data Factory is a good tool for data engineering and it is very beneficial in the long term, when your database grows so large until it is almost unmanageable ADF may be a choice for you. With the addition of Azure Functions, the potentials are endless. Even connecting to databases that are not Microsoft related is possible! I hope you found this tutorial useful.&lt;/p&gt;
+</description>
+        <pubDate>Tue, 31 Mar 2020 03:54:55 +0700</pubDate>
+        <link>https://agustinustheo.github.io//tech/2020/03/31/a-simple-tutorial-on-azure-data-factory.html</link>
+        <guid isPermaLink="true">https://agustinustheo.github.io//tech/2020/03/31/a-simple-tutorial-on-azure-data-factory.html</guid>
+      </item>
+    
+      <item>
+        <title>Microsoft Having An ‘Edge’ Over Chrome</title>
+        <description>&lt;p&gt;I was never a fan of browsers, well to be exact I was only a fan of one, Chrome. It has been my reliable go-to browser for the last 5 years, no real contender has shown some good reason for me to move away from chrome.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://miro.medium.com/max/500/0*EFEInqLBVDCKKD8i.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h4 id=&quot;a-briefhistory&quot;&gt;A Brief History&lt;/h4&gt;
+
+&lt;p&gt;Overall it is just a perfect browser for me. I use Chrome for browsing (obviously) and web development, for web development it is the go-to tool to use. There are many debugging tools made for Chrome, my favorites are the &lt;a href=&quot;https://chrome.google.com/webstore/detail/vuejs-devtools/nhdogjmejiglipccpnnnanhbledajbpd?hl=en&quot;&gt;Vue.js&lt;/a&gt; dev tools, &lt;a href=&quot;https://www.wappalyzer.com/&quot;&gt;Wappalyzer chrome extension&lt;/a&gt;, &lt;a href=&quot;https://chrome.google.com/webstore/detail/clear-cache/cppjkneekbjaeellbfkmgnhonkkjfpdn?hl=en&quot;&gt;Clear cache chrome extension&lt;/a&gt;, and many more. Microsoft’s Edge was an answer to its outdated browser Internet Explorer. Edge is been the default browser for Windows 10 and has been Microsoft’s poster boy since it’s release in 2015.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://miro.medium.com/max/1000/0*8tDzdFZh4aP0_GDR.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h4 id=&quot;browser-usageshare&quot;&gt;Browser Usage Share&lt;/h4&gt;
+
+&lt;p&gt;According to a statistic released by StatCounter, the market is still dominated by Chrome in a large margin. Nothing seems to come close to take the crown away from Chrome. Over the years, the market that was previously dominated by Internet Explorer quickly shifted. Internet Explorer lacks in many areas, the user experience is uncomfortable. The user interface isn’t something to boast about either. Worst of all some modern web features aren’t even supported in Internet Explorer, the page loading speed can at times be terrible. This caused irreversible damage to Microsoft’s browser reputation. To illustrate my point further here is a meme on Internet Explorer.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://miro.medium.com/proxy/0*nqvgKLROnbaNJPpR.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Yes, it was &lt;strong&gt;THAT&lt;/strong&gt; &lt;strong&gt;BAD&lt;/strong&gt;. The only thing Internet Explorer was good at was probably downloading Chrome for a fresh installed Windows. Thus, there is this meme. Internet Explorer was such a big disappointment to the internet community, its name will be tarnished forever. Microsoft has tried to make a reboot by making Edge, not many people are catching on.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://miro.medium.com/proxy/1*QPjYpmTTqHTqY6BRLo_PHw.jpeg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;the-edge&quot;&gt;The Edge&lt;/h3&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://miro.medium.com/max/1000/1*w7-RN53FkCohU6HhQYiqeg.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h4 id=&quot;first-impressions&quot;&gt;First Impressions&lt;/h4&gt;
+
+&lt;p&gt;When I first used Edge, I have to admit that it was a &lt;strong&gt;BIG IMPROVEMENT&lt;/strong&gt; to Internet Explorer. It does not resemble it’s predecessor at all. A brand new look and feel to it, here is a snapshot of Edge. It was colorful, the tabs seem modern, the navigation bar is clean and sleek. It seems like a worthy contender to Chrome (Well, other than Firefox, but honestly I don’t use Firefox).&lt;/p&gt;
+
+&lt;h4 id=&quot;minor-setbacks&quot;&gt;Minor Setbacks&lt;/h4&gt;
+
+&lt;p&gt;I started browsing, then when I clicked search I realized I was using Bing. Compared to Google I don’t think Bing stands a chance. I find a more accurate search using Google, so I went to Google Search and started browsing. The experience was inseparable from Chrome I didn’t felt any different using Google on Chrome or on Edge. Then I opened Youtube, nothing was different. I tried clicking on the videos, nothing seemed odd. Until I right clicked, then I saw the first difference. Chrome’s right-click is generic while on Edge there are some animations to it. It felt different at first, but after reading the options I quickly got used to it. The huge difference was when I was loading graphic-intense sites.&lt;/p&gt;
+
+&lt;h4 id=&quot;problems&quot;&gt;Problems&lt;/h4&gt;
+
+&lt;p&gt;I like to edit photos on an open-source photo-editing site called &lt;a href=&quot;https://photopea.com&quot;&gt;Photopea&lt;/a&gt;. On Chrome all the controls worked fine, all the shortcuts were seamless. I assume Photopea was made with Chrome in-mind because the controls and shortcuts were messy on Edge. The problems were not major, but it was enough to push me back to Chrome. Honestly, I never used Edge ever since… UNTIL…&lt;/p&gt;
+
+&lt;h3 id=&quot;the-comeback&quot;&gt;The Comeback&lt;/h3&gt;
+
+&lt;h4 id=&quot;the-revered-underdog-iscoming&quot;&gt;The Revered Underdog is coming&lt;/h4&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://miro.medium.com/proxy/1*BQ-0em6SEZwLk9MZApNkDw.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Recently, Microsoft has a new update. When I updated my Windows, the Edge browser suddenly popped up with this image. &lt;em&gt;“Wow, cool!”&lt;/em&gt; That’s what I was thinking about when I clicked the download button. When I opened the installer, I was a little excited about what I was going to experience. Seconds later Edge is updated, everything is ready, I clicked the shortcut to run the new Edge. The window opened and I felt a familiar feeling. The new Edge… is Chrome? Wait, let me check.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://miro.medium.com/max/1000/1*u0Gplrvw-eFChIwMFmj5SA.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Turns out the new Edge was built on top of the open-source Chromium browser, Chromium is essentially Chrome. If you want to see future Chrome updates you can peek at Chromium. Anyway, if Edge is based on Chromium, that means Edge is using Chromes V8 engine for Javascript. Loading things using Edge starts to feel a lot like Chrome. I have no problems so far with the new Edge, loading speeds are great. As far as rendering goes it is on par with Chrome. No more problems with Photopea.&lt;/p&gt;
+
+&lt;h3 id=&quot;the-newedge&quot;&gt;The New Edge&lt;/h3&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://miro.medium.com/max/1000/1*f66smc87Vrw5vTWhCl4IGQ.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h4 id=&quot;the-logo&quot;&gt;The Logo&lt;/h4&gt;
+
+&lt;p&gt;First of all, let me just say the new Edge logo is lit. I really like it, it doesn’t feel look like a standard Microsoft logo. The design is so sleek and modern. It just looks so damn cool!&lt;/p&gt;
+
+&lt;h4 id=&quot;extensions&quot;&gt;Extensions&lt;/h4&gt;
+
+&lt;p&gt;Since the new Edge is based on Chromium there is something glorious with its rebirth, Edge now supports Chrome extensions. This is a key feature in the browser war, a huge part of Chrome’s success was it’s extensions. If you go to the Chrome Web Store using the new Edge, click &lt;strong&gt;Allow extensions from other stores&lt;/strong&gt; on the top-most of the screen. Then click the &lt;strong&gt;Add extension&lt;/strong&gt; button to add the Chrome extension to your Edge browser.&lt;/p&gt;
+
+&lt;h4 id=&quot;privacy-settings&quot;&gt;Privacy Settings&lt;/h4&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://miro.medium.com/proxy/1*8gs-XZ3oazQNI9uJzCxsKA.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Best of all, the new Edge comes with built-in tracking prevention. This feature prevents the personalized ads and can prevent trackers from sites. The settings are customizable too, you can choose how &lt;em&gt;‘open’&lt;/em&gt; you want to be. Though it doesn’t &lt;a href=&quot;https://www.datadriveninvestor.com/glossary/block/&quot;&gt;block&lt;/a&gt; ads like the Brave browser, I think it is a noteworthy feature.&lt;/p&gt;
+
+&lt;h3 id=&quot;final-thoughts&quot;&gt;Final Thoughts&lt;/h3&gt;
+
+&lt;p&gt;I have been using Chrome for years, the only browser that made me stop using Chrome is the new Edge. Microsoft really came through with its 2020 reboot of Microsoft Edge. So far, it has been a wonderful experience. One more thing, as Linux user it’s sad that the new Edge is not supported on Linux (probably soon). I hope you will consider trying the new &lt;a href=&quot;https://www.microsoft.com/en-us/edge/?form=MY01BV&amp;amp;OCID=MY01BV&quot;&gt;Edge&lt;/a&gt;. So far, it is the best thing Microsoft has released in 2020.&lt;/p&gt;
+</description>
+        <pubDate>Sun, 29 Mar 2020 17:01:28 +0700</pubDate>
+        <link>https://agustinustheo.github.io//tech/2020/03/29/microsoft-having-an-edge-over-chrome.html</link>
+        <guid isPermaLink="true">https://agustinustheo.github.io//tech/2020/03/29/microsoft-having-an-edge-over-chrome.html</guid>
+      </item>
+    
+      <item>
+        <title>Surviving In A Digital Age of Instability</title>
+        <description>&lt;p&gt;If you are a computer scientist you might have noticed that new frameworks are constantly popping up. Programming languages just keep showing up and old ones that can’t keep up are becoming deprecated.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://miro.medium.com/max/300/0*StICNdSHF0wAMJeG.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;the-beauties&quot;&gt;The Beauties&lt;/h3&gt;
+
+&lt;p&gt;For experienced programmers, it is a normal part of everyday life. New technologies like to be promoted as things of the future, &lt;strong&gt;it is beautiful they said, it will help us they said, it is the hottest framework today they said…&lt;/strong&gt; It is like these technologies have a cult following.&lt;/p&gt;
+
+&lt;h3 id=&quot;the-frontendbeauties&quot;&gt;The Frontend Beauties&lt;/h3&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://miro.medium.com/max/700/0*s-5Nwr4FlgJ_n6_b.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;In the last year, I have continuously learned new things to keep up with the pace of incoming technologies but sometimes it seems that more-and-more technologies are popping up. What really bugs me is the fact that these technologies are just a different take of the same cake. For example, imagine being a frontend web developer you already have to learn HTML, CSS, and Javascript. But there are also a whole lot of other things you &lt;em&gt;‘should’&lt;/em&gt; learn. React, Vue, Angular, Webpack, and probably some good ol’ jQuery. Though to be fair, each framework has its pros and cons and each library/framework was built to solve problems not yet answered or caused by libraries/frameworks before them.&lt;/p&gt;
+
+&lt;p&gt;Believe me, you do not have to master all the frontend web frameworks to be a frontend web developer, just use things that make you comfortable. It just annoys me that there are so many different frameworks that it gets confusing.&lt;/p&gt;
+
+&lt;h3 id=&quot;the-backendbeauties&quot;&gt;The Backend Beauties&lt;/h3&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://miro.medium.com/max/620/0*GYz9L8EkLiMhFckp.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;It starts out very intimidating because while there are many similarities between frameworks, the manner in how we use them is very different. Phoenix, Spring Boot, Ruby on Rails, Django, and Laravel are among the most sophisticated web frameworks that can boost development speed because it is easy to use.&lt;/p&gt;
+
+&lt;p&gt;Adding to that, the level of abstraction in these frameworks can also be very hard to understand. This doesn’t only apply to frontend frameworks because backend frameworks also have a lot of &lt;em&gt;‘magic’&lt;/em&gt; frameworks. These &lt;em&gt;‘magic’&lt;/em&gt; frameworks are very confusing for people who want to learn to program, the level of abstraction in some of these frameworks are so high-level that it’s hard to grasp the basics. In the end, you might end up memorizing code other than understanding them.&lt;/p&gt;
+
+&lt;p&gt;Even though memorization seems like the most likely answer to this problem, frankly it is not. Memorization of code is the worst thing to do because different programming languages already have different syntax, but a framework based on the same language also have different syntax. It is not the optimal answer, that’s what I am trying to say…&lt;/p&gt;
+
+&lt;h3 id=&quot;the-beasts&quot;&gt;The Beasts&lt;/h3&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://miro.medium.com/max/399/0*apEEbBE6IfHlsxVx.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;In a hero’s tale, the villain overpowers the hero in the first battle. Only for the hero to train intensively and face the villain again to finish the tale once and for all. This story is a good metaphor for the learning curve. At first, it seems impossible to learn every single thing to complete a task, but when we ‘train’ ourselves by doing these tasks separately and repetitively it becomes easier and it becomes more understandable.&lt;/p&gt;
+
+&lt;h3 id=&quot;the-learningcurve&quot;&gt;The Learning Curve&lt;/h3&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://cdn-images-1.medium.com/max/800/0*zq1ful6BuluVeBEA.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;We can see patterns in the task that we could never have seen before, this is when we master a subject, this happens when we have reached past the hard learning curve. But to understand the framework you need to understand the fundamentals, the architecture, the language and many more. It is not a simple task to learn a new algorithm or a new design pattern but to learn those things will help in the development of our understanding.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://cdn-images-1.medium.com/max/600/0*orag6Owvpr-Qo1GR.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;This brings me two the second part, &lt;strong&gt;the beast&lt;/strong&gt;. Learning algorithms and another basic computer science subjects are as hard and as boring as it can get, at times it might feel like we want to give up because honestly when I was learning an algorithm it was hard for me to visualize what kind of scenario would this certain algorithm be used in, but the more I learn about the basics of computer science and programming the easier it is for me to understand the frameworks because it follows a pattern. For example, Ruby on Rails and Django are web frameworks designed with the same architecture in mind. The Model View Controller architecture or MVC for short. If you understand the fundamentals of an MVC framework transitioning from Ruby on Rails to Django is only a matter of syntax. Development-wise there will be a lot of similarities. Learning the basic architecture pattern is are like &lt;strong&gt;beasts&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;h3 id=&quot;the-importance-of-taming-thebeast&quot;&gt;The Importance of Taming the Beast&lt;/h3&gt;
+
+&lt;p&gt;&lt;strong&gt;Beasts&lt;/strong&gt; are hard to tame, they are hard to understand and they seem intimidating. Sometimes it may be easier to ignore &lt;strong&gt;the beast&lt;/strong&gt; altogether and try to force learn by memorization. Sadly, it will end up in a faulty understanding of the system at hand. Thus, resulting in a misconception of what the reality of the system is.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://cdn-images-1.medium.com/max/600/0*rn-KHGIN4n-4rpK7.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Taming &lt;strong&gt;the beast&lt;/strong&gt; should be the first thing all of us ought to do. Like in every story to save &lt;strong&gt;the beautiful heroine&lt;/strong&gt; you must tame the dreaded &lt;strong&gt;beast&lt;/strong&gt;. Sadly, not everyone is fond of your journey. Some might worry, some might question, and others are skeptic. But all you should know is to tame the &lt;strong&gt;beasts&lt;/strong&gt; and to save the heroine. What I am trying to say is. Yes… theory sucks, learning algorithms aren’t as fun as building a website with Rails, and architectures seem unimportant. But knowledge about these fundamentals is going to define you and what you know.&lt;/p&gt;
+
+&lt;h3 id=&quot;final-thoughts&quot;&gt;Final Thoughts&lt;/h3&gt;
+
+&lt;p&gt;I believe that if we truly understand the fundamentals of programming, the new tech wouldn’t be much of a hassle. Technologies keep evolving, it’s a good thing! Tech evolves to improve upon the mistakes of the previous generation or to bring new things to the world. People should really embrace change. Programming knowledge is subject to change. I realize that I should continuously improve my knowledge of current technologies every month or so. It is a process in which all of us should do.&lt;/p&gt;
+</description>
+        <pubDate>Thu, 27 Feb 2020 06:01:30 +0700</pubDate>
+        <link>https://agustinustheo.github.io//tech/2020/02/27/surviving-in-a-digital-age-of-instability.html</link>
+        <guid isPermaLink="true">https://agustinustheo.github.io//tech/2020/02/27/surviving-in-a-digital-age-of-instability.html</guid>
+      </item>
+    
+      <item>
+        <title>Handling PDF Files using Docsplit and Ruby on Rails</title>
+        <description>&lt;p&gt;A little backstory, Ruby on Rails is a framework used for web development. Many companies use Ruby on Rails Github, Gojek and Airbnb. &lt;a href=&quot;https://code.tutsplus.com/articles/ruby-on-rails-study-guide-the-history-of-rails--net-29439&quot;&gt;Ruby on Rails was created by David Heinemeier in 2003&lt;/a&gt;. Since it’s inception a lot has changed for this framework and developers are finding more complex uses for it. Ruby on Rails is based on the programming language Ruby and making small libraries to help development is a common practice among Rails users.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://cdn-images-1.medium.com/max/800/0*7jenzJUEPTWB9rOr.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;If you have developed a Rails application you must have heard of the term Gems. Gems are like libraries that are made to help simplify your Rails developing experience. In this tutorial, we will be looking into one of those Gems. &lt;a href=&quot;https://documentcloud.github.io/docsplit/&quot;&gt;Docsplit&lt;/a&gt;!&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://cdn-images-1.medium.com/max/600/0*LHSDKI7HY8cQMPUG.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Docsplit is one of my favorite gems. I used this gem for my first Rails project, I noticed the docs can be improved upon and in this tutorial I wish to introduce to you this wonderful gem whilst trying to make clearer documentation on the PDF handling part of this gem.&lt;/p&gt;
+
+&lt;h3 id=&quot;adding-docsplit-to-your-railsproject&quot;&gt;Adding Docsplit to your Rails project&lt;/h3&gt;
+
+&lt;p&gt;Of course, what would be a tutorial without an installation tutorial? Installing the Docsplit gem is like installing any other Gem. Assuming that you are using a Linux system, install GraphicsMagick and Poppler using sudo.&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sudo apt-get install graphicsmagick  
+sudo apt-get install poppler
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;GraphicsMagick and Poppler are mandatory for this gem to work, other dependencies need to be installed for some features to work but are not mandatory. One of the optional dependency that I recommend installing is pdftk. Install pdftk using sudo.&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sudo apt-get install pdftk
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;After installing the dependencies add this line into your Gemfile.&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;gem 'docsplit'
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Then before you run your Rails app run this in your command prompt.&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;bundle install
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Running your bundle will help you install gems that you added in your Gemfile.&lt;/p&gt;
+
+&lt;h3 id=&quot;using-docsplit-to-handlepdf&quot;&gt;Using Docsplit to Handle PDF&lt;/h3&gt;
+
+&lt;h4 id=&quot;extracting-images-frompdf&quot;&gt;Extracting images from PDF&lt;/h4&gt;
+
+&lt;p&gt;Docsplit allows extracting each page as images. In Docsplit there is an &lt;em&gt;extract_images&lt;/em&gt; function, you can call the function like so:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Docsplit.extract_images([file_path], :format =&amp;gt; [:jpg])
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Docsplits &lt;em&gt;extract_images&lt;/em&gt; function has six parameters. &lt;strong&gt;These six parameters accept file paths, file output, file size, output format, output page, and file density.&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;The format parameter is mandatory because it is needed to define what format the saved images would be in. file paths parameter is the first parameter to be passed, the file path parameter is relative to the location of the script. For example:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;--|  
+  |-- script.rb  
+  |  
+  |-- example.pdf
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Assuming the Ruby script is in the same directory as the PDF file then this is how you use Docsplit.extract_images&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Docsplit.extract_images('example.pdf', :format =&amp;gt; [:jpg])
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;The second parameter is the file output parameter if the file output parameter is not passed then the extracted images would be saved in the root of the Rails app. Otherwise, the file would be saved to the directory the file output parameter is pointing to.&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Docsplit.extract_images('example.pdf', output: Rails.root.join('temp'), :format =&amp;gt; [:jpg])
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;The size parameter controls the quality of the file output, it defines the desired file resolution.&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Docsplit.extract_images('example.pdf', :size  =&amp;gt; '1000x', :format =&amp;gt; [:jpg])
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Next, the page parameter determines which page would be extracted as an image. If a page parameter is not passed then the function would extract all the pages. Example of using page parameters are like so:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Docsplit.extract_images('example.pdf', :page =&amp;gt; 1, :format =&amp;gt; [:jpg])
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Lastly, the density parameter. According to the &lt;a href=&quot;https://documentcloud.github.io/docsplit/&quot;&gt;Docsplit docs&lt;/a&gt; the density parameter controls the DPI to rasterize the page to an image.&lt;/p&gt;
+
+&lt;h4 id=&quot;extracting-pdfmetadata&quot;&gt;Extracting PDF metadata&lt;/h4&gt;
+
+&lt;p&gt;Docsplit allows for PDF metadata extracting. Metadata that can be extracted are author, date, creator, keywords, producer, subject, title, and length. There is only one single parameter needed for this function, the file path parameter.&lt;/p&gt;
+
+&lt;p&gt;For example, let’s try getting a PDFs title. To do that we just need to run:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Docsplit.extract_title('example.pdf')
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;This function will return the title of the PDF, the return can be stored in a variable to keep the result. To extract other metadata categories we would only need to change the latter of the function.&lt;/p&gt;
+
+&lt;p&gt;Let’s do another example, to extract the author we only need to run:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Docsplit.extract_author('example.pdf')
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;From these two examples, extracting other types of metadata should be quite straightforward.&lt;/p&gt;
+
+&lt;h4 id=&quot;splitting-pdf&quot;&gt;Splitting PDF&lt;/h4&gt;
+
+&lt;p&gt;If you intend on extracting certain pages from a multiple page PDF. The extract_pages method would come in handy. &lt;strong&gt;Before trying to implement this method you need to make sure you have installed pdftk.&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;For example, if you want to extract the first page of a PDF you can do:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Docsplit.extract_pages('example.pdf', :pages =&amp;gt; 1)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Otherwise, if you want to extract the third page of a PDF you can do:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Docsplit.extract_pages('example.pdf', :pages =&amp;gt; 3)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;To extract a range of pages. In this case page one to three you could do:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Docsplit.extract_pages('example.pdf', :pages =&amp;gt; 1..3)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;conclusion&quot;&gt;Conclusion&lt;/h3&gt;
+
+&lt;p&gt;Docsplit is one of those gems that you should consider trying. It is a very useful tool for your Rails project when needed. This tutorial was written based on my personal experience in using Docsplit and much of it was based on the &lt;a href=&quot;https://documentcloud.github.io/docsplit/&quot;&gt;original Docsplit docs&lt;/a&gt; (do check it out if you are planning to use it). Cheers.&lt;/p&gt;
+</description>
+        <pubDate>Fri, 29 Nov 2019 23:58:20 +0700</pubDate>
+        <link>https://agustinustheo.github.io//tech/2019/11/29/handling-pdf-files-using-docsplit-and-ruby-on-rails.html</link>
+        <guid isPermaLink="true">https://agustinustheo.github.io//tech/2019/11/29/handling-pdf-files-using-docsplit-and-ruby-on-rails.html</guid>
+      </item>
+    
+      <item>
+        <title>Making an Indonesian Message Classifier</title>
+        <description>&lt;p&gt;Ever got a spam message on your phone? Annoying right?! &lt;br /&gt;
+I mean from all of the things that could irritate me spam message is one of them. It especially ticks me off when I am waiting for an important text from a special someone and when my phone &lt;em&gt;lit&lt;/em&gt; guess what? Some random numbers texted me offering me a free loan. Wonderful.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://cdn-images-1.medium.com/max/800/0*OOA21LWp_huhJtxN&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;As a computer scientist, I thought I could tackle the problem while using the project as a college assignment. So essentially I am killing two birds with one stone.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://cdn-images-1.medium.com/max/800/0*Yas-UXmkZ4JvqL_x.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;To start it all of we are going to use python as our programming language, and we will need to install the required libraries, the libraries used for this build are as follows.&lt;/p&gt;
+
+&lt;p&gt;nltk&lt;br /&gt;
+sklearn&lt;br /&gt;
+numpy&lt;br /&gt;
+pandas&lt;/p&gt;
+
+&lt;p&gt;Copy these to the requirements.txt file on your project’s root folder and run this command.&lt;/p&gt;
+
+&lt;p&gt;For Windows:&lt;/p&gt;
+
+&lt;p&gt;pip install -r requirements.txt&lt;/p&gt;
+
+&lt;p&gt;For Linux (install pip3 first):&lt;/p&gt;
+
+&lt;p&gt;pip3 install -r requirements.txt&lt;/p&gt;
+
+&lt;p&gt;If you have followed these steps, you are ready to train the SMS classifier model. The model will classify SMS into three categories normal, spam, and promo messages. To create the models there needs to be a dataset, and like all datasets, it needs to be normalized to remove noise.&lt;/p&gt;
+
+&lt;h3 id=&quot;step-1-making-an-indonesian-text-tokenizer&quot;&gt;Step 1: Making an Indonesian Text Tokenizer&lt;/h3&gt;
+
+&lt;p&gt;Before we can train the SMS classifier we will need to make an Indonesian Sentence Tokenizer. To do this we will use NLTK’s &lt;strong&gt;PunktSentenceTokenizer&lt;/strong&gt;. Other libraries include:&lt;/p&gt;
+
+&lt;p&gt;Libraries imported for this build.&lt;/p&gt;
+
+&lt;p&gt;First, a huge corpus filled with Indonesian literature will need to be loaded After we opened them we will need to read and process the texts to remove noise such as symbols, numbers, and emails to replace them with texts easily understood by the classifier.&lt;/p&gt;
+
+&lt;p&gt;Function to replace symbols, numbers, and email used in the text.&lt;/p&gt;
+
+&lt;p&gt;After processing the texts using the function above, we can train the tokenizer.&lt;/p&gt;
+
+&lt;p&gt;Training the PunktSentenceTokenizer.&lt;/p&gt;
+
+&lt;h3 id=&quot;step-2-lets-process-thedataset&quot;&gt;Step 2: Let’s process the dataset&lt;/h3&gt;
+
+&lt;p&gt;To train the classifier we will need a dataset, luckily I have made a dataset of about 200+ spam, promo, and normal SMS each.&lt;/p&gt;
+
+&lt;p&gt;Loading dataset into a data frame.&lt;/p&gt;
+
+&lt;p&gt;When loading the dataset into a data frame, as always we should remove the noise in the data. To remove noise in an SMS we can use this function.&lt;/p&gt;
+
+&lt;p&gt;Function to replace symbols, numbers, and email used in the text.&lt;/p&gt;
+
+&lt;h3 id=&quot;step-3-collecting-the-bag-ofwords&quot;&gt;Step 3: Collecting the Bag of Words…&lt;/h3&gt;
+
+&lt;p&gt;To separate classifiers between words, we can use a popular algorithm called Bag of Words. This algorithm will put words into a bag, and get the most used words.&lt;/p&gt;
+
+&lt;p&gt;Creating a bag-of-words to then find the features.&lt;/p&gt;
+
+&lt;p&gt;After collecting the bag-of-words we need to extract the word features and pair them with their corresponding class.&lt;/p&gt;
+
+&lt;p&gt;Attaching features to their corresponding sets.&lt;/p&gt;
+
+&lt;p&gt;This algorithm will put words of each class into a bag, making a correspondence between the word and the class involved. Before we can use this bag-of-words as a training set we need to randomize the data so that the classifier would train accurately.&lt;/p&gt;
+
+&lt;p&gt;Randomizing the features sets, to increase the accuracy of the classifier when training.&lt;/p&gt;
+
+&lt;h3 id=&quot;step-4-start-training-the-classifier&quot;&gt;Step 4: Start Training the Classifier!&lt;/h3&gt;
+
+&lt;p&gt;First, we must define the classifying algorithms that we will use.&lt;/p&gt;
+
+&lt;p&gt;Determining algorithms that are going to be used in the classifier.&lt;/p&gt;
+
+&lt;p&gt;Then all we need to do is to train the classifiers!&lt;/p&gt;
+
+&lt;p&gt;Training classifiers to generate the model.&lt;/p&gt;
+
+&lt;h3 id=&quot;step-5-last-but-not-least-start-classifying&quot;&gt;Step 5: Last but not least, start classifying!&lt;/h3&gt;
+
+&lt;p&gt;Because we have trained the model, we just need to open it and start classifying with it.&lt;/p&gt;
+
+&lt;p&gt;Opening the model and classifying text.&lt;/p&gt;
+
+&lt;p&gt;There are all kinds of characters used in a standard spam SMS. In this case, there is a unique characteristic in Indonesian spam messages. Spammers like to replace letters with words, for example:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;1 = i&lt;/li&gt;
+  &lt;li&gt;3 = e&lt;/li&gt;
+  &lt;li&gt;4 = a&lt;/li&gt;
+  &lt;li&gt;5 = s&lt;/li&gt;
+  &lt;li&gt;6 = g&lt;/li&gt;
+  &lt;li&gt;7 = t&lt;/li&gt;
+  &lt;li&gt;8 = b&lt;/li&gt;
+  &lt;li&gt;9 = g&lt;/li&gt;
+  &lt;li&gt;0 = o&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;To normalize these types of texts we just need to create a function to decode it.&lt;/p&gt;
+
+&lt;p&gt;Function to replace rogue numbers used in the text as a replacement for letters.&lt;/p&gt;
+
+&lt;p&gt;In the function above the numbers that don’t have the ‘ribu’, ‘rbu’ or ‘rb’ in the back of the numbers will be replaced with normal letters (‘ribu’, ‘rbu’ or ‘rb’ is the Indonesian shortened slang for thousand).&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;Voilà!&lt;/em&gt; these are the 5 steps to make your own Indonesian SMS Classifier.&lt;/p&gt;
+
+&lt;p&gt;If you want to check out my git repo on this subject, click &lt;a href=&quot;https://github.com/agustinustheo/sms-classifier-model&quot;&gt;here&lt;/a&gt;! I hope you understood this tutorial, have a nice spam-free day!&lt;/p&gt;
+</description>
+        <pubDate>Tue, 30 Jul 2019 23:46:56 +0700</pubDate>
+        <link>https://agustinustheo.github.io//tech/2019/07/30/making-an-indonesian-message-classifier.html</link>
+        <guid isPermaLink="true">https://agustinustheo.github.io//tech/2019/07/30/making-an-indonesian-message-classifier.html</guid>
+      </item>
+    
+      <item>
+        <title>Filtering Fake News using Python has never been easier</title>
+        <description>&lt;p&gt;With the rapid development of information technology, communication has been easier than it has ever been before. This results in fake news becoming more widespread. Everyday people from around the world are more susceptible to irresponsible people writing fake news. That is why technology to verify news is gradually needed. A simple solution to help verify news is to search for the keywords used in the news title, query them in a search engine and review if the given results are similar. This is one of the easiest ways to verify if a news article is fake or not.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://cdn-images-1.medium.com/max/800/1*PPIp7twJJUknfohZqtL8pQ.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;For computers to process tasks like these, it will be required to use methods such as natural language processing. Natural Language Processing is a subfield of computer science and artificial intelligence concerned with computers processing natural human language. Using this method we can process these articles to find keywords that reflect the objective of the article. Once the keywords are found we just need to search for articles with similar keywords on the internet. The search results will verify the validity of the article. The main programming language that is going to be used will mainly be Python because Python has a lot of libraries related to natural language processing.&lt;/p&gt;
+
+&lt;p&gt;These are the Libraries that are going to be used to develop our fake news classifier.&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;nltk  
+beautifulsoup4  
+selenium&amp;gt;=2.44.0,&amp;lt;3.0.0  
+requests  
+unidecode  
+vcrpy  
+future  
+fake-useragent  
+newspaper3k  
+sklearn  
+git+https://github.com/abenassi/Google-Search-API
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;First, copy these to your own version of requirements.txt in your applications’ root folder. Then to install these libraries, just open up a command line and type these commands in your source folder.&lt;/p&gt;
+
+&lt;p&gt;For Windows:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;pip install -r requirements.txt
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;For Linux (install pip3 first):&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;pip3 install -r requirements.txt
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;To find similar news articles the function will have two formal parameters. One to receive news parameters either in link or string and another to receive a similarity index. If the received news params is a link then the newspaper3k library will parse and extract the articles’ title, but if the received param is a string then it will be assumed as the articles’ title. Before the text goes through further processing, the text must be normalized so that it would not contain any punctuation or other symbols that might cause noise in the data.&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;def remove_unnecessary_noise(text_messages):
+    text_messages = re.sub(r'\\([a-z]|[A-Z]|[0-9])([a-z]|[A-Z]|[0-9])([a-z]|[A-Z]|[0-9])\\([a-z]|[A-Z]|[0-9])([a-z]|[A-Z]|[0-9])([a-z]|[A-Z]|[0-9])\\([a-z]|[A-Z]|[0-9])([a-z]|[A-Z]|[0-9])([a-z]|[A-Z]|[0-9])', ' ', text_messages)
+    text_messages = re.sub(r'\\([a-z]|[A-Z]|[0-9])([a-z]|[A-Z]|[0-9])([a-z]|[A-Z]|[0-9])\\([a-z]|[A-Z]|[0-9])([a-z]|[A-Z]|[0-9])([a-z]|[A-Z]|[0-9])', ' ', text_messages)
+    text_messages = re.sub(r'\[[0-9]+\]|\[[a-z]+\]|\[[A-Z]+\]|\\\\|\\r|\\t|\\n|\\', ' ', text_messages)
+
+    return text_messages
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Normalization will need a new function, the function will have only one formal parameter intended to receive the article titles. All unnecessary noise such as numbers, punctuation, symbols, and trailing white spaces will be removed. Upper case letters will also be lowercased, this is done because punctuation, symbols, and upper case letters are only used to easily interpret languages.&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;def preproccess_text(text_messages):
+    # change words to lower case - Hello, HELLO, hello are all the same word
+    processed = text_messages.lower()
+
+    # Remove remove unnecessary noise
+    processed = re.sub(r'\[[0-9]+\]|\[[a-z]+\]|\[[A-Z]+\]|\\\\|\\r|\\t|\\n|\\', ' ', processed)
+
+    # Remove punctuation
+    processed = re.sub(r'[.,\/#!%\^&amp;amp;\*;\[\]:|+{}=\-\'&quot;_”“`~(’)?]', ' ', processed)
+
+    # Replace whitespace between terms with a single space
+    processed = re.sub(r'\s+', ' ', processed)
+
+    # Remove leading and trailing whitespace
+    processed = re.sub(r'^\s+|\s+?$', '', processed)
+    return processed
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Next, the title will go through tokenization, stopwords removal and stemming. Tokenization is when words in a sentence are separated into arrays equal to the number of words contained in said sentences. For example a sentence ‘I love ice cream’ will be tokenized into an array each containing the words [‘I’, ‘love’, ‘ice’, ‘cream’]. Then all the words that count as stopwords are excluded from the sentence, stopwords are extra words added to make natural languages easier to understand. English stopwords include ‘I’, ‘who’, ‘that’, etc. Next, the title will go through stemming, this is a process that derives words to their original stems, for example, the word playing, played, and plays are all derived from the wordplay.&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;def news_title_tokenization(message):
+    stopwords = nltk.corpus.stopwords.words('english')
+    tokenized_news_title = []
+    ps = PorterStemmer()
+    for word in word_tokenize(message):
+        if word not in stopwords:
+            tokenized_news_title.append(ps.stem(word))
+
+    return tokenized_news_title
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;If the sentence is normalized and each word is tokenized the next thing to do is to search for the acquired keywords using the Google-Search-API. This API will search the internet for pages that contain these keywords. Each result will go through the process of normalization and tokenization again to help measure the similarities between the two articles titles.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://cdn-images-1.medium.com/max/800/1*ilLHSHAx8adPMQ8ENJuqjQ.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Measuring the similarity will be done using the Euclidian Distance algorithm. The search keywords and the result keywords will be put in an array and the similarities will be measured. Euclidian Distance uses a Pythagorean theorem to measure the distances between two points. The more similar the search and results are the smaller the Euclidian Distance will be. Thus the maximum number of Euclidian Distance has to be set as tolerance of similarity. The smaller the maximum number is, the more specific the comparison will be. A large maximum number will result in generalization. In this case, the similarity index is already defined by the second formal parameter of the find similar articles function.&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;def find_similar_articles(news, similarity):
+    news_title_tokenized = &quot;&quot;
+    
+    if(re.match(r'^https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&amp;amp;//=]*)$', news)):
+        news_article = Article(news)
+        news_article.download()
+        news_article.parse()
+        news_title_tokenized = news_title_tokenization(preproccess_text(news_article.title))
+    else:
+        news_title_tokenized = news_title_tokenization(preproccess_text(news))
+
+    search_title = &quot;&quot;
+    for word in news_title_tokenized:
+        search_title = search_title + word + &quot; &quot;
+
+    num_page_searched = 1
+    search_results = google.search(search_title, num_page_searched)
+
+    similar_articles = []
+    for result in search_results:
+        similar_article = {}
+        search_result_title = result.name.split('http')[0].split('...')[0]
+        search_result_title = remove_unnecessary_noise(search_result_title)
+        search_result_title = preproccess_text(search_result_title)
+        search_result_title = news_title_tokenization(search_result_title)
+
+        result_string = &quot;&quot;
+        for w in search_result_title:
+            result_string = result_string + w + &quot; &quot;
+
+            corpus = []
+            corpus.append(search_title)
+            corpus.append(result_string)
+
+        vectorizer = CountVectorizer()
+        features = vectorizer.fit_transform(corpus).todense()
+
+        for f in features:
+            dist = euclidean_distances(features[0], f)
+
+        if dist &amp;lt; similarity:
+            similar_article[&quot;article_title&quot;] = result.name.split('http')[0].split('...')[0]
+            similar_article[&quot;article_url&quot;] = result.link
+            similar_articles.append(similar_article)
+
+    return similar_articles
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;If an article is found the program will return a message “Found a similar article!”. When multiple similar article titles are found the program will return a message “Found similar articles!”, but if the program fails to find a similar article the program will return “No similar articles found!” as a message. If there are no similar articles found on the internet, the credibility if the article in question can be assumed false. This is because there are no factors to give an account of the article. Therefore every article that is read on the internet must be taken with a grain of salt because if we do not confirm its’ source there is a possibility that the article we are reading is false.&lt;/p&gt;
+</description>
+        <pubDate>Fri, 22 Feb 2019 19:35:23 +0700</pubDate>
+        <link>https://agustinustheo.github.io//tech/2019/02/22/filtering-fake-news-using-python-has-never-been-easier.html</link>
+        <guid isPermaLink="true">https://agustinustheo.github.io//tech/2019/02/22/filtering-fake-news-using-python-has-never-been-easier.html</guid>
+      </item>
+    
+      <item>
+        <title>Progressive Web Apps, Artificial Intelligence, the next App Boom</title>
+        <description>&lt;p&gt;The app boom started in July 2008, when Apple introduced the App Store. In previous years while developers were making apps, there were still people that download these apps.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://cdn-images-1.medium.com/max/1200/1*cMh5Oh6F9UQIah1LGZUbUQ.jpeg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;But that too has changed since the number of average smartphone users that download apps have plummeted, according to an article by &lt;a href=&quot;https://www.recode.net/2016/6/8/11883518/app-boom-over-snapchat-uber&quot;&gt;Recode&lt;/a&gt; the growth is not like what it used to be. An example of less growth can be seen here.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://cdn-images-1.medium.com/max/600/1*i2dRvC5P0bwnKD6k4OA74Q.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;This graph represents the total number of downloads each major app has had in 2015 and 2016. This research has proved that the number of people that are downloading mobile apps is declining. Taking that into account, we must reconsider an alternative to mobile apps. Recently in the web app world, there has been a contender that might be able to end the 2008 App Boom once and for all, Progressive Web Apps. According to a post from &lt;a href=&quot;https://hackernoon.com/progressive-web-apps-the-future-of-mobile-web-app-development-f29257b0dea2&quot;&gt;Hackernoon&lt;/a&gt;, a Progressive Web App is an app that is able to look and react like a native mobile app, this is achieved with APIs on modern browsers that make native mobile app features such as a full-screen application or push notifications possible. On top of that these web apps are extremely lightweight, the installation process is also easy, and users don’t even need to update their PWAs because the app doesn’t have a middle man like an app store to manage application versions, the apps would just update as soon as users connect to the internet. With these advantages, PWAs are a great danger to mobile apps and their future.&lt;/p&gt;
+
+&lt;p&gt;But there is another player in this stage, artificial intelligence has taken a huge leap forward in terms of usability in recent years. With the help of deep learning, the possibilities for AI are boundless. Just a decade ago AI can only process words, now AI can do face recognition. A feature that was only available through science fiction, writing AI programs today are also easier because AI libraries are getting more frequent. Fun fact, currently there is an AI library that is written in Javascript, Tensorflow.js. On the 2018 TensorFlow Dev Summit, Google developers showed a demo of a Tensorflow.js app an emoji scavenger hunt app, users are prompt to find items in around them that corresponds to the emoji showed in the app.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://cdn-images-1.medium.com/max/800/1*GkmmhsO4gjw1MSHiW09Z1A.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;This evolves the way we think about web apps. According to an article from &lt;a href=&quot;https://www.forbes.com/sites/bernardmarr/2018/09/02/what-is-industry-4-0-heres-a-super-easy-explanation-for-anyone/#5dbee5df9788&quot;&gt;Forbes&lt;/a&gt;, we are currently in the midst of a new revolution, Industry 4.0 whereas previously computers were added to help humans complete simple tasks. Now we are developing technologies that are able to connect with each other and make decisions without human involvement. Imagine an entire industry running with only machines and a connection to the web.&lt;/p&gt;
+
+&lt;p&gt;Now you might be wondering, how does this correlate with the 2008 App Boom. This will affect even our daily lives. For example imagine computers ordering car parts for a company because the computer realized the current stock is not sufficient all of this without human involvement, this is a new step for all of us to keep relevant. With the complicated PWA APIs, and the development of AI a new app boom is imminent, but not an app being used by humans. It will be developed for the purpose of computers communicating with each other. In my opinion, the flow of future apps will be as follows: AI will be used for processing any kind of input the computer receives, and with sophisticated APIs, it will send commands to other computers to complete its’ tasks. With AI libraries that are compatible with modern frameworks making this possible.&lt;/p&gt;
+</description>
+        <pubDate>Thu, 13 Dec 2018 14:19:11 +0700</pubDate>
+        <link>https://agustinustheo.github.io//tech/2018/12/13/progressive-web-apps-artificial-intelligence-the-next-app-boom.html</link>
+        <guid isPermaLink="true">https://agustinustheo.github.io//tech/2018/12/13/progressive-web-apps-artificial-intelligence-the-next-app-boom.html</guid>
+      </item>
+    
   </channel>
 </rss>
