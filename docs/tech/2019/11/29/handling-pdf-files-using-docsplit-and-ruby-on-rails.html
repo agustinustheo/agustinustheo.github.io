@@ -1,0 +1,729 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.21.0 by Michael Rose
+  Copyright 2013-2020 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Handling PDF Files using Docsplit and Ruby on Rails - Agustinus Theodorus</title>
+<meta name="description" content="Handle PDF one Gem at a time!">
+
+
+  <meta name="author" content="Agustinus Theodorus">
+  
+  <meta property="article:author" content="Agustinus Theodorus">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Agustinus Theodorus">
+<meta property="og:title" content="Handling PDF Files using Docsplit and Ruby on Rails">
+<meta property="og:url" content="https://agustinustheo.github.io/tech/2019/11/29/handling-pdf-files-using-docsplit-and-ruby-on-rails.html">
+
+
+  <meta property="og:description" content="Handle PDF one Gem at a time!">
+
+
+
+  <meta property="og:image" content="https://cdn-images-1.medium.com/max/800/0*7jenzJUEPTWB9rOr.png">
+
+
+
+
+
+  <meta property="article:published_time" content="2019-11-29T23:58:20+07:00">
+
+
+
+
+
+
+<link rel="canonical" href="https://agustinustheo.github.io/tech/2019/11/29/handling-pdf-files-using-docsplit-and-ruby-on-rails.html">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": "Agustinus Theodorus",
+      "url": "https://agustinustheo.github.io/"
+    
+  }
+</script>
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+<link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Agustinus Theodorus Feed">
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css">
+
+<!--[if IE]>
+  <style>
+    /* old IE unsupported flexbox fixes */
+    .greedy-nav .site-title {
+      padding-right: 3em;
+    }
+    .greedy-nav button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+    }
+  </style>
+<![endif]-->
+
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single">
+    <nav class="skip-links">
+  <h2 class="screen-reader-text">Skip links</h2>
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/">
+          Agustinus Theodorus
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="https://agustinustheoo.medium.com">Blog</a>
+            </li><li class="masthead__menu-item">
+              <a href="https://id.linkedin.com/in/agustinus-theodorus">Profile</a>
+            </li></ul>
+        
+        <button class="search__toggle" type="button">
+          <span class="visually-hidden">Toggle search</span>
+          <svg class="icon" width="16" height="16" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15.99 16">
+            <path d="M15.5,13.12L13.19,10.8a1.69,1.69,0,0,0-1.28-.55l-0.06-.06A6.5,6.5,0,0,0,5.77,0,6.5,6.5,0,0,0,2.46,11.59a6.47,6.47,0,0,0,7.74.26l0.05,0.05a1.65,1.65,0,0,0,.5,1.24l2.38,2.38A1.68,1.68,0,0,0,15.5,13.12ZM6.4,2A4.41,4.41,0,1,1,2,6.4,4.43,4.43,0,0,1,6.4,2Z" transform="translate(-.01)"></path>
+          </svg>
+        </button>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person">
+
+  
+    <div class="author__avatar">
+      
+        <img src="/assets/img/bio-photo.jpg" alt="Agustinus Theodorus" itemprop="image">
+      
+    </div>
+  
+
+  <div class="author__content">
+    
+      <h3 class="author__name" itemprop="name">Agustinus Theodorus</h3>
+    
+    
+      <div class="author__bio" itemprop="description">
+        <p>I am primarily a web app developer. Most of my coding time is spent making new web apps, web APIs or bug fixing. My current hobby is writing, I usually spare time to write every month.</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+
+      
+        
+          
+            <li><a href="https://steego.link" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-link" aria-hidden="true"></i><span class="label">Website</span></a></li>
+          
+        
+          
+            <li><a href="https://id.linkedin.com/in/agustinus-theodorus" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span class="label">LinkedIn</span></a></li>
+          
+        
+          
+            <li><a href="https://github.com/agustinustheo" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i><span class="label">GitHub</span></a></li>
+          
+        
+          
+            <li><a href="https://twitter.com/agustinustheoo" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-twitter-square" aria-hidden="true"></i><span class="label">Twitter</span></a></li>
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Handling PDF Files using Docsplit and Ruby on Rails">
+    <meta itemprop="description" content="A little backstory, Ruby on Rails is a framework used for web development. Many companies use Ruby on Rails Github, Gojek and Airbnb. Ruby on Rails was created by David Heinemeier in 2003. Since it’s inception a lot has changed for this framework and developers are finding more complex uses for it. Ruby on Rails is based on the programming language Ruby and making small libraries to help development is a common practice among Rails users.">
+    <meta itemprop="datePublished" content="2019-11-29T23:58:20+07:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">Handling PDF Files using Docsplit and Ruby on Rails
+</h1>
+          
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          4 minute read
+        
+      </span>
+    
+  </p>
+
+
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <p>A little backstory, Ruby on Rails is a framework used for web development. Many companies use Ruby on Rails Github, Gojek and Airbnb. <a href="https://code.tutsplus.com/articles/ruby-on-rails-study-guide-the-history-of-rails--net-29439">Ruby on Rails was created by David Heinemeier in 2003</a>. Since it’s inception a lot has changed for this framework and developers are finding more complex uses for it. Ruby on Rails is based on the programming language Ruby and making small libraries to help development is a common practice among Rails users.</p>
+
+<p><img src="https://cdn-images-1.medium.com/max/800/0*7jenzJUEPTWB9rOr.png" alt="" /></p>
+
+<p>If you have developed a Rails application you must have heard of the term Gems. Gems are like libraries that are made to help simplify your Rails developing experience. In this tutorial, we will be looking into one of those Gems. <a href="https://documentcloud.github.io/docsplit/">Docsplit</a>!</p>
+
+<p><img src="https://cdn-images-1.medium.com/max/600/0*LHSDKI7HY8cQMPUG.png" alt="" /></p>
+
+<p>Docsplit is one of my favorite gems. I used this gem for my first Rails project, I noticed the docs can be improved upon and in this tutorial I wish to introduce to you this wonderful gem whilst trying to make clearer documentation on the PDF handling part of this gem.</p>
+
+<h3 id="adding-docsplit-to-your-railsproject">Adding Docsplit to your Rails project</h3>
+
+<p>Of course, what would be a tutorial without an installation tutorial? Installing the Docsplit gem is like installing any other Gem. Assuming that you are using a Linux system, install GraphicsMagick and Poppler using sudo.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo apt-get install graphicsmagick  
+sudo apt-get install poppler
+</code></pre></div></div>
+
+<p>GraphicsMagick and Poppler are mandatory for this gem to work, other dependencies need to be installed for some features to work but are not mandatory. One of the optional dependency that I recommend installing is pdftk. Install pdftk using sudo.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo apt-get install pdftk
+</code></pre></div></div>
+
+<p>After installing the dependencies add this line into your Gemfile.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>gem 'docsplit'
+</code></pre></div></div>
+
+<p>Then before you run your Rails app run this in your command prompt.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bundle install
+</code></pre></div></div>
+
+<p>Running your bundle will help you install gems that you added in your Gemfile.</p>
+
+<h3 id="using-docsplit-to-handlepdf">Using Docsplit to Handle PDF</h3>
+
+<h4 id="extracting-images-frompdf">Extracting images from PDF</h4>
+
+<p>Docsplit allows extracting each page as images. In Docsplit there is an <em>extract_images</em> function, you can call the function like so:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Docsplit.extract_images([file_path], :format =&gt; [:jpg])
+</code></pre></div></div>
+
+<p>Docsplits <em>extract_images</em> function has six parameters. <strong>These six parameters accept file paths, file output, file size, output format, output page, and file density.</strong></p>
+
+<p>The format parameter is mandatory because it is needed to define what format the saved images would be in. file paths parameter is the first parameter to be passed, the file path parameter is relative to the location of the script. For example:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>--|  
+  |-- script.rb  
+  |  
+  |-- example.pdf
+</code></pre></div></div>
+
+<p>Assuming the Ruby script is in the same directory as the PDF file then this is how you use Docsplit.extract_images</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Docsplit.extract_images('example.pdf', :format =&gt; [:jpg])
+</code></pre></div></div>
+
+<p>The second parameter is the file output parameter if the file output parameter is not passed then the extracted images would be saved in the root of the Rails app. Otherwise, the file would be saved to the directory the file output parameter is pointing to.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Docsplit.extract_images('example.pdf', output: Rails.root.join('temp'), :format =&gt; [:jpg])
+</code></pre></div></div>
+
+<p>The size parameter controls the quality of the file output, it defines the desired file resolution.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Docsplit.extract_images('example.pdf', :size  =&gt; '1000x', :format =&gt; [:jpg])
+</code></pre></div></div>
+
+<p>Next, the page parameter determines which page would be extracted as an image. If a page parameter is not passed then the function would extract all the pages. Example of using page parameters are like so:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Docsplit.extract_images('example.pdf', :page =&gt; 1, :format =&gt; [:jpg])
+</code></pre></div></div>
+
+<p>Lastly, the density parameter. According to the <a href="https://documentcloud.github.io/docsplit/">Docsplit docs</a> the density parameter controls the DPI to rasterize the page to an image.</p>
+
+<h4 id="extracting-pdfmetadata">Extracting PDF metadata</h4>
+
+<p>Docsplit allows for PDF metadata extracting. Metadata that can be extracted are author, date, creator, keywords, producer, subject, title, and length. There is only one single parameter needed for this function, the file path parameter.</p>
+
+<p>For example, let’s try getting a PDFs title. To do that we just need to run:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Docsplit.extract_title('example.pdf')
+</code></pre></div></div>
+
+<p>This function will return the title of the PDF, the return can be stored in a variable to keep the result. To extract other metadata categories we would only need to change the latter of the function.</p>
+
+<p>Let’s do another example, to extract the author we only need to run:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Docsplit.extract_author('example.pdf')
+</code></pre></div></div>
+
+<p>From these two examples, extracting other types of metadata should be quite straightforward.</p>
+
+<h4 id="splitting-pdf">Splitting PDF</h4>
+
+<p>If you intend on extracting certain pages from a multiple page PDF. The extract_pages method would come in handy. <strong>Before trying to implement this method you need to make sure you have installed pdftk.</strong></p>
+
+<p>For example, if you want to extract the first page of a PDF you can do:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Docsplit.extract_pages('example.pdf', :pages =&gt; 1)
+</code></pre></div></div>
+
+<p>Otherwise, if you want to extract the third page of a PDF you can do:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Docsplit.extract_pages('example.pdf', :pages =&gt; 3)
+</code></pre></div></div>
+
+<p>To extract a range of pages. In this case page one to three you could do:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Docsplit.extract_pages('example.pdf', :pages =&gt; 1..3)
+</code></pre></div></div>
+
+<h3 id="conclusion">Conclusion</h3>
+
+<p>Docsplit is one of those gems that you should consider trying. It is a very useful tool for your Rails project when needed. This tutorial was written based on my personal experience in using Docsplit and much of it was based on the <a href="https://documentcloud.github.io/docsplit/">original Docsplit docs</a> (do check it out if you are planning to use it). Cheers.</p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+
+
+        
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2019-11-29T23:58:20+07:00">November 29, 2019</time></p>
+
+
+      </footer>
+
+      <section class="page__share">
+  
+
+  <a href="https://twitter.com/intent/tweet?text=Handling+PDF+Files+using+Docsplit+and+Ruby+on+Rails%20https%3A%2F%2Fagustinustheo.github.io%2Ftech%2F2019%2F11%2F29%2Fhandling-pdf-files-using-docsplit-and-ruby-on-rails.html" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fagustinustheo.github.io%2Ftech%2F2019%2F11%2F29%2Fhandling-pdf-files-using-docsplit-and-ruby-on-rails.html" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=https%3A%2F%2Fagustinustheo.github.io%2Ftech%2F2019%2F11%2F29%2Fhandling-pdf-files-using-docsplit-and-ruby-on-rails.html" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+
+      
+  <nav class="pagination">
+    
+      <a href="/tech/2019/07/30/making-an-indonesian-message-classifier.html" class="pagination--pager" title="Making an Indonesian Message Classifier
+">Previous</a>
+    
+    
+      <a href="/tech/2020/02/27/surviving-in-a-digital-age-of-instability.html" class="pagination--pager" title="Surviving In A Digital Age of Instability
+">Next</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h4 class="page__related-title">You May Also Enjoy</h4>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="https://cdn-images-1.medium.com/max/800/0*zCSfGwYvrx7hc3DY" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/tech/2020/12/10/automate-your-linux-deployment-using-azure-devops.html" rel="permalink">Automate Your Linux Deployment Using Azure DevOps
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          9 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">Feel like you have been logging into your Linux servers too much lately? Good, this might be the right article for you. In teams, either large or small manua...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="https://cdn-images-1.medium.com/max/800/0*9RPiaNqFjBvZay_Q" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/tech/2020/11/18/how-to-choose-your-first-techstack.html" rel="permalink">How To Choose Your First Techstack
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          7 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">For all these years in the tech industry. I assure you that I have had my fair share of technology. A multitude of different frameworks aiming to achieve the...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="https://cdn-images-1.medium.com/max/800/0*4HwhJBcQU5Fcjv2U" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/tech/2020/11/09/how-to-host-flutter-using-nginx.html" rel="permalink">How To Host Flutter Web In Linux Using Nginx
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          5 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">Thinking of making a web app? I recommend you try Flutter. Flutter’s web capabilities are still in beta but it’s quite promising, to say the least. I have ex...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="https://cdn-images-1.medium.com/max/800/0*DuZ_NXbhwmAfiMPM" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/tech/2020/10/28/how-to-make-scalable-apis-using-flask-and-faunadb.html" rel="permalink">How To Make Scalable APIs Using Flask and FaunaDB
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          7 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">With the rise of serverless technology, making web services only gets easier. Serverless apps change the old monolithic architecture of apps and promote more...</p>
+  </article>
+</div>
+
+        
+      </div>
+    </div>
+  
+  
+</div>
+
+    </div>
+
+    
+      <div class="search-content">
+        <div class="search-content__inner-wrap"><form class="search-content__form" onkeydown="return event.key != 'Enter';">
+    <label class="sr-only" for="search">
+      Enter your search term...
+    </label>
+    <input type="search" id="search" class="search-input" tabindex="-1" placeholder="Enter your search term..." />
+  </form>
+  <div id="results" class="results"></div></div>
+
+      </div>
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+      
+        
+          <li><a href="https://steego.link" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-link" aria-hidden="true"></i> Website</a></li>
+        
+      
+        
+          <li><a href="https://id.linkedin.com/in/agustinus-theodorus" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i> LinkedIn</a></li>
+        
+      
+        
+          <li><a href="https://github.com/agustinustheo" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+        
+      
+        
+          <li><a href="https://twitter.com/agustinustheoo" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-twitter-square" aria-hidden="true"></i> Twitter</a></li>
+        
+      
+    
+
+    <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2020 Agustinus Theodorus. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+<script src="/assets/js/lunr/lunr.min.js"></script>
+<script src="/assets/js/lunr/lunr-store.js"></script>
+<script src="/assets/js/lunr/lunr-en.js"></script>
+
+
+
+
+
+
+
+  </body>
+</html>

@@ -10,11 +10,11 @@ categories: ['tech']
 keywords: []
 slug: /4-key-habits-i-learned-as-a-software-engineer
 header:
-  teaser: /assets/img/1__u18ToVTMMZ8AN1M4fur0xw.jpeg
+  teaser: https://cdn-images-1.medium.com/max/800/1*u18ToVTMMZ8AN1M4fur0xw.jpeg
 ---
 I am almost 3 years into software engineering. Honestly, I don’t think I am **that** good at it yet (I don’t know if I’ll ever be). But there are times when I wished that I knew somethings sooner than later. I thought it would be fun for me to reflect on those subjects and try to convey them to you as best as I can in this article. So here are the 4 key habits I learned as a software engineer.
 
-![]({{ site.url }}/assets/img/1__u18ToVTMMZ8AN1M4fur0xw.jpeg)
+![](https://cdn-images-1.medium.com/max/800/1*u18ToVTMMZ8AN1M4fur0xw.jpeg)
 
 ### 1\. Write Clean Code (Obviously!)
 
@@ -35,9 +35,6 @@ So ever since I realized that I tried to write functions for code that I would b
 If you don’t do that you might have to change multiple documents that literally have the same line of code just to let’s say — add a new condition to an if-else statement. Take it from me, sometimes you can forget and bugs will happen. So please, write code you going to reuse in a function.
 
 Speaking of functions…
-
-[**How an AI-based Chatbot Can Help You Form Better Long-Term Habits | Data Driven Investor**  
-_When we think about our everyday behaviors, we often do not realize, how big is the percentage of the actions we do…_www.datadriveninvestor.com](https://www.datadriveninvestor.com/2020/02/03/how-an-ai-based-chatbot-can-help-you-form-better-long-term-habits/ "https://www.datadriveninvestor.com/2020/02/03/how-an-ai-based-chatbot-can-help-you-form-better-long-term-habits/")[](https://www.datadriveninvestor.com/2020/02/03/how-an-ai-based-chatbot-can-help-you-form-better-long-term-habits/)
 
 #### Code Purposeful Functions
 
@@ -84,7 +81,3 @@ Keep that in mind the next time your boss asks you to document your code.
 **TL;DR** Write clean code, try to implement the Don’t Repeat Yourself (DRY) mindset to your code. Write purposeful functions that are easy to read. Learn design patterns, find a pattern that you personally like. Also if possible try to automate your tasks. Finally, never be a lazy documentation writer. It can save you more time than you think.
 
 In the end, we all have our own variety of lessons learned. These 4 are just mine. I am writing this not to persuade you rather share with you my personal opinions. Anyway, I hope you have a nice day!
-
-_Originally published at_ [_https://www.datadriveninvestor.com_](https://www.datadriveninvestor.com/2020/10/12/4-key-habits-i-learned-as-a-software-engineer/) _on October 12, 2020._
-
-#### Gain Access to Expert View — [Subscribe to DDI Intel](https://datadriveninvestor.com/ddi-intel)

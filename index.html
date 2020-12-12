@@ -33,13 +33,9 @@ feature_row:
 <h1>Portfolio</h1>
 {% include feature_row %}
 
-<h1><a href="/tech-blog" style="text-decoration: none; color: #3D4144">Tech Blog</a></h1>
-<ul>
-  {% for post in site.posts %}
-  <li>
-    {{ post.teaser }}
-    <h2><a href="{{ post.url }}">{{ post.title }}</a></h2>
-    {{ post.excerpt }}
-  </li>
-  {% endfor %}
-</ul>
+<h1><a href="/tech-articles" style="text-decoration: none; color: #3D4144">Latest Tech Articles</a></h1>
+{% for post in site.posts limit:5 %}
+  {{ post.teaser }}
+  <h2><a href="{{ post.url }}">{{ post.title }}</a></h2>
+  {{ post.excerpt }}
+{% endfor %}

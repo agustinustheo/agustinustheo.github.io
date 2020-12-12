@@ -1,0 +1,744 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.21.0 by Michael Rose
+  Copyright 2013-2020 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Filtering Fake News using Python has never been easier - Agustinus Theodorus</title>
+<meta name="description" content="With the rapid development of information technology, communication has been easier than it has ever been before. This results in fake…">
+
+
+  <meta name="author" content="Agustinus Theodorus">
+  
+  <meta property="article:author" content="Agustinus Theodorus">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Agustinus Theodorus">
+<meta property="og:title" content="Filtering Fake News using Python has never been easier">
+<meta property="og:url" content="https://agustinustheo.github.io/tech/2019/02/22/filtering-fake-news-using-python-has-never-been-easier.html">
+
+
+  <meta property="og:description" content="With the rapid development of information technology, communication has been easier than it has ever been before. This results in fake…">
+
+
+
+  <meta property="og:image" content="https://cdn-images-1.medium.com/max/800/1*PPIp7twJJUknfohZqtL8pQ.png">
+
+
+
+
+
+  <meta property="article:published_time" content="2019-02-22T19:35:23+07:00">
+
+
+
+
+
+
+<link rel="canonical" href="https://agustinustheo.github.io/tech/2019/02/22/filtering-fake-news-using-python-has-never-been-easier.html">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": "Agustinus Theodorus",
+      "url": "https://agustinustheo.github.io/"
+    
+  }
+</script>
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+<link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Agustinus Theodorus Feed">
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css">
+
+<!--[if IE]>
+  <style>
+    /* old IE unsupported flexbox fixes */
+    .greedy-nav .site-title {
+      padding-right: 3em;
+    }
+    .greedy-nav button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+    }
+  </style>
+<![endif]-->
+
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single">
+    <nav class="skip-links">
+  <h2 class="screen-reader-text">Skip links</h2>
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/">
+          Agustinus Theodorus
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="https://agustinustheoo.medium.com">Blog</a>
+            </li><li class="masthead__menu-item">
+              <a href="https://id.linkedin.com/in/agustinus-theodorus">Profile</a>
+            </li></ul>
+        
+        <button class="search__toggle" type="button">
+          <span class="visually-hidden">Toggle search</span>
+          <svg class="icon" width="16" height="16" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15.99 16">
+            <path d="M15.5,13.12L13.19,10.8a1.69,1.69,0,0,0-1.28-.55l-0.06-.06A6.5,6.5,0,0,0,5.77,0,6.5,6.5,0,0,0,2.46,11.59a6.47,6.47,0,0,0,7.74.26l0.05,0.05a1.65,1.65,0,0,0,.5,1.24l2.38,2.38A1.68,1.68,0,0,0,15.5,13.12ZM6.4,2A4.41,4.41,0,1,1,2,6.4,4.43,4.43,0,0,1,6.4,2Z" transform="translate(-.01)"></path>
+          </svg>
+        </button>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person">
+
+  
+    <div class="author__avatar">
+      
+        <img src="/assets/img/bio-photo.jpg" alt="Agustinus Theodorus" itemprop="image">
+      
+    </div>
+  
+
+  <div class="author__content">
+    
+      <h3 class="author__name" itemprop="name">Agustinus Theodorus</h3>
+    
+    
+      <div class="author__bio" itemprop="description">
+        <p>I am primarily a web app developer. Most of my coding time is spent making new web apps, web APIs or bug fixing. My current hobby is writing, I usually spare time to write every month.</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+
+      
+        
+          
+            <li><a href="https://steego.link" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-link" aria-hidden="true"></i><span class="label">Website</span></a></li>
+          
+        
+          
+            <li><a href="https://id.linkedin.com/in/agustinus-theodorus" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span class="label">LinkedIn</span></a></li>
+          
+        
+          
+            <li><a href="https://github.com/agustinustheo" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i><span class="label">GitHub</span></a></li>
+          
+        
+          
+            <li><a href="https://twitter.com/agustinustheoo" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-twitter-square" aria-hidden="true"></i><span class="label">Twitter</span></a></li>
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Filtering Fake News using Python has never been easier">
+    <meta itemprop="description" content="With the rapid development of information technology, communication has been easier than it has ever been before. This results in fake news becoming more widespread. Everyday people from around the world are more susceptible to irresponsible people writing fake news. That is why technology to verify news is gradually needed. A simple solution to help verify news is to search for the keywords used in the news title, query them in a search engine and review if the given results are similar. This is one of the easiest ways to verify if a news article is fake or not.">
+    <meta itemprop="datePublished" content="2019-02-22T19:35:23+07:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">Filtering Fake News using Python has never been easier
+</h1>
+          
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          5 minute read
+        
+      </span>
+    
+  </p>
+
+
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <p>With the rapid development of information technology, communication has been easier than it has ever been before. This results in fake news becoming more widespread. Everyday people from around the world are more susceptible to irresponsible people writing fake news. That is why technology to verify news is gradually needed. A simple solution to help verify news is to search for the keywords used in the news title, query them in a search engine and review if the given results are similar. This is one of the easiest ways to verify if a news article is fake or not.</p>
+
+<p><img src="https://cdn-images-1.medium.com/max/800/1*PPIp7twJJUknfohZqtL8pQ.png" alt="" /></p>
+
+<p>For computers to process tasks like these, it will be required to use methods such as natural language processing. Natural Language Processing is a subfield of computer science and artificial intelligence concerned with computers processing natural human language. Using this method we can process these articles to find keywords that reflect the objective of the article. Once the keywords are found we just need to search for articles with similar keywords on the internet. The search results will verify the validity of the article. The main programming language that is going to be used will mainly be Python because Python has a lot of libraries related to natural language processing.</p>
+
+<p>These are the Libraries that are going to be used to develop our fake news classifier.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>nltk  
+beautifulsoup4  
+selenium&gt;=2.44.0,&lt;3.0.0  
+requests  
+unidecode  
+vcrpy  
+future  
+fake-useragent  
+newspaper3k  
+sklearn  
+git+https://github.com/abenassi/Google-Search-API
+</code></pre></div></div>
+
+<p>First, copy these to your own version of requirements.txt in your applications’ root folder. Then to install these libraries, just open up a command line and type these commands in your source folder.</p>
+
+<p>For Windows:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>pip install -r requirements.txt
+</code></pre></div></div>
+
+<p>For Linux (install pip3 first):</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>pip3 install -r requirements.txt
+</code></pre></div></div>
+
+<p>To find similar news articles the function will have two formal parameters. One to receive news parameters either in link or string and another to receive a similarity index. If the received news params is a link then the newspaper3k library will parse and extract the articles’ title, but if the received param is a string then it will be assumed as the articles’ title. Before the text goes through further processing, the text must be normalized so that it would not contain any punctuation or other symbols that might cause noise in the data.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>def remove_unnecessary_noise(text_messages):
+    text_messages = re.sub(r'\\([a-z]|[A-Z]|[0-9])([a-z]|[A-Z]|[0-9])([a-z]|[A-Z]|[0-9])\\([a-z]|[A-Z]|[0-9])([a-z]|[A-Z]|[0-9])([a-z]|[A-Z]|[0-9])\\([a-z]|[A-Z]|[0-9])([a-z]|[A-Z]|[0-9])([a-z]|[A-Z]|[0-9])', ' ', text_messages)
+    text_messages = re.sub(r'\\([a-z]|[A-Z]|[0-9])([a-z]|[A-Z]|[0-9])([a-z]|[A-Z]|[0-9])\\([a-z]|[A-Z]|[0-9])([a-z]|[A-Z]|[0-9])([a-z]|[A-Z]|[0-9])', ' ', text_messages)
+    text_messages = re.sub(r'\[[0-9]+\]|\[[a-z]+\]|\[[A-Z]+\]|\\\\|\\r|\\t|\\n|\\', ' ', text_messages)
+
+    return text_messages
+</code></pre></div></div>
+
+<p>Normalization will need a new function, the function will have only one formal parameter intended to receive the article titles. All unnecessary noise such as numbers, punctuation, symbols, and trailing white spaces will be removed. Upper case letters will also be lowercased, this is done because punctuation, symbols, and upper case letters are only used to easily interpret languages.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>def preproccess_text(text_messages):
+    # change words to lower case - Hello, HELLO, hello are all the same word
+    processed = text_messages.lower()
+
+    # Remove remove unnecessary noise
+    processed = re.sub(r'\[[0-9]+\]|\[[a-z]+\]|\[[A-Z]+\]|\\\\|\\r|\\t|\\n|\\', ' ', processed)
+
+    # Remove punctuation
+    processed = re.sub(r'[.,\/#!%\^&amp;\*;\[\]:|+{}=\-\'"_”“`~(’)?]', ' ', processed)
+
+    # Replace whitespace between terms with a single space
+    processed = re.sub(r'\s+', ' ', processed)
+
+    # Remove leading and trailing whitespace
+    processed = re.sub(r'^\s+|\s+?$', '', processed)
+    return processed
+</code></pre></div></div>
+
+<p>Next, the title will go through tokenization, stopwords removal and stemming. Tokenization is when words in a sentence are separated into arrays equal to the number of words contained in said sentences. For example a sentence ‘I love ice cream’ will be tokenized into an array each containing the words [‘I’, ‘love’, ‘ice’, ‘cream’]. Then all the words that count as stopwords are excluded from the sentence, stopwords are extra words added to make natural languages easier to understand. English stopwords include ‘I’, ‘who’, ‘that’, etc. Next, the title will go through stemming, this is a process that derives words to their original stems, for example, the word playing, played, and plays are all derived from the wordplay.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>def news_title_tokenization(message):
+    stopwords = nltk.corpus.stopwords.words('english')
+    tokenized_news_title = []
+    ps = PorterStemmer()
+    for word in word_tokenize(message):
+        if word not in stopwords:
+            tokenized_news_title.append(ps.stem(word))
+
+    return tokenized_news_title
+</code></pre></div></div>
+
+<p>If the sentence is normalized and each word is tokenized the next thing to do is to search for the acquired keywords using the Google-Search-API. This API will search the internet for pages that contain these keywords. Each result will go through the process of normalization and tokenization again to help measure the similarities between the two articles titles.</p>
+
+<p><img src="https://cdn-images-1.medium.com/max/800/1*ilLHSHAx8adPMQ8ENJuqjQ.png" alt="" /></p>
+
+<p>Measuring the similarity will be done using the Euclidian Distance algorithm. The search keywords and the result keywords will be put in an array and the similarities will be measured. Euclidian Distance uses a Pythagorean theorem to measure the distances between two points. The more similar the search and results are the smaller the Euclidian Distance will be. Thus the maximum number of Euclidian Distance has to be set as tolerance of similarity. The smaller the maximum number is, the more specific the comparison will be. A large maximum number will result in generalization. In this case, the similarity index is already defined by the second formal parameter of the find similar articles function.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>def find_similar_articles(news, similarity):
+    news_title_tokenized = ""
+    
+    if(re.match(r'^https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&amp;//=]*)$', news)):
+        news_article = Article(news)
+        news_article.download()
+        news_article.parse()
+        news_title_tokenized = news_title_tokenization(preproccess_text(news_article.title))
+    else:
+        news_title_tokenized = news_title_tokenization(preproccess_text(news))
+
+    search_title = ""
+    for word in news_title_tokenized:
+        search_title = search_title + word + " "
+
+    num_page_searched = 1
+    search_results = google.search(search_title, num_page_searched)
+
+    similar_articles = []
+    for result in search_results:
+        similar_article = {}
+        search_result_title = result.name.split('http')[0].split('...')[0]
+        search_result_title = remove_unnecessary_noise(search_result_title)
+        search_result_title = preproccess_text(search_result_title)
+        search_result_title = news_title_tokenization(search_result_title)
+
+        result_string = ""
+        for w in search_result_title:
+            result_string = result_string + w + " "
+
+            corpus = []
+            corpus.append(search_title)
+            corpus.append(result_string)
+
+        vectorizer = CountVectorizer()
+        features = vectorizer.fit_transform(corpus).todense()
+
+        for f in features:
+            dist = euclidean_distances(features[0], f)
+
+        if dist &lt; similarity:
+            similar_article["article_title"] = result.name.split('http')[0].split('...')[0]
+            similar_article["article_url"] = result.link
+            similar_articles.append(similar_article)
+
+    return similar_articles
+</code></pre></div></div>
+
+<p>If an article is found the program will return a message “Found a similar article!”. When multiple similar article titles are found the program will return a message “Found similar articles!”, but if the program fails to find a similar article the program will return “No similar articles found!” as a message. If there are no similar articles found on the internet, the credibility if the article in question can be assumed false. This is because there are no factors to give an account of the article. Therefore every article that is read on the internet must be taken with a grain of salt because if we do not confirm its’ source there is a possibility that the article we are reading is false.</p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+
+
+        
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2019-02-22T19:35:23+07:00">February 22, 2019</time></p>
+
+
+      </footer>
+
+      <section class="page__share">
+  
+
+  <a href="https://twitter.com/intent/tweet?text=Filtering+Fake+News+using+Python+has+never+been+easier%20https%3A%2F%2Fagustinustheo.github.io%2Ftech%2F2019%2F02%2F22%2Ffiltering-fake-news-using-python-has-never-been-easier.html" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fagustinustheo.github.io%2Ftech%2F2019%2F02%2F22%2Ffiltering-fake-news-using-python-has-never-been-easier.html" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=https%3A%2F%2Fagustinustheo.github.io%2Ftech%2F2019%2F02%2F22%2Ffiltering-fake-news-using-python-has-never-been-easier.html" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+
+      
+  <nav class="pagination">
+    
+      <a href="/tech/2018/12/13/progressive-web-apps-artificial-intelligence-the-next-app-boom.html" class="pagination--pager" title="Progressive Web Apps, Artificial Intelligence, the next App Boom
+">Previous</a>
+    
+    
+      <a href="/tech/2019/07/30/making-an-indonesian-message-classifier.html" class="pagination--pager" title="Making an Indonesian Message Classifier
+">Next</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h4 class="page__related-title">You May Also Enjoy</h4>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="https://cdn-images-1.medium.com/max/800/0*zCSfGwYvrx7hc3DY" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/tech/2020/12/10/automate-your-linux-deployment-using-azure-devops.html" rel="permalink">Automate Your Linux Deployment Using Azure DevOps
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          9 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">Feel like you have been logging into your Linux servers too much lately? Good, this might be the right article for you. In teams, either large or small manua...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="https://cdn-images-1.medium.com/max/800/0*9RPiaNqFjBvZay_Q" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/tech/2020/11/18/how-to-choose-your-first-techstack.html" rel="permalink">How To Choose Your First Techstack
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          7 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">For all these years in the tech industry. I assure you that I have had my fair share of technology. A multitude of different frameworks aiming to achieve the...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="https://cdn-images-1.medium.com/max/800/0*4HwhJBcQU5Fcjv2U" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/tech/2020/11/09/how-to-host-flutter-using-nginx.html" rel="permalink">How To Host Flutter Web In Linux Using Nginx
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          5 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">Thinking of making a web app? I recommend you try Flutter. Flutter’s web capabilities are still in beta but it’s quite promising, to say the least. I have ex...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="https://cdn-images-1.medium.com/max/800/0*DuZ_NXbhwmAfiMPM" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/tech/2020/10/28/how-to-make-scalable-apis-using-flask-and-faunadb.html" rel="permalink">How To Make Scalable APIs Using Flask and FaunaDB
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          7 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">With the rise of serverless technology, making web services only gets easier. Serverless apps change the old monolithic architecture of apps and promote more...</p>
+  </article>
+</div>
+
+        
+      </div>
+    </div>
+  
+  
+</div>
+
+    </div>
+
+    
+      <div class="search-content">
+        <div class="search-content__inner-wrap"><form class="search-content__form" onkeydown="return event.key != 'Enter';">
+    <label class="sr-only" for="search">
+      Enter your search term...
+    </label>
+    <input type="search" id="search" class="search-input" tabindex="-1" placeholder="Enter your search term..." />
+  </form>
+  <div id="results" class="results"></div></div>
+
+      </div>
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+      
+        
+          <li><a href="https://steego.link" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-link" aria-hidden="true"></i> Website</a></li>
+        
+      
+        
+          <li><a href="https://id.linkedin.com/in/agustinus-theodorus" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i> LinkedIn</a></li>
+        
+      
+        
+          <li><a href="https://github.com/agustinustheo" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+        
+      
+        
+          <li><a href="https://twitter.com/agustinustheoo" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-twitter-square" aria-hidden="true"></i> Twitter</a></li>
+        
+      
+    
+
+    <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2020 Agustinus Theodorus. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+<script src="/assets/js/lunr/lunr.min.js"></script>
+<script src="/assets/js/lunr/lunr-store.js"></script>
+<script src="/assets/js/lunr/lunr-en.js"></script>
+
+
+
+
+
+
+
+  </body>
+</html>

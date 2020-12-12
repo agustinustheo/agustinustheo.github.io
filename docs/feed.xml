@@ -1,6 +1,408 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.1.1">Jekyll</generator><link href="https://agustinustheo.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://agustinustheo.github.io/" rel="alternate" type="text/html" /><updated>2020-12-12T18:50:14+07:00</updated><id>https://agustinustheo.github.io/feed.xml</id><title type="html">Agustinus Theodorus</title><subtitle>I am primarily a web app developer. Most of my coding time is spent making new web apps, web APIs or bug fixing. My current hobby is writing, I usually spare time to write every month.</subtitle><author><name>Agustinus Theodorus</name></author><entry><title type="html">How To Choose Your First Techstack</title><link href="https://agustinustheo.github.io/tech/2020/11/18/how-to-choose-your-first-techstack.html" rel="alternate" type="text/html" title="How To Choose Your First Techstack" /><published>2020-11-18T20:01:31+07:00</published><updated>2020-11-18T20:01:31+07:00</updated><id>https://agustinustheo.github.io/tech/2020/11/18/how-to-choose-your-first-techstack</id><content type="html" xml:base="https://agustinustheo.github.io/tech/2020/11/18/how-to-choose-your-first-techstack.html">&lt;p&gt;For all these years in the tech industry. I assure you that I have had my fair share of technology. A multitude of different frameworks aiming to achieve the same thing with their own different takes. Teams that prefer different tech stacks. It doesn’t matter what you learn but how fast can you adapt.&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.1.1">Jekyll</generator><link href="https://agustinustheo.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://agustinustheo.github.io/" rel="alternate" type="text/html" /><updated>2020-12-13T01:12:52+07:00</updated><id>https://agustinustheo.github.io/feed.xml</id><title type="html">Agustinus Theodorus</title><subtitle>I am primarily a web app developer. Most of my coding time is spent making new web apps, web APIs or bug fixing. My current hobby is writing, I usually spare time to write every month.</subtitle><author><name>Agustinus Theodorus</name></author><entry><title type="html">Automate Your Linux Deployment Using Azure DevOps</title><link href="https://agustinustheo.github.io/tech/2020/12/10/automate-your-linux-deployment-using-azure-devops.html" rel="alternate" type="text/html" title="Automate Your Linux Deployment Using Azure DevOps" /><published>2020-12-10T19:49:28+07:00</published><updated>2020-12-10T19:49:28+07:00</updated><id>https://agustinustheo.github.io/tech/2020/12/10/automate-your-linux-deployment-using-azure-devops</id><content type="html" xml:base="https://agustinustheo.github.io/tech/2020/12/10/automate-your-linux-deployment-using-azure-devops.html">&lt;p&gt;Feel like you have been logging into your Linux servers too much lately? Good, this might be the right article for you. In teams, either large or small manual deployments can be tedious. But they are also predictable. Deployment steps don’t really change that often unless you have a breaking change or you are implementing a major feature.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;https://agustinustheo.github.io/assets/img/0__9RPiaNqFjBvZay__Q.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://cdn-images-1.medium.com/max/800/0*zCSfGwYvrx7hc3DY&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;So, why don’t you just automate it? You don’t need to do it yourself. Do important things like &lt;strong&gt;writing code&lt;/strong&gt; and let a machine do the deployments for you.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;If your team is blessed to use Azure DevOps here is a tutorial to finally automate &lt;strong&gt;&lt;em&gt;the hell&lt;/em&gt;&lt;/strong&gt; out of your deployments. You &lt;em&gt;seldom&lt;/em&gt; have to log on to your Linux servers again.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;In this tutorial, we will be making an automated pipeline to deploy .NET Core applications to a Centos 8 server. The app will be run as a service and we will serve those services through a reverse proxy using NGINX.&lt;/strong&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;installing-azure-agent-onlinux&quot;&gt;Installing Azure Agent on Linux&lt;/h3&gt;
+
+&lt;p&gt;In Azure DevOps, we use an agent to interact with our builds in the pipeline. Installing agents are straightforward, just follow these steps:&lt;/p&gt;
+
+&lt;h4 id=&quot;1-setting-up-a-deployment-group-in-azuredevops&quot;&gt;1. Setting Up A Deployment Group in Azure DevOps&lt;/h4&gt;
+
+&lt;p&gt;Deployment groups are the list of agents already installed on your servers. You would need to make a deployment group for each server.&lt;/p&gt;
+
+&lt;p&gt;First, open your &lt;strong&gt;Azure DevOps&lt;/strong&gt; dashboard.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://cdn-images-1.medium.com/max/800/1*diKrTk5BKavbs076x6AqNQ.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Next, open your &lt;strong&gt;Pipelines&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://cdn-images-1.medium.com/max/800/0*RQiW01F5omxuvnAV&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Go to &lt;strong&gt;Deployment Groups&lt;/strong&gt;, and click &lt;strong&gt;New&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://cdn-images-1.medium.com/max/800/0*wFxLJNCYSxD9PhN4&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Give your Linux VM an Alias, and the description. Then click &lt;strong&gt;Create&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://cdn-images-1.medium.com/max/800/1*dC9GLQyFwPz4sVprOJ4l-g.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;You have created a deployment group, now to install this deployment groups agent on your Linux server:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Change the target from Windows to &lt;strong&gt;Linux&lt;/strong&gt;.&lt;/li&gt;
+  &lt;li&gt;Check the &lt;strong&gt;Use a personal access token&lt;/strong&gt; checkbox.&lt;/li&gt;
+  &lt;li&gt;Save the script on a notepad for the next step.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h4 id=&quot;2-installing-the-agent-on-the-linuxserver&quot;&gt;2. Installing the Agent on the Linux Server&lt;/h4&gt;
+
+&lt;p&gt;To install the agent, run the script copied from the previous step &lt;strong&gt;in the home directory&lt;/strong&gt;, make sure you &lt;strong&gt;run the script with a user that has sudo enabled&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;After installation is finished run go into the &lt;strong&gt;azagent&lt;/strong&gt; directory and check the installation by trying to run the agent:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;cd azagent  
+./run.sh
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;If the agent returns a &lt;strong&gt;&lt;em&gt;Listening for Jobs&lt;/em&gt;&lt;/strong&gt; message, that means the installation was successful. The next step is to make a service that can run the agent in the background.&lt;/p&gt;
+
+&lt;p&gt;To start to install the agent as a service, run:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sudo ./svc.sh install
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;This will install the service, and then run it in the background. To stop the service run:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sudo ./svc.sh stop
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Otherwise, if we want to start an installed service, run:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sudo ./svc.sh start
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://cdn-images-1.medium.com/max/800/0*vkJRjhEYQVPeemFc&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Check if the service is running by opening the Deployment Groups tab in Azure DevOps. If it is &lt;strong&gt;Online&lt;/strong&gt; then your agent installation is successful and it is available for jobs.&lt;/p&gt;
+
+&lt;p&gt;This short installation guide was based on an article by &lt;a href=&quot;https://docs.microsoft.com/en-us/azure/devops/pipelines/agents/v2-linux?view=azure-devops&quot;&gt;Microsoft&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h3 id=&quot;configure-your-linux-server-for-automation&quot;&gt;Configure your Linux server for automation&lt;/h3&gt;
+
+&lt;p&gt;Now, this would be the fun part. Microsoft already did all the heavy lifting with the boring installation things. Now it is our turn to automate things.&lt;/p&gt;
+
+&lt;h4 id=&quot;1-make-a-script-to-automate-nginx-configurations&quot;&gt;1. Make a script to automate NGINX configurations&lt;/h4&gt;
+
+&lt;p&gt;To add new NGINX configurations we will create a shell script, add this &lt;em&gt;add-nginx-conf.sh&lt;/em&gt; script on the home directory:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;#!/bin/bash
+conf_path=&quot;/etc/nginx/conf.d/$1.conf&quot;
+
+if [ -f &quot;$conf_path&quot; ]
+then
+    conf_text=`cat $conf_path`
+    if [[ &quot;$conf_text&quot; == *&quot;$2&quot;* ]] || [[ &quot;$conf_text&quot; == *&quot;localhost:$3&quot;* ]]
+    then
+        echo &quot;Proxy route or localhost port has been used, please manually reconfigure your Nginx configuration.&quot;
+    else
+        word=&quot;\n\n\tlocation \/$2\/ {\
+\n\t\tproxy_pass http:\/\/localhost:$3\/;\
+\n\t}&quot;
+        match=&quot;# Insert here&quot;
+        echo &quot;$conf_text&quot; | sed &quot;s/$match/&amp;amp;$word/g&quot; &amp;gt; &quot;$conf_path&quot;
+    fi
+
+    nginx -t
+    systemctl reload nginx
+else
+    conf_text=&quot;server {
+	listen       80;
+	listen       [::]:80;
+	server_name  $1;
+
+	# Load configuration files for the default server block.
+	include /etc/nginx/default.d/*.conf;
+	
+	# Insert here
+
+	location /$2/ {
+		proxy_pass http://localhost:$3/;
+	}
+
+	error_page 404 /404.html;
+		location = /40x.html {
+	}
+
+	error_page 500 502 503 504 /50x.html;
+		location = /50x.html {
+	}
+}&quot;
+
+    echo &quot;$conf_text&quot; &amp;gt; &quot;$conf_path&quot;
+
+    chcon unconfined_u:object_r:httpd_config_t:s0 &quot;$conf_path&quot;
+    chown root:root &quot;$conf_path&quot;
+
+    nginx -t
+    systemctl reload nginx
+fi
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;This script will create a search for configuration files named using the associated DNS, it will create a new one if it was not found. Once found, the new configuration routes will be added there. Mind you, the configuration route in this script would be a basic proxy pass, you might want to add more configurations to the script if you want to use it for production.&lt;/p&gt;
+
+&lt;p&gt;The shell script accepts three parameters. The DNS, proxy route, and the port being used:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sudo ~/add-nginx-conf.sh &amp;lt;DNS&amp;gt; &amp;lt;proxy route&amp;gt; &amp;lt;app port&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Example:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sudo ~/add-nginx-conf.sh yourdomain.com enrichment_track 14321
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;In this example, the script will add configurations for the yourdomain.com domain, with a reverse proxy to port 14321 in the enrichment_track.&lt;/p&gt;
+
+&lt;h4 id=&quot;2-make-a-script-to-automate-system-service-configurations&quot;&gt;2. Make a script to automate system service configurations&lt;/h4&gt;
+
+&lt;p&gt;To add new system service configurations we will create a shell script, add this &lt;em&gt;make-service.sh&lt;/em&gt; script on the home directory:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;#!/bin/bash
+file_path=`pwd`
+service_path=&quot;/etc/systemd/system/$1.service&quot;
+if [ -f &quot;$service_path&quot; ]
+then
+    echo &quot;Service file already exists&quot;
+else
+    touch &quot;$service_path&quot;
+    service_contents=&quot;[Unit]
+Description=.NET Web API for $1
+
+[Service]
+WorkingDirectory=$file_path/_$1/drop/s
+ExecStart=/usr/bin/dotnet $file_path/_$1/drop/s/$2.dll
+Restart=always
+# Restart service after 10 seconds if the dotnet service crashes:
+RestartSec=10
+KillSignal=SIGINT
+SyslogIdentifier=dotnet-example
+User=&amp;lt;user&amp;gt;
+Environment=ASPNETCORE_ENVIRONMENT=&amp;lt;server environment&amp;gt;
+Environment=DOTNET_PRINT_TELEMETRY_MESSAGE=false
+
+[Install]
+WantedBy=multi-user.target&quot;
+    echo &quot;$service_contents&quot; &amp;gt;&amp;gt; &quot;$service_path&quot;
+    systemctl start $1.service
+    systemctl enable $1.service
+fi
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;Before you copy and paste the code, notice the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;&amp;lt;user&amp;gt;&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;&amp;lt;server environment&amp;gt;&lt;/code&gt; tags in the script. Please change it to your corresponding user and server environment beforehand. Server environments in this case would be either Development or Production.&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;The script will generate new systemd service files that would run .NET Core projects. To generate scripts for other types of applications you would want to change the given template.&lt;/p&gt;
+
+&lt;p&gt;The shell script accepts two parameters. The service name, and the project name used:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sudo ~/make-service.sh &amp;lt;service name&amp;gt; &amp;lt;project name&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Example:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sudo ~/make-service.sh CI-Build API-Project
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;In this example, the script will add a new system service file &lt;em&gt;CI-Build.service&lt;/em&gt;, that runs a dll file named &lt;em&gt;API-Project.dll&lt;/em&gt;.&lt;/p&gt;
+
+&lt;h4 id=&quot;3-setup-a-user-to-run-systemctl-and-nginx-commands-without-passwordprompts&quot;&gt;3. Setup a user to run systemctl and Nginx commands without password prompts&lt;/h4&gt;
+
+&lt;p&gt;For automation purposes, the user that you used to install your Azure Agent needs to be able to run systemctl and Nginx commands without a password prompt. To remove the password prompts on sudo run:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sudo visudo
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;We need to run all the commands in the script using sudo without having a password being prompted. So, we make exceptions for those commands, and the corresponding scripts we are going to use.&lt;/p&gt;
+
+&lt;p&gt;Then add this on the last line &lt;em&gt;(change the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;&amp;lt;user&amp;gt;&lt;/code&gt; tag beforehand)&lt;/em&gt;:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;lt;user&amp;gt; ALL=(ALL) NOPASSWD:/usr/bin/systemctl, /usr/sbin/nginx, /usr/bin/chcon, /usr/bin/chown, /usr/bin/echo, /usr/bin/touch, /usr/bin/sed, /home/&amp;lt;user&amp;gt;/make-service.sh, /home/&amp;lt;user&amp;gt;/add-nginx-conf.sh
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Exit and save the config file, then try running one of these commands using sudo. You should not be prompted for a password.&lt;/p&gt;
+
+&lt;p&gt;A full explanation on how to run a sudo command without a password can be seen &lt;a href=&quot;https://www.cyberciti.biz/faq/linux-unix-running-sudo-command-without-a-password/&quot;&gt;here&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h3 id=&quot;prepare-the-pipelines&quot;&gt;Prepare the Pipelines&lt;/h3&gt;
+
+&lt;h4 id=&quot;prepare-the-cipipeline&quot;&gt;Prepare the CI Pipeline&lt;/h4&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://cdn-images-1.medium.com/max/800/1*fRlXDaaNIGDMUXlx8ER1gg.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;In this tutorial, we are going to use a .NET Core app as our example.&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;First, go to the Pipelines tab.&lt;/li&gt;
+  &lt;li&gt;Click &lt;strong&gt;New Pipeline&lt;/strong&gt;.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://cdn-images-1.medium.com/max/800/0*lwYKW8-orAtqp1xr&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Use the classic editor.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://cdn-images-1.medium.com/max/800/0*w9fgiTigSL8dU4Pu&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Choose a repository and click &lt;strong&gt;Continue&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://cdn-images-1.medium.com/max/800/0*j8MZijq5kfQ3gFyo&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Apply the .NET Core template.&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Search for &lt;strong&gt;“.NET Core”&lt;/strong&gt;.&lt;/li&gt;
+  &lt;li&gt;Then apply the template&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://cdn-images-1.medium.com/max/800/0*aJDSwZlIsa-uVRjl&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Because we are deploying a very small example app, I didn’t prepare any tests so:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Click the Test task.&lt;/li&gt;
+  &lt;li&gt;Remove the task.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Otherwise, if you are using tests, then don’t remove this task.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://cdn-images-1.medium.com/max/800/0*i2vTHkZzgc3RK2Op&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Finally, this is what you are left with. In the next step, we will implement Continuous Development in our solution.&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Change the name of your CI pipeline.&lt;/li&gt;
+  &lt;li&gt;Save the Pipeline.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h4 id=&quot;prepare-the-cdpipeline&quot;&gt;Prepare the CD Pipeline&lt;/h4&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://cdn-images-1.medium.com/max/800/0*j4Oyuueu6v8jcAa-&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;To add a new Continuous Development pipeline:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Go to the &lt;strong&gt;Releases&lt;/strong&gt; tab.&lt;/li&gt;
+  &lt;li&gt;Click the &lt;strong&gt;New&lt;/strong&gt;.&lt;/li&gt;
+  &lt;li&gt;Then click &lt;strong&gt;New release pipeline&lt;/strong&gt; to create a new pipeline.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://cdn-images-1.medium.com/max/800/0*PksyAUqhU2tdHkTW&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;After clicking the &lt;strong&gt;New release pipeline&lt;/strong&gt; button a pop-up will appear, then select &lt;strong&gt;Empty Job&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://cdn-images-1.medium.com/max/800/0*B8Sh7jl3MZJ4qtF1&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;To connect to a CI pipeline:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Click &lt;strong&gt;Add a new artifact&lt;/strong&gt;.&lt;/li&gt;
+  &lt;li&gt;Choose the project that contains the CI pipeline.&lt;/li&gt;
+  &lt;li&gt;Choose the CI pipeline.&lt;/li&gt;
+  &lt;li&gt;Give an alias to your artifact.&lt;/li&gt;
+  &lt;li&gt;When all is done click &lt;strong&gt;Add&lt;/strong&gt; to finish the configuration.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://cdn-images-1.medium.com/max/800/0*38Fjnw3zUuPhvji9&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Then for the Continuous Deployment pipeline:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Click the thunderbolt icon.&lt;/li&gt;
+  &lt;li&gt;Then check the &lt;strong&gt;Enabled&lt;/strong&gt; button.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://cdn-images-1.medium.com/max/800/0*0iqhBSovBPD7xVpL&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;After creating a stage, on &lt;strong&gt;stages&lt;/strong&gt;, double click on tasks to go to the &lt;strong&gt;Tasks&lt;/strong&gt; section.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://cdn-images-1.medium.com/max/800/0*ojZ6-NrtHwo0Aeie&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;In the tasks section, make a deployment group job.&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Click the three dots to show options.&lt;/li&gt;
+  &lt;li&gt;Add a deployment group job.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://cdn-images-1.medium.com/max/800/0*FyUB5L1Iei_pTuQN&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Choose the Linux deployment group we made on &lt;a href=&quot;https://docs.google.com/document/d/1KauINvdb7BFPz9pdlGhwGw93Jj7unkbnTNWAXrstOeg/edit#heading=h.n6j71fd5yi6b&quot;&gt;this step&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://cdn-images-1.medium.com/max/800/0*3XuKy89xJJyYXec8&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Add a task to the deployment job.&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;To add a new task click the &lt;strong&gt;+&lt;/strong&gt; sign.&lt;/li&gt;
+  &lt;li&gt;Then search for &lt;strong&gt;Download build artifacts&lt;/strong&gt;. This task is to download artifacts from the CI pipeline to the Linux VM.&lt;/li&gt;
+  &lt;li&gt;Finally, &lt;strong&gt;Add&lt;/strong&gt; the task.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://cdn-images-1.medium.com/max/800/0*7r1MUEHrP4G5AbB_&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Next is to configure your Download Build Artifacts job. Follow these 6 steps.&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Click the &lt;strong&gt;Download Build Artifacts&lt;/strong&gt; task.&lt;/li&gt;
+  &lt;li&gt;Choose to download artifacts by &lt;strong&gt;Specific Build&lt;/strong&gt;.&lt;/li&gt;
+  &lt;li&gt;Define your Azure DevOps project&lt;/li&gt;
+  &lt;li&gt;Define your CI pipeline.&lt;/li&gt;
+  &lt;li&gt;Check the &lt;strong&gt;When appropriate download artifacts from the triggering build&lt;/strong&gt; checkbox to trigger a download only after the build is finished.&lt;/li&gt;
+  &lt;li&gt;As for the download, type choose &lt;strong&gt;Specific files&lt;/strong&gt;.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://cdn-images-1.medium.com/max/800/0*Y5iGYaSEcE2O1u1y&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Then search for the &lt;strong&gt;Command line&lt;/strong&gt; task:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Create a new task by clicking the &lt;strong&gt;+&lt;/strong&gt; button.&lt;/li&gt;
+  &lt;li&gt;Search for &lt;strong&gt;“command”&lt;/strong&gt;.&lt;/li&gt;
+  &lt;li&gt;Click &lt;strong&gt;Add&lt;/strong&gt; to add a new task to the existing job.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://cdn-images-1.medium.com/max/800/1*EWRJZrvelnFdQywZNAAxJA.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Then in the command line, paste in the script you will be running:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Copy the &lt;strong&gt;appsettings.json&lt;/strong&gt; file from the home directory to the build folder.&lt;/li&gt;
+  &lt;li&gt;Generate system service configuration files and start &lt;strong&gt;if not exist&lt;/strong&gt; using the &lt;em&gt;make-service.sh&lt;/em&gt; script.&lt;/li&gt;
+  &lt;li&gt;Restart the service for the .NET Core project.&lt;/li&gt;
+  &lt;li&gt;Add NGINX configuration &lt;strong&gt;if not exist&lt;/strong&gt; using the &lt;em&gt;add-nginx-conf.sh&lt;/em&gt; script.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Notice in the command line, there are tags like &lt;strong&gt;$(Build.DefinitionName)&lt;/strong&gt;. This is one of Azure Pipeline’s pre-defined variables you can learn more about it &lt;a href=&quot;https://docs.microsoft.com/en-us/azure/devops/pipelines/build/variables?view=azure-devops&amp;amp;tabs=yaml&quot;&gt;here&lt;/a&gt;.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://cdn-images-1.medium.com/max/800/0*sxB70Pit7xBQICV3&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;After you’re done with the configuration, save your Release pipeline:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Change the name of the Pipeline&lt;/li&gt;
+  &lt;li&gt;Save the pipeline.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3 id=&quot;testing-thepipeline&quot;&gt;Testing the pipeline&lt;/h3&gt;
+
+&lt;p&gt;To test the pipeline, go to the Pipelines section, open the pipeline you just created, and click &lt;strong&gt;Run Pipeline&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://cdn-images-1.medium.com/max/800/1*ulEJaZGiPYdzOIEoOt8iWw.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;We run it from the CI pipeline because both CI and CD pipelines are already connected.&lt;/p&gt;
+
+&lt;h3 id=&quot;summary&quot;&gt;Summary&lt;/h3&gt;
+
+&lt;p&gt;In this tutorial, you have learned how to automate CI/CD deployments using Azure DevOps and some shell scripts. We tested it out using a .NET Core project. The Linux server used was a Centos 8.&lt;/p&gt;
+
+&lt;p&gt;To recap what we have done:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Installed an Azure Agent on Linux.&lt;/li&gt;
+  &lt;li&gt;Configured our Linux server for automation.&lt;/li&gt;
+  &lt;li&gt;Prepared the CI/CD Pipelines.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;You now have an open playbook to use when you want to automate deployments. Hope this tutorial was of help and have a nice day!&lt;/p&gt;</content><author><name>Agustinus Theodorus</name></author><category term="tech" /><summary type="html">Feel like you have been logging into your Linux servers too much lately? Good, this might be the right article for you. In teams, either large or small manual deployments can be tedious. But they are also predictable. Deployment steps don’t really change that often unless you have a breaking change or you are implementing a major feature.</summary></entry><entry><title type="html">How To Choose Your First Techstack</title><link href="https://agustinustheo.github.io/tech/2020/11/18/how-to-choose-your-first-techstack.html" rel="alternate" type="text/html" title="How To Choose Your First Techstack" /><published>2020-11-18T20:01:31+07:00</published><updated>2020-11-18T20:01:31+07:00</updated><id>https://agustinustheo.github.io/tech/2020/11/18/how-to-choose-your-first-techstack</id><content type="html" xml:base="https://agustinustheo.github.io/tech/2020/11/18/how-to-choose-your-first-techstack.html">&lt;p&gt;For all these years in the tech industry. I assure you that I have had my fair share of technology. A multitude of different frameworks aiming to achieve the same thing with their own different takes. Teams that prefer different tech stacks. It doesn’t matter what you learn but how fast can you adapt.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://cdn-images-1.medium.com/max/800/0*9RPiaNqFjBvZay_Q&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;In this article, I might not give you &lt;strong&gt;exact&lt;/strong&gt; answers to what you should choose. Because I believe that you should find what is comfortable for yourself. I would just explain what my ideas were when I chose my stack.&lt;/p&gt;
 
@@ -98,11 +500,11 @@
 
 &lt;p&gt;Furthermore, Javascript has another benefit of being &lt;strong&gt;a free tech stack&lt;/strong&gt;. Here’s what I mean. There is a service called &lt;a href=&quot;https://www.netlify.com/&quot;&gt;Netlify&lt;/a&gt;. Netlify hosts JAM Stack applications, and if you have reasonably small traffic, Netlify covers the costs for free. JAM stands for Javascript, APIs, Markup. Add to that Netlify also has a service called &lt;a href=&quot;https://www.netlify.com/products/functions/&quot;&gt;Netlify Functions&lt;/a&gt;.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;https://agustinustheo.github.io/assets/img/1__Sjwe6yN2B25zJI91MAqMmA.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://cdn-images-1.medium.com/max/800/1*Sjwe6yN2B25zJI91MAqMmA.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;Netlify Functions utilize serverless technologies to make simple APIs using Javascript using &lt;a href=&quot;https://aws.amazon.com/lambda/&quot;&gt;AWS Lambda&lt;/a&gt; as their base. You are only charged after 125k~ requests or so.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;https://agustinustheo.github.io/assets/img/1__wl90hwJrFDI7__UW1jHQfjQ.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://cdn-images-1.medium.com/max/800/1*wl90hwJrFDI7-UW1jHQfjQ.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;My next statement might sound controversial, but in my opinion, adding Javascript to your knowledge repository can help you get a job. It is very popular and very flexible. Being multiplatform it is cost-effective and the choice of many modern startups. Some corporations are also planning to migrate to Javascript environments.&lt;/p&gt;
 
@@ -114,21 +516,500 @@
   &lt;p&gt;“The master has failed more times than the beginner has even tried.” — &lt;a href=&quot;https://www.goodreads.com/quotes/1252243-the-master-has-failed-more-times-than-the-beginner-has&quot;&gt;Stephen McCranie&lt;/a&gt;&lt;/p&gt;
 &lt;/blockquote&gt;
 
-&lt;p&gt;Don’t be afraid to try. Failure is only a step. Thank you and have a nice day!&lt;/p&gt;
+&lt;p&gt;Don’t be afraid to try. Failure is only a step. Thank you and have a nice day!&lt;/p&gt;</content><author><name>Agustinus Theodorus</name></author><category term="tech" /><summary type="html">For all these years in the tech industry. I assure you that I have had my fair share of technology. A multitude of different frameworks aiming to achieve the same thing with their own different takes. Teams that prefer different tech stacks. It doesn’t matter what you learn but how fast can you adapt.</summary></entry><entry><title type="html">How To Host Flutter Web In Linux Using Nginx</title><link href="https://agustinustheo.github.io/tech/2020/11/09/how-to-host-flutter-using-nginx.html" rel="alternate" type="text/html" title="How To Host Flutter Web In Linux Using Nginx" /><published>2020-11-09T05:02:42+07:00</published><updated>2020-11-09T05:02:42+07:00</updated><id>https://agustinustheo.github.io/tech/2020/11/09/how-to-host-flutter-using-nginx</id><content type="html" xml:base="https://agustinustheo.github.io/tech/2020/11/09/how-to-host-flutter-using-nginx.html">&lt;p&gt;Thinking of making a web app? I recommend you try Flutter. Flutter’s web capabilities are still in beta but it’s quite promising, to say the least. I have experienced first hand how quick it is to build UIs using Flutter and I think it could soon be a competitive alternative to the Javascript ecosystem such as React, Vue, and Angular.&lt;/p&gt;
 
-&lt;p&gt;&lt;em&gt;Originally published at&lt;/em&gt; &lt;a href=&quot;https://www.datadriveninvestor.com/2020/11/18/how-to-choose-your-first-techstack/&quot;&gt;&lt;em&gt;https://www.datadriveninvestor.com&lt;/em&gt;&lt;/a&gt; &lt;em&gt;on November 18, 2020.&lt;/em&gt;&lt;/p&gt;</content><author><name>Agustinus Theodorus</name></author><category term="tech" /><summary type="html">For all these years in the tech industry. I assure you that I have had my fair share of technology. A multitude of different frameworks aiming to achieve the same thing with their own different takes. Teams that prefer different tech stacks. It doesn’t matter what you learn but how fast can you adapt.</summary></entry><entry><title type="html">How To Deploy Your .NET Core App on an IIS Server</title><link href="https://agustinustheo.github.io/tech/2020/10/20/how-to-deploy-net-core-on-iis.html" rel="alternate" type="text/html" title="How To Deploy Your .NET Core App on an IIS Server" /><published>2020-10-20T20:51:54+07:00</published><updated>2020-10-20T20:51:54+07:00</updated><id>https://agustinustheo.github.io/tech/2020/10/20/how-to-deploy-net-core-on-iis</id><content type="html" xml:base="https://agustinustheo.github.io/tech/2020/10/20/how-to-deploy-net-core-on-iis.html">&lt;p&gt;When you work in an enterprise environment you can’t choose where you would want to publish your application, especially if you enter a very established company. There would be times that you have to publish in a Linux environment, but in this case publishing in a Windows environment.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://cdn-images-1.medium.com/max/800/0*4HwhJBcQU5Fcjv2U&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;https://agustinustheo.github.io/assets/img/0__QkuSb8wVpC5wY7kj.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;So to help out the future Flutter community members, a tutorial on how to host your Flutter web app on a DIY private server would help. As a healthy alternative to Firebase.&lt;/p&gt;
+
+&lt;h3 id=&quot;what-would-youneed&quot;&gt;What would you need?&lt;/h3&gt;
+
+&lt;h4 id=&quot;umm-first-of-all-a-privateserver&quot;&gt;Umm, first of all, a private server.&lt;/h4&gt;
+
+&lt;p&gt;With serverless capabilities nowadays it is no wonder that people prefer Firebase, it’s free and it’s painless. Obvious choice.&lt;/p&gt;
+
+&lt;p&gt;But what if we want to go independent? Away from the norms? Well, you have to learn it all yourself. Because we are using Nginx, then the server must be a Linux server, not a Windows server.&lt;/p&gt;
+
+&lt;p&gt;Assuming you use a Debian/Ubuntu-based Linux distro. Here’s a starter script to help you get started.&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sudo apt update  
+sudo apt install nginx
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;There, I just saved you some googling time. If you want an in-depth guide on Nginx, I suggest you read &lt;a href=&quot;https://www.digitalocean.com/community/tutorials/how-to-install-nginx-on-ubuntu-18-04&quot;&gt;this post by Digital Ocean&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h4 id=&quot;do-we-need-to-install-the-flutter-sdk-on-ourserver&quot;&gt;Do we need to install the Flutter SDK on our server?&lt;/h4&gt;
+
+&lt;p&gt;Umm, yes, and no.&lt;/p&gt;
+
+&lt;p&gt;Let me elaborate. It is possible to install the SDK, but why do you need exactly? Installing the SDK helps you to test quick changes to the code on the server to try to fix a few production-related bugs like a cowboy!&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://cdn-images-1.medium.com/max/600/0*chBNVmBfQ2j2KpyA.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;I won’t do it though because SDKs consumes a lot of memory and requires a lot of RAM to be compiled. Your private server might not have enough RAM to process it. Believe me, I’ve tried. My VPS only had around 400MB of RAM enough to run a small app but not enough to compile the SDK. &lt;strong&gt;So I didn’t install it&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;So this just leaves one option either you use CI/CD to deploy your Flutter app to your VPS or just use plain old git. By using Git I mean by pushing your builds to the repository. This might not be a best practice for some teams as the entire software world almost unilaterally agree on using CI/CD, but hey — a cowboy’s gotta do what a cowboy’s gotta do.&lt;/p&gt;
+
+&lt;p&gt;I am not going into how much of a best practice this tutorial is going to be rather how simple and understandable it is. So let me just leave this choice to you.&lt;/p&gt;
+
+&lt;h4 id=&quot;do-i-need-adomain&quot;&gt;Do I need a domain?&lt;/h4&gt;
+
+&lt;p&gt;Do you need a domain? No. It is not required because we are learning &lt;strong&gt;how to host a Flutter web app using Nginx&lt;/strong&gt; using a domain or not is not of this tutorial’s concern.&lt;/p&gt;
+
+&lt;h3 id=&quot;build-yourapp&quot;&gt;Build your app&lt;/h3&gt;
+
+&lt;p&gt;After your app has been tested, run the Flutter build command.&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;flutter build web
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;That should generate a build folder within your project structure. Within the build folder, there is another folder named &lt;strong&gt;web&lt;/strong&gt; which contains the essential files to be used for hosting.&lt;/p&gt;
+
+&lt;p&gt;The web directory should contain a file named &lt;strong&gt;index.html&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;h3 id=&quot;configure-nginx&quot;&gt;Configure Nginx&lt;/h3&gt;
+
+&lt;p&gt;Here come’s the fun part. Now copy that web directory to your VPS in any fashion you would want. Then make sure you move the build files to /var/www/html.&lt;/p&gt;
+
+&lt;p&gt;Let’s say your application name is &lt;strong&gt;todos&lt;/strong&gt; so a good folder naming convention would be /var/www/html/todos. Inside the todos directory is the build files, &lt;strong&gt;index.html,&lt;/strong&gt; etc. If you’re not familiar with Linux commands this should help, assuming that your build files are in your home directory.&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sudo mv web /var/www/html/todos
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Next, you need to go to the Nginx directory on your server more precisely /etc/nginx/sites-enabled. There should be a file named &lt;strong&gt;default&lt;/strong&gt;. Open it using a vim/nano text editor of your choice and change the root directory on the configuration file to /var/www/html/todos.&lt;/p&gt;
+
+&lt;h4 id=&quot;no-domainsetup&quot;&gt;No Domain Setup&lt;/h4&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# Default server configuration
+server {
+       listen 80 default_server;
+       listen [::]:80 default_server;
+
+       root /var/www/html/todos;
+       index index.html index.htm;
+
+       server_name _;
+
+       location / {
+              try_files $uri $uri/ =404;
+       }
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Here is an example. The original file should be filled with comments, but I left those comments out in the gist. After changing your config files, check your Nginx config using this command:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sudo nginx -t
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;If all is well, then restart the Nginx service:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sudo systemctl reload nginx
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;This should restart your Nginx server and get the updated config file. When all is done open up your VPS IP Address from the browser. Your Flutter app should already be up.&lt;/p&gt;
+
+&lt;p&gt;I prefer people access my app by domain so I’ll include how to set up the app using a domain here too.&lt;/p&gt;
+
+&lt;h4 id=&quot;domain-setup&quot;&gt;Domain Setup&lt;/h4&gt;
+
+&lt;p&gt;When you don’t want to use a domain, changing the &lt;strong&gt;default&lt;/strong&gt; file should be fine (even though some people prefer to leave the default as-is and create a new one).&lt;/p&gt;
+
+&lt;p&gt;But when you want to use a domain, make sure you make a new configuration file. The file should have a .conf extension.&lt;/p&gt;
+
+&lt;p&gt;I have attached the corresponding gist. The setup should be similar to the previous one with a difference in the server_name. Then before you open your app from the browser, run:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sudo nginx -t
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;If configuration health checks pass, reload the Nginx service.&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sudo systemctl reload nginx
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;After restarting Nginx, try to open your domain from your browser. It should be done by then.&lt;/p&gt;
+
+&lt;h3 id=&quot;further-note&quot;&gt;Further Note&lt;/h3&gt;
+
+&lt;h4 id=&quot;dont-forget-to-update-domain-nameservers&quot;&gt;Don’t forget to update domain nameservers&lt;/h4&gt;
+
+&lt;p&gt;When you want to use a domain, please make sure you point your domain nameservers to your VPS. You are required to do this before any further configuration is to be done.&lt;/p&gt;
+
+&lt;h4 id=&quot;install-an-ssl-certificate-usingcertbot&quot;&gt;Install an SSL certificate using Certbot&lt;/h4&gt;
+
+&lt;p&gt;There’s a technology called Let’s Encrypt. It gives you free SSL certificates to be used for your apps, securing your app, and adding HTTPS to your domain. Install Certbot for Nginx using this command:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sudo apt install python-certbot-nginx
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Then, install SSL certificates on your domains:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sudo certbot --nginx -d your\_domain -d www.your\_domain
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;summary&quot;&gt;Summary&lt;/h3&gt;
+
+&lt;p&gt;In this tutorial, you have learned how to serve a Flutter application using Nginx. You now have an open playbook to use when you want to deploy Flutter web applications using Nginx on your own server. Hope this tutorial was of help and have a nice day!&lt;/p&gt;</content><author><name>Agustinus Theodorus</name></author><category term="tech" /><summary type="html">Thinking of making a web app? I recommend you try Flutter. Flutter’s web capabilities are still in beta but it’s quite promising, to say the least. I have experienced first hand how quick it is to build UIs using Flutter and I think it could soon be a competitive alternative to the Javascript ecosystem such as React, Vue, and Angular.</summary></entry><entry><title type="html">How To Make Scalable APIs Using Flask and FaunaDB</title><link href="https://agustinustheo.github.io/tech/2020/10/28/how-to-make-scalable-apis-using-flask-and-faunadb.html" rel="alternate" type="text/html" title="How To Make Scalable APIs Using Flask and FaunaDB" /><published>2020-10-28T06:50:13+07:00</published><updated>2020-10-28T06:50:13+07:00</updated><id>https://agustinustheo.github.io/tech/2020/10/28/how-to-make-scalable-apis-using-flask-and-faunadb</id><content type="html" xml:base="https://agustinustheo.github.io/tech/2020/10/28/how-to-make-scalable-apis-using-flask-and-faunadb.html">&lt;p&gt;With the rise of serverless technology, making web services only gets easier. Serverless apps change the old monolithic architecture of apps and promote more of a microservice solution to technical problems.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://cdn-images-1.medium.com/max/800/0*DuZ_NXbhwmAfiMPM&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;With the advantage of autoscaling, and multi-region deployments it is no wonder that serverless apps are making a quick rise in recent years. The cost of serverless has also redefined how we make software as it is now on a per request basis rather than a time-based service.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Even better, serverless also enables small services to be free altogether. Only being needed to be paid after a million requests or so. &lt;a href=&quot;https://azure.microsoft.com/en-us/pricing/details/functions/#:~:text=Azure%20Functions%20consumption%20plan%20is,function%20apps%20in%20that%20subscription.&quot;&gt;An example would be Azure Function’s consumption plan&lt;/a&gt;.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&quot;what-does-serverless-have-to-do-with-this-tutorial&quot;&gt;What does Serverless have to do with this tutorial?&lt;/h3&gt;
+
+&lt;p&gt;The main reason serverless is being mentioned here is because &lt;a href=&quot;https://fauna.com/features&quot;&gt;FaunaDB&lt;/a&gt; is a NoSQL database that is made for serverless in mind. The pricing on this database is request based, precisely what serverless apps need.&lt;/p&gt;
+
+&lt;p&gt;Using a service like FaunaDB can help cut costs so much that the hosting capabilities of the app would be virtually free. Excluding the development costs of course. Thus, using a monthly billed database for serverless apps kind of kills the point.&lt;/p&gt;
+
+&lt;p&gt;A free stack example would be a combination of Netlify, Netlify Functions, and FaunaDB. Though it would only be ‘free’ for a certain amount of requests. Unless you are making an app that gets thousands of users on day zero of deployment I don’t think it would be much of a problem.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;In my opinion, using a monthly billed database for serverless apps kind of kills the point&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;Flask on the other hand is a microframework written in Python. It is a minimalistic framework with no database abstraction layers, form validation, or any other particular functions provided by other frameworks.&lt;/p&gt;
+
+&lt;p&gt;Flask is by large serverless compatible. You can make a serverless Flask app using AWS Lambda. &lt;a href=&quot;https://www.serverless.com/flask&quot;&gt;Here is an official guide to Flask serverless from serverless.com&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h3 id=&quot;getting-started&quot;&gt;Getting Started&lt;/h3&gt;
+
+&lt;h4 id=&quot;setting-up-python-andpip&quot;&gt;Setting up Python and Pip&lt;/h4&gt;
+
+&lt;p&gt;First of all, install Python and Pip. I’m not going to list all the possible ways of installing it, for Windows users you can get the installer &lt;a href=&quot;https://www.python.org/downloads/windows/&quot;&gt;here&lt;/a&gt;. As for Linux users if you are using a Debian/Ubuntu-based distro open your command prompt and install python and pip like this:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sudo apt update  
+sudo apt install python3 python3-pip
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;To check if the installation is correct try executing these commands:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;python --version  
+pip --version
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;The version numbers would then show for the corresponding commands.&lt;/p&gt;
+
+&lt;h4 id=&quot;installing-dependencies&quot;&gt;Installing dependencies&lt;/h4&gt;
+
+&lt;p&gt;After the environment setup is complete, the next step would be to install Flask itself. The installation process is simple just enter:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;pip install Flask
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Then, install the python driver for FaunaDB:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;pip install faunadb
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;em&gt;Voila!&lt;/em&gt; You’re all set!&lt;/p&gt;
+
+&lt;h3 id=&quot;making-a-to-do-listapp&quot;&gt;Making a To-Do List App&lt;/h3&gt;
+
+&lt;p&gt;Now we are going to make an example app with the &lt;strong&gt;mother&lt;/strong&gt; of all app ideas, the to-do list app.&lt;/p&gt;
+
+&lt;h4 id=&quot;to-do-listtemplate&quot;&gt;To-Do List Template&lt;/h4&gt;
+
+&lt;p&gt;For this example, because we will be focusing mainly on how to make the API we will be using the &lt;a href=&quot;https://www.w3schools.com/howto/howto_js_todolist.asp&quot;&gt;W3School template&lt;/a&gt; for the to-do list app frontend.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://cdn-images-1.medium.com/max/800/1*vd-pu5pZaaHq0pSjp39meQ.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h4 id=&quot;basic-project-structure&quot;&gt;Basic Project Structure&lt;/h4&gt;
+
+&lt;p&gt;Our project would be an implementation of a helper pattern. A simple outline of our project would be like so:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;\-
+ |--app.py   
+ |  
+ |--services  
+    |--todo_service.py  
+ |--helpers  
+    |--todo_helper.py  
+ |--entities  
+    |--faunadb_entity.py
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;faunadb-indexes&quot;&gt;FaunaDB Indexes&lt;/h3&gt;
+
+&lt;h4 id=&quot;wait-what-areindexes&quot;&gt;Wait, what are indexes?&lt;/h4&gt;
+
+&lt;p&gt;Indexes are how you make ‘where’ statements in FaunaDB. It allows you to get specific documents based on the field values.&lt;/p&gt;
+
+&lt;p&gt;To create a new Index, just go to the Indexes section on your database and click &lt;strong&gt;New Index&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://cdn-images-1.medium.com/max/800/1*o7EBsxeVx6QtvRmq4s0fLA.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;When creating an Index, choose the collection you would want to interact with. Then define the field name you want to search by. Lastly, define your index name make sure it is unique and readable.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://cdn-images-1.medium.com/max/800/1*LoR_MqlQX_is-ZtnAvDxCw.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;For example, let’s make an index where we can get all the data in an existing collection.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://cdn-images-1.medium.com/max/800/1*nOsbTxZXiyhH11zB-0qH_g.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Oh, what about an index to get todos by the user’s email? Easy.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://cdn-images-1.medium.com/max/800/1*yWe7e6e0TlskA2NUrGI3GQ.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;If you want to make the terms unique, check the Unique checkbox to add a constraint.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://cdn-images-1.medium.com/max/800/1*DCaHNlv3bdj8WDIpb7IYcw.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;To add constraints to a certain collection you need to create indexes with terms that contain unique fields.&lt;/p&gt;
+
+&lt;p&gt;To help you understand better, &lt;a href=&quot;https://docs.fauna.com/fauna/current/tutorials/indexes/index.html&quot;&gt;here is an official article from Fauna to help you understand indexes.&lt;/a&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;lets-make-theapi&quot;&gt;Let’s Make The API&lt;/h3&gt;
+
+&lt;h4 id=&quot;make-the-flask-startupfile&quot;&gt;Make the Flask startup file&lt;/h4&gt;
+
+&lt;p&gt;First, write a python file that would run Flask.&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;from flask import Flask
+
+app = Flask(__name__)
+
+if __name__ == &quot;__main__&quot;:
+    app.run(host='0.0.0.0')
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h4 id=&quot;write-the-faunadb-entityscript&quot;&gt;Write the FaunaDB entity script&lt;/h4&gt;
+
+&lt;p&gt;Next, before we start writing our services and helpers we must first define an entity file to connect to FaunaDB.&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;import os
+from faunadb import query as q
+from faunadb.objects import Ref
+from faunadb.client import FaunaClient
+
+def get(index, data):
+    try:
+        serverClient = FaunaClient(secret=os.environ.get(&quot;FAUNA_SERVER_SECRET&quot;))
+        res = serverClient.query(q.get(q.match(q.index(index), data)))
+        res[&quot;data&quot;][&quot;ref_id&quot;] = res[&quot;ref&quot;].id()
+        return res[&quot;data&quot;]
+    except Exception as ex:
+        raise ex
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;This is used to get a FaunaDB document by Index. The get function does not return multiple documents and is only able to return a single document at a time.&lt;/p&gt;
+
+&lt;p&gt;To get multiple documents we need to use a map function to return multiple data by a certain index.&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;def get_multiple(index, data=None):
+    try:
+        serverClient = FaunaClient(secret=os.environ.get(&quot;FAUNA_SERVER_SECRET&quot;))
+        res_arr = []
+        if data is None:
+            res = serverClient.query(   
+                q.map_(
+                    q.lambda_(&quot;data&quot;, q.get(q.var(&quot;data&quot;))), 
+                    q.paginate(q.match(q.index(index)))
+                )
+            )
+            res_arr.extend(res[&quot;data&quot;])
+        elif isinstance(data, list):
+            for x in data:
+                res = serverClient.query(   
+                    q.map_(
+                        q.lambda_(&quot;data&quot;, q.get(q.var(&quot;data&quot;))), 
+                        q.paginate(q.match(q.index(index), q.casefold(x)))
+                    )
+                )
+                res_arr.extend(res[&quot;data&quot;])
+        else:
+            res = serverClient.query(   
+                q.map_(
+                    q.lambda_(&quot;data&quot;, q.get(q.var(&quot;data&quot;))), 
+                    q.paginate(q.match(q.index(index), q.casefold(data)))
+                )
+            )
+            res_arr.extend(res[&quot;data&quot;])
+
+        arr = []
+        for x in res_arr:
+            x[&quot;data&quot;][&quot;ref_id&quot;] = x[&quot;ref&quot;].id()
+            arr.append(x[&quot;data&quot;])
+        return arr
+    except Exception as ex:
+        raise ex
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;The lambda function will pass the data needed in the Index while paginate will search for the specific documents in the collection, then the map function will return all matching documents as a list.&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;def get_by_ref_id(collection, id):
+    try:
+        serverClient = FaunaClient(secret=os.environ.get(&quot;FAUNA_SERVER_SECRET&quot;))
+        res = serverClient.query(q.get(q.ref(q.collection(collection), id)))
+        res[&quot;data&quot;][&quot;ref_id&quot;] = res[&quot;ref&quot;].id()
+        return res[&quot;data&quot;]
+    except Exception as ex:
+        raise ex
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Get document by reference Id is the only function that does not use an Index rather would utilize the document’s reference Id.&lt;/p&gt;
+
+&lt;p&gt;The code for creating, updating, and deleting documents would be similar. Because FaunaDB is a NoSQL database the data structure doesn’t matter as long as it is passed as a dictionary. Updating and deleting documents would also need an extra reference Id parameter, similar to the Get document by reference Id function.&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;def create(collection, data):
+    try:
+        serverClient = FaunaClient(secret=os.environ.get(&quot;FAUNA_SERVER_SECRET&quot;))
+        res = serverClient.query(q.create(q.collection(collection), {&quot;data&quot;: data}))
+        res[&quot;data&quot;][&quot;ref_id&quot;] = res[&quot;ref&quot;].id()
+        return res[&quot;data&quot;]
+    except Exception as ex:
+        raise ex
+
+def update(collection, id, data):
+    try:
+        serverClient = FaunaClient(secret=os.environ.get(&quot;FAUNA_SERVER_SECRET&quot;))
+        res = serverClient.query(q.update(q.ref(q.collection(collection), id), {&quot;data&quot;: data}))
+        res[&quot;data&quot;][&quot;ref_id&quot;] = res[&quot;ref&quot;].id()
+        return res[&quot;data&quot;]
+    except Exception as ex:
+        raise ex
+
+def delete(collection, id):
+    try:
+        serverClient = FaunaClient(secret=os.environ.get(&quot;FAUNA_SERVER_SECRET&quot;))
+        serverClient.query(q.delete(q.ref(q.collection(collection), id)))
+        return True
+    except Exception as ex:
+        raise ex
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h4 id=&quot;make-the-to-dohelper&quot;&gt;Make the To-Do helper&lt;/h4&gt;
+
+&lt;p&gt;After writing the FaunaDB entity script, write the helper functions for the collection. The helper functions need to be small precise functions that do exactly one thing.&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;from entities.faunadb_entity import get, get_multiple, get_by_ref_id, create, update, delete
+
+def get_all_todos():
+    try:
+        return get_multiple('all_todos')
+    except Exception as ex:
+        raise ex
+
+def get_todo_by_ref_id(id):
+    try:
+        return get_by_ref_id('todo', id)
+    except Exception as ex:
+        raise ex
+
+def create_todo(data):
+    try:
+        return create('todo', data)
+    except Exception as ex:
+        raise ex
+
+def update_todo(id, data):
+    try:
+        return update('todo', id, data)
+    except Exception as ex:
+        raise ex
+
+def delete_todo(id):
+    try:
+        return delete('todo', id)
+    except Exception as ex:
+        raise ex
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h4 id=&quot;make-the-to-doservice&quot;&gt;Make the To-Do service&lt;/h4&gt;
+
+&lt;p&gt;When all the helpers are ready, write the service file to be used as endpoints. All the requests are parsed at the service level, thus the helper level will only receive processed data.&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;from flask import request, jsonify
+from helpers import todo_helper
+
+def get_all_todos():
+    try:
+        print(todo_helper.get_all_todos())
+        return jsonify(todo_helper.get_all_todos())
+    except Exception as ex:
+        raise ex
+
+def get_todo_by_ref_id(id):
+    try:
+        return jsonify(todo_helper.get_todo_by_ref_id(id))
+    except Exception as ex:
+        raise ex
+
+def create_todo():
+    try:
+        req_data = request.get_json()
+        return jsonify(todo_helper.create_todo(req_data))
+    except Exception as ex:
+        raise ex
+
+def update_todo(id):
+    try:
+        req_data = request.get_json()
+        return jsonify(todo_helper.update_todo(id, req_data[&quot;data&quot;]))
+    except Exception as ex:
+        raise ex
+
+def delete_todo(id):
+    try:
+        return jsonify(todo_helper.delete_todo(id))
+    except Exception as ex:
+        raise ex
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h4 id=&quot;attach-the-routes-to-the-service-endpoints&quot;&gt;Attach the routes to the service endpoints&lt;/h4&gt;
+
+&lt;p&gt;Finally, when the endpoints are set, add the endpoints to the app.py&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;from services.todo_service import get_all_todos, get_todo_by_ref_id, create_todo, update_todo, delete_todo
+from flask import Flask
+
+app = Flask(__name__)
+app.add_url_rule('/api/todos', methods=['GET'], view_func=get_all_todos)
+app.add_url_rule('/api/todos', methods=['POST'], view_func=create_todo)
+app.add_url_rule('/api/todos/&amp;lt;string:id&amp;gt;', methods=['GET'], view_func=get_todo_by_ref_id)
+app.add_url_rule('/api/todos/&amp;lt;string:id&amp;gt;', methods=['PUT'], view_func=update_todo)
+app.add_url_rule('/api/todos/&amp;lt;string:id&amp;gt;', methods=['DELETE'], view_func=delete_todo)
+
+if __name__ == &quot;__main__&quot;:
+    app.run(host='0.0.0.0')
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;You’re done! Don’t forget to test the APIs with Postman before deployment.&lt;/p&gt;
+
+&lt;h3 id=&quot;summary&quot;&gt;Summary&lt;/h3&gt;
+
+&lt;p&gt;&lt;strong&gt;TL;DR&lt;/strong&gt; You can check out my Github repository for the project and try to run it yourself.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://github.com/agustinustheo/flask-faunadb&quot; title=&quot;https://github.com/agustinustheo/flask-faunadb&quot;&gt;&lt;strong&gt;Boilerplate code for Flask and FaunaDB project&lt;/strong&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;In this tutorial, you have learned to make an API using Flask and FaunaDB.&lt;/p&gt;
+
+&lt;p&gt;To recap we have made:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;API endpoints using Flask.&lt;/li&gt;
+  &lt;li&gt;Indexes in FaunaDB.&lt;/li&gt;
+  &lt;li&gt;A simple entity helper for FaunaDB.&lt;/li&gt;
+  &lt;li&gt;A readable boilerplate for future API projects.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;You now have a quick boilerplate setup to use when you want to make a quick app in a matter of hours. Future plans include adding a Swagger implementation to the existing boilerplate.&lt;/p&gt;
+
+&lt;p&gt;Hope this is a great start for you, have a nice day!&lt;/p&gt;</content><author><name>Agustinus Theodorus</name></author><category term="tech" /><summary type="html">With the rise of serverless technology, making web services only gets easier. Serverless apps change the old monolithic architecture of apps and promote more of a microservice solution to technical problems.</summary></entry><entry><title type="html">How To Deploy Your .NET Core App on an IIS Server</title><link href="https://agustinustheo.github.io/tech/2020/10/20/how-to-deploy-net-core-on-iis.html" rel="alternate" type="text/html" title="How To Deploy Your .NET Core App on an IIS Server" /><published>2020-10-20T20:51:54+07:00</published><updated>2020-10-20T20:51:54+07:00</updated><id>https://agustinustheo.github.io/tech/2020/10/20/how-to-deploy-net-core-on-iis</id><content type="html" xml:base="https://agustinustheo.github.io/tech/2020/10/20/how-to-deploy-net-core-on-iis.html">&lt;p&gt;When you work in an enterprise environment you can’t choose where you would want to publish your application, especially if you enter a very established company. There would be times that you have to publish in a Linux environment, but in this case publishing in a Windows environment.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://cdn-images-1.medium.com/max/800/0*QkuSb8wVpC5wY7kj&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;h3 id=&quot;configure-yournet-coreproject&quot;&gt;Configure your .NET Core project&lt;/h3&gt;
 
 &lt;p&gt;When trying to deploy on an IIS Server, make sure you already configure your Startup.cs and Program.cs accordingly. On the &lt;strong&gt;Startup.cs&lt;/strong&gt; you should add this config:&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;https://agustinustheo.github.io/assets/img/0__WH3WzOX03__rPBePK.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://cdn-images-1.medium.com/max/800/0*WH3WzOX03-rPBePK&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;On the &lt;strong&gt;Program.cs&lt;/strong&gt; add this config:&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;https://agustinustheo.github.io/assets/img/0__7ndyVaQEnF108l4V.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://cdn-images-1.medium.com/max/800/0*7ndyVaQEnF108l4V&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;h3 id=&quot;configure-your-iisserver&quot;&gt;Configure your IIS Server&lt;/h3&gt;
 
@@ -153,21 +1034,21 @@
 
 &lt;p&gt;Find the latest release &lt;a href=&quot;https://github.com/Microsoft/artifacts-credprovider/releases&quot;&gt;here&lt;/a&gt;, and download the .zip package.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;https://agustinustheo.github.io/assets/img/0__tlJiw8J58KyBZk1D.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://cdn-images-1.medium.com/max/800/0*tlJiw8J58KyBZk1D&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;After downloading the zip archive, copy the plugins folder to &lt;strong&gt;%USERPROFILE%/.nuget&lt;/strong&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;https://agustinustheo.github.io/assets/img/0__DNrZNycYxJ7EmmAK.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://cdn-images-1.medium.com/max/800/0*DNrZNycYxJ7EmmAK&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;Set your environment variables, open &lt;strong&gt;User Variables&lt;/strong&gt; and create a new entry.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;https://agustinustheo.github.io/assets/img/0__jPaoP30GSXaE__mvK.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://cdn-images-1.medium.com/max/800/0*jPaoP30GSXaE-mvK&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;Set the variable name to &lt;strong&gt;NUGET_PLUGIN_PATHS&lt;/strong&gt;, and because in this case, we are going to be using the dotnet credential provider, so set the value to&lt;/p&gt;
 
 &lt;p&gt;&lt;strong&gt;%USERPROFILE%\.nuget\plugins\netcore\CredentialProvider.Microsoft\CredentialProvider.Microsoft.dll&lt;/strong&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;https://agustinustheo.github.io/assets/img/0__1IbSM3kmog2__9kWl.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://cdn-images-1.medium.com/max/800/0*1IbSM3kmog2-9kWl&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;Then finish the setup by clicking &lt;strong&gt;OK&lt;/strong&gt; on the &lt;strong&gt;Environment Variables&lt;/strong&gt; dialog.&lt;/p&gt;
 
@@ -177,17 +1058,17 @@
 
 &lt;p&gt;Get into the directory where you want to put the application.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;https://agustinustheo.github.io/assets/img/1__JdLjczILQMnVA9QutYSYog.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://cdn-images-1.medium.com/max/800/1*JdLjczILQMnVA9QutYSYog.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;Get inside the newly formed folder and run the dotnet publish command. Further info regarding the commands can be seen &lt;a href=&quot;https://docs.google.com/document/d/14YRTCJ8XO7yumjwmwyN67ZrEpc4LDrbg6UXlGC4noI0/edit#heading=h.eyphkxwv1b7&quot;&gt;here&lt;/a&gt;.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;https://agustinustheo.github.io/assets/img/1__bVpZ052xiPvEIl34UfVtfg.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://cdn-images-1.medium.com/max/800/1*bVpZ052xiPvEIl34UfVtfg.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;If an authorization prompt to &lt;a href=&quot;https://microsoft.com/devicelogin&quot;&gt;https://microsoft.com/devicelogin&lt;/a&gt; pops up, login using the &lt;a href=&quot;https://azure.microsoft.com/en-us/services/devops/&quot;&gt;Azure DevOps&lt;/a&gt; account and enter the code shown in the window.&lt;/p&gt;
 
 &lt;p&gt;Otherwise, it should show a successful build like so:&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;https://agustinustheo.github.io/assets/img/1__9x3fssWVV25Ks0JUIHOaWw.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://cdn-images-1.medium.com/max/800/1*9x3fssWVV25Ks0JUIHOaWw.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;In this case, &lt;strong&gt;D:\deploy\api.test\bin\Release\netcoreapp3.1\publish&lt;/strong&gt; is the &lt;strong&gt;&lt;em&gt;physical path&lt;/em&gt;&lt;/strong&gt;&lt;em&gt;.&lt;/em&gt;&lt;/p&gt;
 
@@ -199,15 +1080,15 @@
 
 &lt;p&gt;Right-click on the &lt;strong&gt;Application Pools&lt;/strong&gt; option.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;https://agustinustheo.github.io/assets/img/0__Ntuy9f755WVik0zY.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://cdn-images-1.medium.com/max/800/0*Ntuy9f755WVik0zY&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;Choose the &lt;strong&gt;Add Application Pool&lt;/strong&gt; option&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;https://agustinustheo.github.io/assets/img/0__KW3cmVX3rTQ7Lwjs.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://cdn-images-1.medium.com/max/800/0*KW3cmVX3rTQ7Lwjs&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;Name your application pool and set the .NET CLR version to &lt;strong&gt;No Managed Code.&lt;/strong&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;https://agustinustheo.github.io/assets/img/0__yZqj4kWhU7wpVDp1.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://cdn-images-1.medium.com/max/800/0*yZqj4kWhU7wpVDp1&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;Then click &lt;strong&gt;OK&lt;/strong&gt;.&lt;/p&gt;
 
@@ -217,23 +1098,23 @@
 
 &lt;p&gt;Right-click on the &lt;strong&gt;Site&lt;/strong&gt; option&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;https://agustinustheo.github.io/assets/img/0__fOXUHP0QgMyt__NXO.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://cdn-images-1.medium.com/max/800/0*fOXUHP0QgMyt-NXO&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;Click &lt;strong&gt;Add Website&lt;/strong&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;https://agustinustheo.github.io/assets/img/0__ZFzoqMNSIj7Mmwb5.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://cdn-images-1.medium.com/max/800/0*ZFzoqMNSIj7Mmwb5&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;Set the &lt;strong&gt;Site name&lt;/strong&gt; and the physical path to the .NET Core build.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;https://agustinustheo.github.io/assets/img/0__IHxAaO__VohU2op1x.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://cdn-images-1.medium.com/max/800/0*IHxAaO_VohU2op1x&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;Click the &lt;strong&gt;Connect as…&lt;/strong&gt; button, to connect as a specific user. Set your user credentials and click &lt;strong&gt;OK&lt;/strong&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;https://agustinustheo.github.io/assets/img/0__hqYDTod9W9vsmTgM.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://cdn-images-1.medium.com/max/800/0*hqYDTod9W9vsmTgM&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;Click &lt;strong&gt;Test Settings&lt;/strong&gt; and it should show a pop up like this&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;https://agustinustheo.github.io/assets/img/0__6zwI7X__4N98nhBPn.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://cdn-images-1.medium.com/max/800/0*6zwI7X_4N98nhBPn&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;Then on the &lt;strong&gt;Add Website&lt;/strong&gt; dialog click &lt;strong&gt;OK&lt;/strong&gt; to finish the setup.&lt;/p&gt;
 
@@ -241,27 +1122,27 @@
 
 &lt;p&gt;On the site’s homepage, click on the &lt;strong&gt;View Applications&lt;/strong&gt; button.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;https://agustinustheo.github.io/assets/img/0__xZT4AhnRwDe3__EjL.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://cdn-images-1.medium.com/max/800/0*xZT4AhnRwDe3-EjL&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;Click on the &lt;strong&gt;Add Application&lt;/strong&gt; action&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;https://agustinustheo.github.io/assets/img/0__dInCu25X3VsVexlZ.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://cdn-images-1.medium.com/max/800/0*dInCu25X3VsVexlZ&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;Set your alias, this will be the path on the Url. Then, set the physical path to the .NET Core build.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;https://agustinustheo.github.io/assets/img/0__n0yJiu4l94muBAXB.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://cdn-images-1.medium.com/max/800/0*n0yJiu4l94muBAXB&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;Next, select the application pool you previously made, then click &lt;strong&gt;OK&lt;/strong&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;https://agustinustheo.github.io/assets/img/0__RWYhIfs7zUhkEePs.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://cdn-images-1.medium.com/max/800/0*RWYhIfs7zUhkEePs&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;Click the &lt;strong&gt;Connect as…&lt;/strong&gt; button. Set your user credentials and click &lt;strong&gt;OK&lt;/strong&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;https://agustinustheo.github.io/assets/img/0__60abQOP6lDndEYGS.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://cdn-images-1.medium.com/max/800/0*60abQOP6lDndEYGS&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;Click &lt;strong&gt;Test Settings&lt;/strong&gt; and it should show a pop up like this&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;https://agustinustheo.github.io/assets/img/0__yDHFWEiPupCSrfsL.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://cdn-images-1.medium.com/max/800/0*yDHFWEiPupCSrfsL&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;Then on the &lt;strong&gt;Add Application&lt;/strong&gt; dialog click &lt;strong&gt;OK&lt;/strong&gt; to finish the setup.&lt;/p&gt;
 
@@ -282,7 +1163,7 @@
 
 &lt;p&gt;You now have an open playbook to use when you want to deploy dotnet applications on IIS. Hope this tutorial was of help and have a nice day!&lt;/p&gt;</content><author><name>Agustinus Theodorus</name></author><category term="tech" /><summary type="html">When you work in an enterprise environment you can’t choose where you would want to publish your application, especially if you enter a very established company. There would be times that you have to publish in a Linux environment, but in this case publishing in a Windows environment.</summary></entry><entry><title type="html">4 Key Habits I Learned as a Software Engineer</title><link href="https://agustinustheo.github.io/tech/2020/10/12/4-key-habits-i-learned-as-a-software-engineer.html" rel="alternate" type="text/html" title="4 Key Habits I Learned as a Software Engineer" /><published>2020-10-12T23:15:31+07:00</published><updated>2020-10-12T23:15:31+07:00</updated><id>https://agustinustheo.github.io/tech/2020/10/12/4-key-habits-i-learned-as-a-software-engineer</id><content type="html" xml:base="https://agustinustheo.github.io/tech/2020/10/12/4-key-habits-i-learned-as-a-software-engineer.html">&lt;p&gt;I am almost 3 years into software engineering. Honestly, I don’t think I am &lt;strong&gt;that&lt;/strong&gt; good at it yet (I don’t know if I’ll ever be). But there are times when I wished that I knew somethings sooner than later. I thought it would be fun for me to reflect on those subjects and try to convey them to you as best as I can in this article. So here are the 4 key habits I learned as a software engineer.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;https://agustinustheo.github.io/assets/img/1__u18ToVTMMZ8AN1M4fur0xw.jpeg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://cdn-images-1.medium.com/max/800/1*u18ToVTMMZ8AN1M4fur0xw.jpeg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;h3 id=&quot;1-write-clean-code-obviously&quot;&gt;1. Write Clean Code (Obviously!)&lt;/h3&gt;
 
@@ -305,9 +1186,6 @@
 &lt;p&gt;If you don’t do that you might have to change multiple documents that literally have the same line of code just to let’s say — add a new condition to an if-else statement. Take it from me, sometimes you can forget and bugs will happen. So please, write code you going to reuse in a function.&lt;/p&gt;
 
 &lt;p&gt;Speaking of functions…&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&quot;https://www.datadriveninvestor.com/2020/02/03/how-an-ai-based-chatbot-can-help-you-form-better-long-term-habits/&quot; title=&quot;https://www.datadriveninvestor.com/2020/02/03/how-an-ai-based-chatbot-can-help-you-form-better-long-term-habits/&quot;&gt;&lt;strong&gt;How an AI-based Chatbot Can Help You Form Better Long-Term Habits | Data Driven Investor&lt;/strong&gt;&lt;br /&gt;
-_When we think about our everyday behaviors, we often do not realize, how big is the percentage of the actions we do…_www.datadriveninvestor.com&lt;/a&gt;&lt;a href=&quot;https://www.datadriveninvestor.com/2020/02/03/how-an-ai-based-chatbot-can-help-you-form-better-long-term-habits/&quot;&gt;&lt;/a&gt;&lt;/p&gt;
 
 &lt;h4 id=&quot;code-purposeful-functions&quot;&gt;Code Purposeful Functions&lt;/h4&gt;
 
@@ -355,13 +1233,9 @@ _When we think about our everyday behaviors, we often do not realize, how big is
 
 &lt;p&gt;&lt;strong&gt;TL;DR&lt;/strong&gt; Write clean code, try to implement the Don’t Repeat Yourself (DRY) mindset to your code. Write purposeful functions that are easy to read. Learn design patterns, find a pattern that you personally like. Also if possible try to automate your tasks. Finally, never be a lazy documentation writer. It can save you more time than you think.&lt;/p&gt;
 
-&lt;p&gt;In the end, we all have our own variety of lessons learned. These 4 are just mine. I am writing this not to persuade you rather share with you my personal opinions. Anyway, I hope you have a nice day!&lt;/p&gt;
+&lt;p&gt;In the end, we all have our own variety of lessons learned. These 4 are just mine. I am writing this not to persuade you rather share with you my personal opinions. Anyway, I hope you have a nice day!&lt;/p&gt;</content><author><name>Agustinus Theodorus</name></author><category term="tech" /><summary type="html">I am almost 3 years into software engineering. Honestly, I don’t think I am that good at it yet (I don’t know if I’ll ever be). But there are times when I wished that I knew somethings sooner than later. I thought it would be fun for me to reflect on those subjects and try to convey them to you as best as I can in this article. So here are the 4 key habits I learned as a software engineer.</summary></entry><entry><title type="html">Software Engineering Is All About Sharing</title><link href="https://agustinustheo.github.io/tech/2020/09/11/software-engineering-is-all-about-sharing.html" rel="alternate" type="text/html" title="Software Engineering Is All About Sharing" /><published>2020-09-11T18:20:37+07:00</published><updated>2020-09-11T18:20:37+07:00</updated><id>https://agustinustheo.github.io/tech/2020/09/11/software-engineering-is-all-about-sharing</id><content type="html" xml:base="https://agustinustheo.github.io/tech/2020/09/11/software-engineering-is-all-about-sharing.html">&lt;p&gt;When I started my first job as a software engineer I would have never realized how narrow my world view regarding tech was. In my mind, the world of software is as large a pool when it is an ocean.&lt;/p&gt;
 
-&lt;p&gt;&lt;em&gt;Originally published at&lt;/em&gt; &lt;a href=&quot;https://www.datadriveninvestor.com/2020/10/12/4-key-habits-i-learned-as-a-software-engineer/&quot;&gt;&lt;em&gt;https://www.datadriveninvestor.com&lt;/em&gt;&lt;/a&gt; &lt;em&gt;on October 12, 2020.&lt;/em&gt;&lt;/p&gt;
-
-&lt;h4 id=&quot;gain-access-to-expert-viewsubscribe-to-ddiintel&quot;&gt;Gain Access to Expert View — &lt;a href=&quot;https://datadriveninvestor.com/ddi-intel&quot;&gt;Subscribe to DDI Intel&lt;/a&gt;&lt;/h4&gt;</content><author><name>Agustinus Theodorus</name></author><category term="tech" /><summary type="html">I am almost 3 years into software engineering. Honestly, I don’t think I am that good at it yet (I don’t know if I’ll ever be). But there are times when I wished that I knew somethings sooner than later. I thought it would be fun for me to reflect on those subjects and try to convey them to you as best as I can in this article. So here are the 4 key habits I learned as a software engineer.</summary></entry><entry><title type="html">Software Engineering Is All About Sharing</title><link href="https://agustinustheo.github.io/tech/2020/09/11/software-engineering-is-all-about-sharing.html" rel="alternate" type="text/html" title="Software Engineering Is All About Sharing" /><published>2020-09-11T18:20:37+07:00</published><updated>2020-09-11T18:20:37+07:00</updated><id>https://agustinustheo.github.io/tech/2020/09/11/software-engineering-is-all-about-sharing</id><content type="html" xml:base="https://agustinustheo.github.io/tech/2020/09/11/software-engineering-is-all-about-sharing.html">&lt;p&gt;When I started my first job as a software engineer I would have never realized how narrow my world view regarding tech was. In my mind, the world of software is as large a pool when it is an ocean.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;https://agustinustheo.github.io/assets/img/0__hqcdsOSzhIQ3LQXk.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://cdn-images-1.medium.com/max/800/0*hqcdsOSzhIQ3LQXk&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;h3 id=&quot;1-everyone-startsconfused&quot;&gt;1. Everyone Starts Confused&lt;/h3&gt;
 
@@ -372,9 +1246,6 @@ _When we think about our everyday behaviors, we often do not realize, how big is
 &lt;p&gt;I honestly entered the tech world thinking I would end up as a Frontend Engineer. Today I am mainly focusing on backend services, system administration, and machine learning. If you’ve ever &lt;em&gt;touched&lt;/em&gt; any one of these skills you would understand how different these 4 roles are.&lt;/p&gt;
 
 &lt;p&gt;I ended up learning everything I can. Though I am currently focusing more on machine learning than any other field. I find making computers do menial and repetitive jobs amusing.&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&quot;https://www.datadriveninvestor.com/2020/06/26/understanding-software-project-management/&quot; title=&quot;https://www.datadriveninvestor.com/2020/06/26/understanding-software-project-management/&quot;&gt;&lt;strong&gt;Thoughts About Being A Software Project Manager | Data Driven Investor&lt;/strong&gt;&lt;br /&gt;
-_I have been a programmer for 3 years now and I think it’s about time I led my own team. As project manager I now can…_www.datadriveninvestor.com&lt;/a&gt;&lt;a href=&quot;https://www.datadriveninvestor.com/2020/06/26/understanding-software-project-management/&quot;&gt;&lt;/a&gt;&lt;/p&gt;
 
 &lt;h3 id=&quot;2-your-not-in-a-poolyour-in-anocean&quot;&gt;2. Your Not In A Pool — Your In An Ocean&lt;/h3&gt;
 
@@ -430,289 +1301,264 @@ _I have been a programmer for 3 years now and I think it’s about time I led my
 
 &lt;p&gt;So you think you are ready for the tech world? Don’t ever be afraid to ask for help. It is completely normal to not know about somethings in this field. You don’t have to be the know-it-all.&lt;/p&gt;
 
-&lt;p&gt;Be humble! It may be one of the most important traits you would ever need. If you know something your desk neighbor doesn’t it wouldn’t hurt to share a bit. Being a mentor can get you further than you would ever expect.&lt;/p&gt;
+&lt;p&gt;Be humble! It may be one of the most important traits you would ever need. If you know something your desk neighbor doesn’t it wouldn’t hurt to share a bit. Being a mentor can get you further than you would ever expect.&lt;/p&gt;</content><author><name>Agustinus Theodorus</name></author><category term="tech" /><summary type="html">When I started my first job as a software engineer I would have never realized how narrow my world view regarding tech was. In my mind, the world of software is as large a pool when it is an ocean.</summary></entry><entry><title type="html">Thoughts About Being A Software Project Manager</title><link href="https://agustinustheo.github.io/tech/2020/06/27/thoughts-about-being-a-software-project-manager.html" rel="alternate" type="text/html" title="Thoughts About Being A Software Project Manager" /><published>2020-06-27T03:48:29+07:00</published><updated>2020-06-27T03:48:29+07:00</updated><id>https://agustinustheo.github.io/tech/2020/06/27/thoughts-about-being-a-software-project-manager</id><content type="html" xml:base="https://agustinustheo.github.io/tech/2020/06/27/thoughts-about-being-a-software-project-manager.html">&lt;p&gt;A few months ago I had an initiative that I have been wanting to realize. In the company that I have been working in, there seems to be a lack of documentation for teaching and no media for knowledge sharing between teams. I thought that there has to be one, for the better of us all.&lt;/p&gt;
 
-&lt;p&gt;&lt;em&gt;Originally published at&lt;/em&gt; &lt;a href=&quot;https://www.datadriveninvestor.com/2020/09/11/software-engineering-is-all-about-sharing/&quot;&gt;&lt;em&gt;https://www.datadriveninvestor.com&lt;/em&gt;&lt;/a&gt; &lt;em&gt;on September 11, 2020.&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://cdn-images-1.medium.com/max/800/0*hDkrdgngAzgKZn0T&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;strong&gt;Gain Access to Expert View —&lt;/strong&gt; &lt;a href=&quot;https://datadriveninvestor.com/ddi-intel&quot;&gt;&lt;strong&gt;Subscribe to DDI Intel&lt;/strong&gt;&lt;/a&gt;&lt;/p&gt;</content><author><name>Agustinus Theodorus</name></author><category term="tech" /><summary type="html">When I started my first job as a software engineer I would have never realized how narrow my world view regarding tech was. In my mind, the world of software is as large a pool when it is an ocean.</summary></entry><entry><title type="html">What I’ve Learned On Azure Data Factory</title><link href="https://agustinustheo.github.io/tech/2020/03/31/a-simple-tutorial-on-azure-data-factory.html" rel="alternate" type="text/html" title="What I’ve Learned On Azure Data Factory" /><published>2020-03-31T03:54:55+07:00</published><updated>2020-03-31T03:54:55+07:00</updated><id>https://agustinustheo.github.io/tech/2020/03/31/a-simple-tutorial-on-azure-data-factory</id><content type="html" xml:base="https://agustinustheo.github.io/tech/2020/03/31/a-simple-tutorial-on-azure-data-factory.html">&lt;p&gt;Azure functions can now be added as a step in Azure Data Factory (ADF). It makes it easier to synchronize data and to make trigger functions that can help data engineering. I have had to use this technology for an upcoming project and my time was misspent on Google searches, that’s why I decided to share with you what I have learned after painstakingly trying to comprehend ADF in 2 days. The tutorial will cover &lt;strong&gt;the specific&lt;/strong&gt; things that I needed to implement.&lt;/p&gt;
+&lt;h3 id=&quot;background&quot;&gt;Background&lt;/h3&gt;
 
-&lt;p&gt;&lt;img src=&quot;https://agustinustheo.github.io/assets/img/1__V8Y31hS__cE39__liIeSDfnw.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;h4 id=&quot;the-initiative&quot;&gt;The Initiative&lt;/h4&gt;
 
-&lt;p&gt;&lt;strong&gt;TL;DR&lt;/strong&gt; You can &lt;strong&gt;Ctrl + F&lt;/strong&gt; this:&lt;/p&gt;
+&lt;p&gt;So I approached HR and proposed this project. To help people learn. Since I work on a university campus, I thought it might be a good idea to have the learning management system (or &lt;em&gt;LMS&lt;/em&gt; for short) be available to the students there as well.&lt;/p&gt;
 
-&lt;ul&gt;
-  &lt;li&gt;&lt;strong&gt;Creating an Azure Data Factory (ADF)&lt;/strong&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;strong&gt;Pipelines in ADF&lt;/strong&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;strong&gt;Adding a new Pipeline in ADF&lt;/strong&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;strong&gt;Adding a Lookup block in the Pipeline&lt;/strong&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;strong&gt;Changing First-row only response to All in Lookup&lt;/strong&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;strong&gt;Adding a source dataset to a Lookup&lt;/strong&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;strong&gt;Adding an Azure Function block in the Pipeline&lt;/strong&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;strong&gt;Lookup to Azure Function Best Practice&lt;/strong&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;strong&gt;Connecting Azure Function in Pipeline&lt;/strong&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;strong&gt;Adding a ForEach block in the Pipeline&lt;/strong&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;strong&gt;Connecting Pipeline Blocks&lt;/strong&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;strong&gt;Connect a Lookup with ForEach&lt;/strong&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;strong&gt;Using Dynamic Contents to add Object inside Object in ADF&lt;/strong&gt;&lt;/li&gt;
-&lt;/ul&gt;
+&lt;p&gt;Well, that was the initial plan. As all software engineer knows, when it came up to requirement gathering the requirements were not really exactly what I wanted. It was less of an LMS and more of an HR information system.&lt;/p&gt;
 
-&lt;h3 id=&quot;creating-an-azure-data-factoryadf&quot;&gt;Creating an Azure Data Factory (ADF)&lt;/h3&gt;
+&lt;p&gt;Well, I didn’t mind. The LMS part of the system is still there, and I think that’s good enough as a start.&lt;/p&gt;
 
-&lt;p&gt;First, go to create an Azure Data Factory resource on portal.azure.com&lt;/p&gt;
+&lt;p&gt;So a month in, the requirements were accepted by the user. Resources have also been allocated for my project.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;https://agustinustheo.github.io/assets/img/1__2LsoqiXiWLy6UVflgM0MkQ.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;Initially, I had a team of 3 people. It was me and two other guys. They bailed after knowing the project was going to use a new tech-stack they have never used before.&lt;/p&gt;
 
-&lt;p&gt;Fill in this New data factory form to generate one:&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;”Well…”&lt;/em&gt;, I thought, &lt;em&gt;“It’s back to square one”&lt;/em&gt;. Luckily for me a year prior I was one of the interviewers for some of the new trainees.&lt;/p&gt;
 
-&lt;ul&gt;
-  &lt;li&gt;Fill in the name of the data factory.&lt;/li&gt;
-  &lt;li&gt;Choose the resource group, if you haven’t made one click the &lt;strong&gt;Create new&lt;/strong&gt; button.&lt;/li&gt;
-  &lt;li&gt;You can connect this to a GIT repository but I prefer to configure it later, thus I unchecked the &lt;strong&gt;Enable GIT&lt;/strong&gt; checkbox.&lt;/li&gt;
-&lt;/ul&gt;
+&lt;h4 id=&quot;gathering-thecrew&quot;&gt;Gathering the crew&lt;/h4&gt;
 
-&lt;h3 id=&quot;pipelines-inadf&quot;&gt;Pipelines in ADF&lt;/h3&gt;
+&lt;p&gt;It was surely a stroke of luck that my relationship with the trainees was on good terms.&lt;/p&gt;
 
-&lt;h4 id=&quot;adding-a-new-pipeline-inadf&quot;&gt;Adding a new Pipeline in ADF&lt;/h4&gt;
+&lt;p&gt;I met one of them a year ago when I was active as an activist at my Uni, and I interviewed the other one. So, I figured they would like to have an opportunity.&lt;/p&gt;
 
-&lt;p&gt;Then open the ADF author page on adf.azure.com and add a new pipeline&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;https://agustinustheo.github.io/assets/img/1__CzYCd__WREpn2dUsBZCxDuQ.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;To add a new pipeline click the &lt;strong&gt;+&lt;/strong&gt; sign and click Pipeline.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;https://agustinustheo.github.io/assets/img/1__1VINUUJqRE39md1WqQA1hQ.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;em&gt;Voila&lt;/em&gt;! There is your pipeline.&lt;/p&gt;
-
-&lt;h4 id=&quot;adding-a-lookup-block-in-thepipeline&quot;&gt;Adding a Lookup block in the Pipeline&lt;/h4&gt;
-
-&lt;p&gt;There is an &lt;strong&gt;Activities&lt;/strong&gt; tab on the left side of the screen, drag Lookup Activities to the center Canvas&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;https://agustinustheo.github.io/assets/img/1__MdzXV__Ong1N7hZN8eDjjzA.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;At the bottom of the page, there are 3 tabs. Click on the &lt;strong&gt;Settings&lt;/strong&gt; tab&lt;/p&gt;
-
-&lt;h4 id=&quot;changing-first-row-only-response-to-all-inlookup&quot;&gt;&lt;strong&gt;Changing First-row only response to All in Lookup&lt;/strong&gt;&lt;/h4&gt;
-
-&lt;p&gt;&lt;img src=&quot;https://agustinustheo.github.io/assets/img/1__mrWIOTEOON__So2SRTziQsg.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;Uncheck the &lt;strong&gt;First row only&lt;/strong&gt; checkbox. &lt;strong&gt;The first row only&lt;/strong&gt; will enable us to lookup the first row of data, unchecking this will allow us to get all of the data available.&lt;/p&gt;
-
-&lt;h4 id=&quot;adding-a-source-dataset-to-alookup&quot;&gt;Adding a source dataset to a Lookup&lt;/h4&gt;
-
-&lt;p&gt;The next thing you have to do is to add or select a dataset. Click the &lt;strong&gt;New&lt;/strong&gt; button to create a new dataset source.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;https://agustinustheo.github.io/assets/img/1__d__x3bQ2rKvw5GpAko8__aIA.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;When it came the time to ask. I breathed a sigh of relief after they said that they were interested.&lt;/p&gt;
 
 &lt;blockquote&gt;
-  &lt;p&gt;Assuming that you already have pre-existing knowledge of configuring an SQL Database on Azure.&lt;/p&gt;
+  &lt;p&gt;A third person joined after he heard about the project from his friend, interestingly enough.&lt;/p&gt;
 &lt;/blockquote&gt;
 
-&lt;p&gt;For this tutorial, we will be using an &lt;strong&gt;Azure SQL Database&lt;/strong&gt; for simplicity’s sake. Click &lt;strong&gt;Continue&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;I orchestrated the first meeting between the four of us. At the beginning of the meeting, I said that it will be an opportunity for them to learn new skills. Since I was going for a relatively modern tech-stack (for the year 2020). A Vue frontend and a .NET Core backend.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;https://agustinustheo.github.io/assets/img/1__KHV1jQ0pL__v__A12vA3qDAg.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;Just like that — &lt;em&gt;the project was on&lt;/em&gt;.&lt;/p&gt;
 
-&lt;p&gt;The pipeline requires a dataset to be processed. Even though in this tutorial we are connecting to an Azure SQL Database it is also possible to connect to different databases like Postgres, MySQL, MariaDB, etc.&lt;/p&gt;
+&lt;h4 id=&quot;happily-ever-aftersortof&quot;&gt;Happily ever after — sort of…&lt;/h4&gt;
 
-&lt;p&gt;&lt;img src=&quot;https://agustinustheo.github.io/assets/img/1__8WI9z2aUz0bzdGniyHJzNA.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;The three trainees’ main responsibilities would be code, my responsibilities were more — &lt;em&gt;many more&lt;/em&gt;.&lt;/p&gt;
 
-&lt;p&gt;Then click &lt;strong&gt;New&lt;/strong&gt; to add a new &lt;strong&gt;Linked service&lt;/strong&gt;. &lt;strong&gt;Linked service&lt;/strong&gt; is used to sync the Lookup action to a database table.&lt;/p&gt;
+&lt;p&gt;Sure I tried to do project management by the book. I used a virtual board on Azure DevOps to list all the requirements, and I also arranged weekly meetings to calculate the project’s velocity.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;https://agustinustheo.github.io/assets/img/1__A__2XqoX6wgU2GPNCYYE7hg.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;I thought that would be enough — &lt;em&gt;boy was I wrong&lt;/em&gt;.&lt;/p&gt;
 
-&lt;p&gt;An Azure subscription is required. Choose the subscription you want to use and choose the server name. In my regard, I chose the Azure SQL Server I had and the &lt;strong&gt;TrainingFunctions&lt;/strong&gt; database.&lt;/p&gt;
+&lt;p&gt;First of all, I may have relied on the trainees a little bit too much and I needed to back them up more than I thought. &lt;em&gt;I am not blaming them, it was my fault for not considering their skills thoroughly.&lt;/em&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;https://agustinustheo.github.io/assets/img/1__B5kqy9QRHW1xzGaO8qmd__w.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;Second, I think my requirement gathering skills have a &lt;em&gt;lot&lt;/em&gt; of room to improve. I analyzed a few features wrong and came up with very conflicting results — &lt;em&gt;I had to clean this up in the end, it was my fault after all&lt;/em&gt;.&lt;/p&gt;
 
-&lt;p&gt;Assuming you have filled in the form, click &lt;strong&gt;Create&lt;/strong&gt; to connect to a database of your choosing. With this done, all we have to do is to change the Source Dataset directly at the &lt;strong&gt;Settings&lt;/strong&gt; tab.&lt;/p&gt;
+&lt;p&gt;So here I am being a project manager, guiding the trainees, fixing all my requirements, talking to the &lt;em&gt;techies&lt;/em&gt; in my company making sure everything was safe, secure, and best practice. Boy… that was an experience.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;https://agustinustheo.github.io/assets/img/1__0QiGXFEt36MWgIqMspRvWA.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;I honestly felt bad for the people I led because they might be more confused than I am. Though I always try my best to help them solve their problems. I did promise them that they would learn something and I really meant it.&lt;/p&gt;
 
-&lt;p&gt;The last thing to do is to determine what kind of action you would like your lookup to do, in my case I want it to select from a table called Attachments.&lt;/p&gt;
+&lt;h3 id=&quot;what-ivelearned&quot;&gt;What I’ve learned&lt;/h3&gt;
 
-&lt;p&gt;&lt;img src=&quot;https://agustinustheo.github.io/assets/img/1__GBLPcDNc5zoZvYF3SlhjwA.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;h4 id=&quot;mistakes-made&quot;&gt;Mistakes made&lt;/h4&gt;
 
-&lt;p&gt;Thus, the query would be like in the picture above. Otherwise, you can do other complex things such as joins and so on.&lt;/p&gt;
+&lt;p&gt;I have been a programmer for 3 years now and I think it’s about time I led my own team. I won’t lie that it was neither easy or relaxing. It was a stressful experience with many mistakes made along the way.&lt;/p&gt;
 
-&lt;h4 id=&quot;adding-an-azure-function-block-in-thepipeline&quot;&gt;Adding an Azure Function block in the Pipeline&lt;/h4&gt;
+&lt;p&gt;I was lucky that my team was made out of trainees eager to learn, thus they still continued on through my less than average project management skills.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;https://agustinustheo.github.io/assets/img/1__Q7d10F59LAUAC8vi5__6uMg.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;It was a learner though.&lt;/p&gt;
 
-&lt;p&gt;Adding the Azure Function block is just as easy, just drag and drop from the &lt;strong&gt;Activities &amp;gt; Azure Function&lt;/strong&gt; tab to the main canvas.&lt;/p&gt;
+&lt;p&gt;After being a project manager I now can grasp what needs to be done by a project lead, or team lead. This is why those roles have less programming and require more time to &lt;em&gt;literally&lt;/em&gt; manage the ongoing project.&lt;/p&gt;
 
-&lt;h4 id=&quot;lookup-to-azure-function-bestpractice&quot;&gt;Lookup to Azure Function Best Practice&lt;/h4&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;Good project management can be done if the person in charge is focused on doing so.&lt;/p&gt;
+&lt;/blockquote&gt;
 
-&lt;p&gt;It is not recommended to send the whole Lookup output to an Azure Function. It is recommended to add a ForEach block beforehand. This is what we are going to do in this tutorial.&lt;/p&gt;
+&lt;p&gt;I was a little to stretched thin at that moment. I needed to help trainees solve problems that they couldn’t while considering the project and safety of the entire codebase.&lt;/p&gt;
 
-&lt;h4 id=&quot;connecting-azure-function-inpipeline&quot;&gt;Connecting Azure Function in Pipeline&lt;/h4&gt;
+&lt;p&gt;It was a real hassle.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;https://agustinustheo.github.io/assets/img/1__bsnFpOYrG4sYdGaMuytk8Q.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;I don’t want to say that I was busy, rather that I could not focus on what I should have done, managing the project.&lt;/p&gt;
 
-&lt;p&gt;In the Azure Function go to the &lt;strong&gt;Settings&lt;/strong&gt; tab.&lt;/p&gt;
+&lt;p&gt;System analyzing wise, I can confidently say that — I suck at it, still a long way to go.&lt;/p&gt;
+
+&lt;p&gt;I didn’t have a good design doc to look up, only a few notes on how it would be made. So I have to &lt;em&gt;read&lt;/em&gt; what I wanted to do, probably a user diagram would be helpful or an application flow diagram.&lt;/p&gt;
+
+&lt;p&gt;I know that this is software project 101 but I am honestly saying that I missed that. &lt;strong&gt;I really blew it&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;Now look at this diagram, can you imagine the number of roles needed when we want to create this application? It is written on the diagram and it is as clear as day.&lt;/p&gt;
+
+&lt;p&gt;Now imagine having no diagram and trying to understand this system by writing. Better yet, try to translate this diagram into a paragraph. Good luck! I didn’t make this and it made me forget what I wanted to do indefinitely. A big lesson learned.&lt;/p&gt;
+
+&lt;p&gt;Feature-wise there should be a clear application flow to explain how the system works, how the users register, and so on.&lt;/p&gt;
+
+&lt;p&gt;Sadly I also didn’t make it. It contributed to the disarray of the trainees under my wing. It showed how a project with good intentions became a complicated one at best. &lt;em&gt;“If only”&lt;/em&gt;, I said to my self, &lt;em&gt;“I have done this”&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;I used waterfall as the software development lifecycle because the requirements were constant and the user wasn’t much of a hassle.&lt;/p&gt;
+
+&lt;p&gt;This further amplified my mistakes because — &lt;em&gt;waterfall absolutely needs these kinds of diagrams.&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;The requirements were constant and might as well made diagrams from the beginning to help understand the system beforehand.&lt;/p&gt;
+
+&lt;p&gt;If I were to use agile however my huge mishap might be forgiven &lt;em&gt;a little bit&lt;/em&gt;. Because if you were to use agile even though an initial design doc is &lt;em&gt;very important&lt;/em&gt;, the requirements are fluid thus you might have no time to keep making a design doc and must continue on programming to finish the project before a deadline.&lt;/p&gt;
+
+&lt;p&gt;I am not saying that a design doc is not important, not by a long shot. I am just trying to imply that the requirements are fluid and you might be forgiven for making a design doc that is slightly different from the end product.&lt;/p&gt;
+
+&lt;h4 id=&quot;a-realization&quot;&gt;A Realization&lt;/h4&gt;
+
+&lt;p&gt;I realized why it is important that project management roles shouldn’t be too caught up in programming. There are a lot of things that need to be arranged by a project manager, like making a design doc and managing the team’s workload.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;&lt;em&gt;Deep respect to all project managers out there doing it well.&lt;/em&gt;&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Of course, in the end, it is not all about the project rather the interactions with the people in the team are very important.&lt;/p&gt;
+
+&lt;p&gt;In regard to this aspect, I feel that I have done a good job. My relationship with the trainees I led has nothing but improved. We communicate more, we are able to joke together as friends. I am able to teach them and communicate my thoughts with them clearly.&lt;/p&gt;
+
+&lt;p&gt;In my opinion, I think socially I am already viable enough. Communication with higher-ups and other teams were also great.&lt;/p&gt;
+
+&lt;p&gt;In the end, the project is planned to have its phase 2 of development. I have other projects so I will not be continuing my role. Thus, the role of the project manager will fall to someone else.&lt;/p&gt;
+
+&lt;h3 id=&quot;conclusion&quot;&gt;Conclusion&lt;/h3&gt;
+
+&lt;p&gt;In conclusion, I really enjoyed the opportunity to lead my own project. It really helped me understand the flaws I have in leadership and gave me a path to further improve myself.&lt;/p&gt;
+
+&lt;p&gt;The company received the project well since they plan on having a phase 2 to further develop it, making it into something better.&lt;/p&gt;
+
+&lt;p&gt;Being the initiator is truly a dream come true. To all the people who believed. Thank you. Mistakes were made, but from them, we learn new things. On that note, here is a good quote to end it.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;&lt;strong&gt;The master has failed more times than the beginner has tried&lt;/strong&gt; - Stephen McCranie&lt;/p&gt;
+&lt;/blockquote&gt;</content><author><name>Agustinus Theodorus</name></author><category term="tech" /><summary type="html">A few months ago I had an initiative that I have been wanting to realize. In the company that I have been working in, there seems to be a lack of documentation for teaching and no media for knowledge sharing between teams. I thought that there has to be one, for the better of us all.</summary></entry><entry><title type="html">The Master-Slave Database Concept For Beginners</title><link href="https://agustinustheo.github.io/tech/2020/05/28/the-master-slave-database-concept-for-beginners.html" rel="alternate" type="text/html" title="The Master-Slave Database Concept For Beginners" /><published>2020-05-28T23:01:16+07:00</published><updated>2020-05-28T23:01:16+07:00</updated><id>https://agustinustheo.github.io/tech/2020/05/28/the-master-slave-database-concept-for-beginners</id><content type="html" xml:base="https://agustinustheo.github.io/tech/2020/05/28/the-master-slave-database-concept-for-beginners.html">&lt;p&gt;The master-slave concept has been around for a while now. This is a fairly simple concept actually, all you need to understand is that there is one master and there are many slaves. Master-slave is a way to optimize the I/O in your application other than using caching. The master database serves as the keeper of information, so to speak. The true data is kept at the master database, thus writing only occurs there. Reading, on the other hand, is only done in the slave. What is this for? This architecture serves the purpose of safeguarding site reliability. If a site receives a lot of traffic and the only available database is one master, it will be overloaded with reading and writing requests. Making the entire system slow for everyone on the site.&lt;/p&gt;
+
+&lt;h3 id=&quot;visualization-of-an-implementation&quot;&gt;Visualization of an implementation&lt;/h3&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://miro.medium.com/max/700/1*Uwa5km4MJpjH42AXtr6ftA.jpeg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;In the example diagram, I use Postgresql as my master. Postgres is a relational database. Relational databases are structured and easy to maintain. For the slave, I use MongoDB because MongoDB is a non-relational database or NoSQL. You can learn how to implement this architecture in &lt;a href=&quot;https://www.endpoint.com/blog/2011/06/12/mongodb-replication-from-postgres-using&quot;&gt;a blog post by Greg Sabino&lt;/a&gt;. Though slave databases don’t have to be NoSQL, there is &lt;a href=&quot;https://www.toptal.com/mysql/mysql-master-slave-replication-tutorial&quot;&gt;another example of using MySQL as both master and slave&lt;/a&gt;. Having one type of database for both master and slave can serve to be convenient because in the end maintaining the codebase will be a lot easier.&lt;/p&gt;
+
+&lt;p&gt;The process for handling the data transfer/synchronization from the master to slave databases is called &lt;strong&gt;replication&lt;/strong&gt;. To replicate data you can, for example, use a serverless function as a pipeline to distribute data to the slaves. Making your own solution to replicate databases can be tedious so I recommend a database replication tool. &lt;a href=&quot;https://www.g2.com/categories/data-replication&quot;&gt;Here is a list of database replication tools in 2020 by g2.com&lt;/a&gt;. You can also make an insert function to add data to both master and slave databases if you want to do realtime data management.&lt;/p&gt;
+
+&lt;h3 id=&quot;wait-what&quot;&gt;Wait, what?&lt;/h3&gt;
+
+&lt;p&gt;Why is the master-slave concept a thing? Well imagine it this way, you are trying to manage a large scale system and you end up with a server bottleneck. A few debug later you find out one of the causes is the read/write traffic to your database server. You stop and think. &lt;em&gt;“What now?”&lt;/em&gt; one of the solutions would be to apply master-slave. Sure this might not be the &lt;strong&gt;first&lt;/strong&gt; thing to come to your mind, other methods such as using a Redis cluster might be enough to sustain yourself for a few years, but this concept can be another great option.&lt;/p&gt;
+
+&lt;p&gt;Well, obviously the downside would be the insurmountable &lt;strong&gt;complexity&lt;/strong&gt; surrounding this setup. You would need a team of dedicated systems and database administrators to be able to pull this off on a large scale system infrastructure. Not saying that it’s impossible but just saying that some costs outweigh the benefits.&lt;/p&gt;
+
+&lt;h3 id=&quot;opinions&quot;&gt;Opinions&lt;/h3&gt;
+
+&lt;h4 id=&quot;costs&quot;&gt;Costs&lt;/h4&gt;
+
+&lt;p&gt;Compared to add more clusters to Postgres/SQL Server setup I would say the master-slave concept would be cheaper and could have similar or even better results than the former.&lt;/p&gt;
+
+&lt;p&gt;In the end, how much traffic would a relational database efficiently handle? Probably a lot, but not as much as about 3 MongoDB slave clusters. I’m not implying that 3 MongoDB clusters are more efficient than a single relational database but in the long run, I would say having NoSQL slave databases could be an advantage.&lt;/p&gt;
+
+&lt;h4 id=&quot;implementation-differences&quot;&gt;Implementation differences&lt;/h4&gt;
+
+&lt;p&gt;In a way, the master-slave concept can be interpreted as a method to cache data from the master to all the slave databases, so to add a simple Redis implementation to your system can &lt;strong&gt;technically&lt;/strong&gt; work as a master-slave system though this concept is not entirely about caching. The initial purpose is to help users get data from the database faster, &lt;strong&gt;any data&lt;/strong&gt;. To help you visualize how I would do master-slave, see the diagram below:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://miro.medium.com/max/700/1*IV1Tuwvdj9-dCrJLgI8KLw.jpeg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Implementing caching wouldn’t really help the database much either. Caching will only result in select data that will be available on your cache. If the data requested is not available then the reading process will happen in the master. Implementing caching is great to optimize your site, but the master-slave concept works better if we have a separate data source identical to the master that can be used to read. Here is how I imagine caching would be, this is not an example of how to do master-slave:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://miro.medium.com/max/700/1*wqYwiB9-o7yMZ2gTmsCvwA.jpeg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;In the example above, the architecture is an example of how caching and master-slave is different. To do a master-slave &lt;strong&gt;WITH&lt;/strong&gt; caching I would probably do it like this:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://miro.medium.com/max/700/1*1m6mZynfl0qy38VOZicMTA.jpeg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h4 id=&quot;architecture-complexity&quot;&gt;Architecture Complexity&lt;/h4&gt;
+
+&lt;p&gt;Imagine this, you already have enough trouble having to code and keep your business afloat and now you burden yourself and your team with an additional load to constantly manage a master-slave system.&lt;/p&gt;
+
+&lt;p&gt;To be honest, many things can go wrong here. What do you do when you have a failed replication? How long does the synchronization between the master Postgres database and MongoDB should take? Wouldn’t Redis suffice? Why should you bother in the first place?&lt;/p&gt;
+
+&lt;p&gt;Look there are many reasons to choose this architecture also as many reasons not to. The fact of the matter is, this is an &lt;strong&gt;option&lt;/strong&gt; if you deem yourself ready and capable to handle a master-slave database system then go for it! It may just benefit your organization. I’m not evangelizing this concept I’m just trying to share this concept to programmers who do not know beforehand.&lt;/p&gt;
+
+&lt;p&gt;An easy way would be to use a distributed database like CosmosDB a NoSQL MongoDB alternative from Microsoft Azure. CosmosDB works by adding clusters to itself and it’s data to handle exceptional loads. Thus, when using this service on Azure you are charged on the RU (a type of data read/write meter used for CosmosDB) usage rather than the number of CosmosDB clusters active.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;But let’s face it, sometimes an easy way out is &lt;strong&gt;just not fun!&lt;/strong&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;We need thrill in our lives, people! The thrill of making a master-slave system would be an experience you should not pass up if had the chance.&lt;/p&gt;
+
+&lt;h3 id=&quot;conclusion&quot;&gt;Conclusion&lt;/h3&gt;
+
+&lt;p&gt;To summarize master-slave database architectures are usually used to help stabilize the system. Because reading data can be done through the slave database while inserting data needs to be done to the master database. Synchronizing data from the master to slave is called data replication, and some techniques to get realtime data can involve inserting in both master and slave database to even realtime data replication depends on your needs. To help you understand more regarding master-slave database architecture here are some good resources for you to check out:&lt;/p&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;Select the linked service to link to the Azure Function. To add a new linked service, click &lt;strong&gt;New&lt;/strong&gt; link.&lt;/li&gt;
-  &lt;li&gt;Fill in the &lt;strong&gt;Azure Function name&lt;/strong&gt; in the Function name textbox, make sure the Function name is the same in the linked service.&lt;/li&gt;
-  &lt;li&gt;Fill in the method used by the selected Azure Function. Usually, HTTP Methods like &lt;strong&gt;GET&lt;/strong&gt; and &lt;strong&gt;POST&lt;/strong&gt; are used.&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://mariadb.com/resources/blog/database-master-slave-replication-in-the-cloud/&quot;&gt;Database Master-Slave Replication in the Cloud — &lt;em&gt;MariaDB&lt;/em&gt;&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://stackoverflow.com/questions/3736969/master-master-vs-master-slave-database-architecture&quot;&gt;Master-master vs master-slave database architecture? — &lt;em&gt;Stackoverflow&lt;/em&gt;&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://intellipaat.com/community/6605/master-master-vs-master-slave-database-architecture&quot;&gt;Master-master vs master-slave database architecture? — &lt;em&gt;IntelliPaat&lt;/em&gt;&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://www.quora.com/What-are-Master-and-Slave-databases-and-how-does-pairing-them-make-web-apps-faster&quot;&gt;What are Master and Slave databases and how does pairing them make web apps faster? — &lt;em&gt;Quora&lt;/em&gt;&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://en.wikipedia.org/wiki/Master/slave_%28technology%29&quot;&gt;Master/slave (technology) — &lt;em&gt;Wikipedia&lt;/em&gt;&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;Otherwise, to make a new linked service click the &lt;strong&gt;+ New&lt;/strong&gt; button&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;A special thanks to&lt;/em&gt; &lt;a href=&quot;https://medium.com/u/abd0c33e19b2&quot;&gt;&lt;em&gt;Richard M Simarmata&lt;/em&gt;&lt;/a&gt; &lt;em&gt;for the valuable inputs.&lt;/em&gt;&lt;/p&gt;</content><author><name>Agustinus Theodorus</name></author><category term="tech" /><summary type="html">The master-slave concept has been around for a while now. This is a fairly simple concept actually, all you need to understand is that there is one master and there are many slaves. Master-slave is a way to optimize the I/O in your application other than using caching. The master database serves as the keeper of information, so to speak. The true data is kept at the master database, thus writing only occurs there. Reading, on the other hand, is only done in the slave. What is this for? This architecture serves the purpose of safeguarding site reliability. If a site receives a lot of traffic and the only available database is one master, it will be overloaded with reading and writing requests. Making the entire system slow for everyone on the site.</summary></entry><entry><title type="html">5 Awesome Open Source Software In 2020</title><link href="https://agustinustheo.github.io/tech/2020/04/21/5-awesome-open-source-software-in-2020.html" rel="alternate" type="text/html" title="5 Awesome Open Source Software In 2020" /><published>2020-04-21T23:01:44+07:00</published><updated>2020-04-21T23:01:44+07:00</updated><id>https://agustinustheo.github.io/tech/2020/04/21/5-awesome-open-source-software-in-2020</id><content type="html" xml:base="https://agustinustheo.github.io/tech/2020/04/21/5-awesome-open-source-software-in-2020.html">&lt;p&gt;Ever wondered why Chrome (or the New Edge) is such a cool browser? For those of you, non-techies Chrome is a browsing software based on Chromium an open-source browser maintained by Google. The number of people committed to the project could number in the thousands. It is typical of an open-source project to have thousands of contributors to the project. Thus the software from the open-source projects is free-to-use.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;https://agustinustheo.github.io/assets/img/1__Pia7TKWUNLhHKWvEm__dUzg.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://cdn-images-1.medium.com/max/600/0*B9sTJBj81oc0FyN6&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
-&lt;p&gt;Connecting to an Azure Function through a linked service is similar to connecting to a dataset.&lt;/p&gt;
+&lt;h3 id=&quot;about-open-source&quot;&gt;About Open-Source&lt;/h3&gt;
 
-&lt;p&gt;&lt;img src=&quot;https://agustinustheo.github.io/assets/img/1__BjDKMEcf____SbReEjSINS0w.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;Open-source software is free. Contributions to an open-source project come in many forms. If you are a highly skilled developer that has an interest in the project, you may contribute your time to help develop the project altogether. Otherwise, you can usually support the project maintainers by donating money to them directly. Though the practice of donations is not widely adopted by all project maintainers, because some developers do it as a pet project or as a hobby.&lt;/p&gt;
 
-&lt;p&gt;Fill in the linked service form to connect to your Azure Function, select a subscription and then pick the selected function. The next thing is to get your Function key.&lt;/p&gt;
+&lt;p&gt;Open-source projects help define modern life. A famous example would be the OS Linux. Many companies today use Linux on their servers. Many developers also build distros on top of Linux adding new flavors to the Linux environment.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;https://agustinustheo.github.io/assets/img/0__p5fp8V8tDE__nkNCk.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;h4 id=&quot;open-source-vs-freesoftware&quot;&gt;Open-source vs Free software&lt;/h4&gt;
 
-&lt;p&gt;You can get your Function Key in &lt;strong&gt;Home &amp;gt; All Services &amp;gt; Function App &amp;gt; Function Project &amp;gt; Functions &amp;gt; {Function Name} &amp;gt; Manage&lt;/strong&gt; at portal.azure.com.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://cdn-images-1.medium.com/max/800/0*MHCa1ygzZYFqIpmB.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
-&lt;h4 id=&quot;adding-a-foreach-block-in-thepipeline&quot;&gt;Adding a ForEach block in the Pipeline&lt;/h4&gt;
+&lt;p&gt;Now, I want to &lt;a href=&quot;https://www.datadriveninvestor.com/glossary/address/&quot;&gt;address&lt;/a&gt; an important difference around open-source software and free software. Free software does not need to share the codebase to the public. This is the first main difference, free software does not always equal open-source. After researching a bit for this article I found an interesting quote that could help enlighten the difference.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;https://agustinustheo.github.io/assets/img/1__6E4YzT0lppfUn7X5GQURZQ.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;You see, the entire concept of open-source revolves around teamwork. The end goal is to develop the project further, resulting in better software for all.&lt;/p&gt;
 
-&lt;p&gt;Adding the ForEach block is as simple as just dragging and dropping from the &lt;strong&gt;Activities &amp;gt; Iterations &amp;amp; conditionals&lt;/strong&gt; tab to the main canvas.&lt;/p&gt;
+&lt;h3 id=&quot;5-awesome-open-source-software-in2020&quot;&gt;5 Awesome Open Source Software In 2020&lt;/h3&gt;
 
-&lt;h3 id=&quot;connecting-pipelineblocks&quot;&gt;Connecting Pipeline Blocks&lt;/h3&gt;
+&lt;p&gt;Now to the part you are waiting for. I want to share the 5 open-source tools I have been using in 2020.&lt;/p&gt;
 
-&lt;h4 id=&quot;connect-a-lookup-withforeach&quot;&gt;Connect a Lookup with ForEach&lt;/h4&gt;
+&lt;h4 id=&quot;1-libreoffice&quot;&gt;1. LibreOffice&lt;/h4&gt;
 
-&lt;p&gt;In this premise, we need to connect the Lookup block to the ForEach block. Sending the Lookup output to be iterated and processed in the ForEach block.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://cdn-images-1.medium.com/max/800/0*dQOZZOEbsApLHkpg.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;https://agustinustheo.github.io/assets/img/1__KJVw5D0XJ8gyORaSpBoT7g.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;LibreOffice is an office suite similar to Microsoft Office. Its initial stable release was in 2011. Personally I use this app on my Linux PC because when I want to edit a .docx file I do not want to restart my dual boot PC to open Window. Although there is other free-to-use software like &lt;a href=&quot;https://www.google.com/docs/about/&quot;&gt;Google Docs&lt;/a&gt;, I still prefer to use LibreOffice at times because it doesn’t require an internet connection.&lt;/p&gt;
 
-&lt;p&gt;First, we need to connect the two blocks by activity, there are 4 types of activities: Success, Failure, Completion and Skipped. You can see this when you click on the &lt;strong&gt;+&lt;/strong&gt; symbol on the &lt;strong&gt;bottom-right side&lt;/strong&gt; of the Lookup box.&lt;/p&gt;
+&lt;p&gt;There are also other open-source competitors like &lt;a href=&quot;https://www.openoffice.org/&quot;&gt;Apache OpenOffice&lt;/a&gt;, recently debuted in September 2019, I have not had the chance to compare the two and I am still stuck with Libre. I’ll be sure to update you otherwise.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;https://agustinustheo.github.io/assets/img/1__hpxMSYVSUpDjkb4C5O2nSQ.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;All-in-all I believe Libre is a good substitute for Microsoft Office and it is available on Windows, Linux, and macOS. If you are interested in trying LibreOffice you can download the installer from their &lt;a href=&quot;https://www.libreoffice.org/download/download/&quot;&gt;site&lt;/a&gt; and if you want to contribute, the original source code is available on &lt;a href=&quot;https://github.com/LibreOffice&quot;&gt;GitHub&lt;/a&gt;.&lt;/p&gt;
 
-&lt;p&gt;In this example, we will be using Success activity. After connecting, click on the &lt;strong&gt;ForEach&lt;/strong&gt; block, go to the &lt;strong&gt;Settings&lt;/strong&gt; tab.&lt;/p&gt;
+&lt;h4 id=&quot;2-greenshot&quot;&gt;2. Greenshot&lt;/h4&gt;
 
-&lt;h4 id=&quot;using-dynamic-contents-to-add-object-inside-object-inadf&quot;&gt;Using Dynamic Contents to add Object inside Object in ADF&lt;/h4&gt;
+&lt;p&gt;&lt;img src=&quot;https://cdn-images-1.medium.com/max/800/0*lFv_tzUkc92gtbag.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
-&lt;p&gt;Dynamic contents are used to customize the input.&lt;/p&gt;
+&lt;p&gt;Greenshot is an open-source screenshot software. It has a built-in photo editor so after taking screenshots you can directly edit it. Honestly, Greenshot is my favorite open-source software out of all the others on this list. I work as a software developer and because I am required to document the apps I make I usually use Greenshot to highlight each button on MSPaint after taking a screenshot using Snipping Tool. This app has been a great help for me.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;https://agustinustheo.github.io/assets/img/1__SGuttyb9WFy9S__oNwsmSJQ.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;I am recommending this software, as the editor’s choice. Greenshot is free-to-use for Windows users but it is covered by a paywall on macOS. But Linux is not supported by Greenshot. The Greenshot installer is available at their &lt;a href=&quot;https://getgreenshot.org/downloads/&quot;&gt;site&lt;/a&gt;, and the source code is available on &lt;a href=&quot;https://github.com/greenshot&quot;&gt;GitHub&lt;/a&gt;.&lt;/p&gt;
 
-&lt;p&gt;Click on the Items textbox and click the &lt;strong&gt;Add dynamic content&lt;/strong&gt; button.&lt;/p&gt;
+&lt;h4 id=&quot;3-open-broadcaster-software-obsstudio&quot;&gt;3. Open Broadcaster Software (OBS) Studio&lt;/h4&gt;
 
-&lt;p&gt;&lt;img src=&quot;https://agustinustheo.github.io/assets/img/1__v3KHCoOkxTzEugAPtK__SlA.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://cdn-images-1.medium.com/max/800/0*7fHic4LtwtzcJVru.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
-&lt;p&gt;In the &lt;strong&gt;Add dynamic content&lt;/strong&gt; sub-page scroll to the bottom and click on the Lookup output expression, this will add the Lookup output to the ForEach input to be processed.&lt;/p&gt;
+&lt;p&gt;Open Broadcaster Software (OBS) is one of the interesting ones. The application is usually used for screen recording and streaming. The software is excellent and it is FREE. Many people use OBS, at their site the OBS project already has some tough backers like Twitch, Facebook, NVIDIA, and Logitech.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;https://agustinustheo.github.io/assets/img/1__84tIcfl7B3yRbCAnLnr2Ow.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;Personally I really like the application because although it has many features it is by far the fastest screen recorder I have ever used. The recordings are seamless and the options on the audio recording are excellent. The software is written completely in C++ so if you are interested you should check out the original repo available on &lt;a href=&quot;https://github.com/obsproject/obs-studio&quot;&gt;GitHub&lt;/a&gt;. Oh and if you want to try this bad boy out for yourself, it is available for Windows, Linux, and macOS. Just download the installer from their &lt;a href=&quot;https://obsproject.com/download&quot;&gt;site&lt;/a&gt;.&lt;/p&gt;
 
-&lt;p&gt;This example is how you could join two lookup items together as one input using string Concat function, then converting them again to JSON to be then passed to the Azure Function. In the example above, the input will be passing 5 attributes &lt;strong&gt;ID, Description, PIC, Attachments, and IsComplete&lt;/strong&gt;. With the &lt;strong&gt;Attachment&lt;/strong&gt; attribute being a list of JSON objects from the previous lookup.&lt;/p&gt;
+&lt;h4 id=&quot;4-openshot&quot;&gt;4. Openshot&lt;/h4&gt;
 
-&lt;h3 id=&quot;final-thoughts&quot;&gt;Final Thoughts&lt;/h3&gt;
+&lt;p&gt;&lt;img src=&quot;https://cdn-images-1.medium.com/max/800/0*ins_ruDV4IwsBlXe.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
-&lt;p&gt;Azure Data Factory is a good tool for data engineering and it is very beneficial in the long term, when your database grows so large until it is almost unmanageable ADF may be a choice for you. With the addition of Azure Functions, the potentials are endless. Even connecting to databases that are not Microsoft related is possible! I hope you found this tutorial useful.&lt;/p&gt;</content><author><name>Agustinus Theodorus</name></author><category term="tech" /><summary type="html">Azure functions can now be added as a step in Azure Data Factory (ADF). It makes it easier to synchronize data and to make trigger functions that can help data engineering. I have had to use this technology for an upcoming project and my time was misspent on Google searches, that’s why I decided to share with you what I have learned after painstakingly trying to comprehend ADF in 2 days. The tutorial will cover the specific things that I needed to implement.</summary></entry><entry><title type="html">Making an Indonesian Message Classifier</title><link href="https://agustinustheo.github.io/tech/2019/07/30/making-an-indonesian-message-classifier.html" rel="alternate" type="text/html" title="Making an Indonesian Message Classifier" /><published>2019-07-30T23:46:56+07:00</published><updated>2019-07-30T23:46:56+07:00</updated><id>https://agustinustheo.github.io/tech/2019/07/30/making-an-indonesian-message-classifier</id><content type="html" xml:base="https://agustinustheo.github.io/tech/2019/07/30/making-an-indonesian-message-classifier.html">&lt;p&gt;Ever got a spam message on your phone? Annoying right?! &lt;br /&gt;
-I mean from all of the things that could irritate me spam message is one of them. It especially ticks me off when I am waiting for an important text from a special someone and when my phone &lt;em&gt;lit&lt;/em&gt; guess what? Some random numbers texted me offering me a free loan. Wonderful.&lt;/p&gt;
+&lt;p&gt;OpenShot is an open-source video editor. After looking up its features and UI, I can honestly say it is one of the most legit free video editing software out there. Best of all, NO WATERMARKS! I dread software watermarks on my videos. If you are a hardcore video editor maybe you won’t like this software as much as FinalCutPro or Adobe Premiere or Adobe After Effects, but just look at the features available in this free app.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;https://agustinustheo.github.io/assets/img/0__OOA21LWp__huhJtxN.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://cdn-images-1.medium.com/max/800/1*PvWXzMfcr3vpsUueOdZm9g.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
-&lt;p&gt;As a computer scientist, I thought I could tackle the problem while using the project as a college assignment. So essentially I am killing two birds with one stone.&lt;/p&gt;
+&lt;p&gt;The amount of work committed is impressive. It is worthy of a recommendation, take a look at their &lt;a href=&quot;https://www.openshot.org/&quot;&gt;site&lt;/a&gt;. The source code is available on &lt;a href=&quot;https://github.com/OpenShot/&quot;&gt;Github&lt;/a&gt;.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;https://agustinustheo.github.io/assets/img/0__Yas__UXmkZ4JvqL__x.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;h4 id=&quot;5-telegramx&quot;&gt;5. Telegram (X)&lt;/h4&gt;
 
-&lt;p&gt;&lt;a href=&quot;https://www.datadriveninvestor.com/2019/01/23/which-is-more-promising-data-science-or-software-engineering/&quot; title=&quot;https://www.datadriveninvestor.com/2019/01/23/which-is-more-promising-data-science-or-software-engineering/&quot;&gt;&lt;strong&gt;Which is More Promising: Data Science or Software Engineering? | Data Driven Investor&lt;/strong&gt;&lt;br /&gt;
-_About a month back, while I was sitting at a café and working on developing a website for a client, I found this woman…_www.datadriveninvestor.com&lt;/a&gt;&lt;a href=&quot;https://www.datadriveninvestor.com/2019/01/23/which-is-more-promising-data-science-or-software-engineering/&quot;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://cdn-images-1.medium.com/max/800/0*5xRrxBQSoLdgRNa2.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
-&lt;p&gt;To start it all of we are going to use python as our programming language, and we will need to install the required libraries, the libraries used for this build are as follows.&lt;/p&gt;
+&lt;p&gt;This one might be the most well-known project on the entire list. Telegram is a messaging app, the &lt;a href=&quot;https://www.datadriveninvestor.com/glossary/client/&quot;&gt;client&lt;/a&gt;-side apps are open-source. The original source code is available on &lt;a href=&quot;https://www.datadriveninvestor.com/glossary/github/&quot;&gt;GitHub&lt;/a&gt; on two separate accounts, Android would be &lt;a href=&quot;https://github.com/DrKLO/Telegram&quot;&gt;here&lt;/a&gt; and for iOS would be &lt;a href=&quot;https://github.com/TelegramMessenger/Telegram-iOS&quot;&gt;here&lt;/a&gt;. Telegram is a secure messaging platform. It receives income from its donators. Even though the app is not entirely open-source, because the backend service source code is not shared with the public. Probably for security reasons.&lt;/p&gt;
 
-&lt;p&gt;nltk&lt;br /&gt;
-sklearn&lt;br /&gt;
-numpy&lt;br /&gt;
-pandas&lt;/p&gt;
+&lt;p&gt;I recommend you try the X version A.K.A Telegram X because it seems better than the original one. The Telegram X experience is seamless and very efficient. You download it on the Google Play Store or on the Apple App Store.&lt;/p&gt;
 
-&lt;p&gt;Copy these to the requirements.txt file on your project’s root folder and run this command.&lt;/p&gt;
+&lt;h4 id=&quot;mastodon-bonus&quot;&gt;Mastodon (Bonus)&lt;/h4&gt;
 
-&lt;p&gt;For Windows:&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://cdn-images-1.medium.com/max/800/0*QK9u8eQFVhmoGMdW.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
-&lt;p&gt;pip install -r requirements.txt&lt;/p&gt;
+&lt;p&gt;Now, this one is a bonus. Because I thought Mastodon is an interesting subject, I thought I would mention it here. Mastodon is an open-source social media website. It is a microblogging site like Twitter. The reason Mastodon was created is in the hopes of creating an independent social media, not abiding by rules that can be changed by a separate entity.&lt;/p&gt;
 
-&lt;p&gt;For Linux (install pip3 first):&lt;/p&gt;
-
-&lt;p&gt;pip3 install -r requirements.txt&lt;/p&gt;
-
-&lt;p&gt;If you have followed these steps, you are ready to train the SMS classifier model. The model will classify SMS into three categories normal, spam, and promo messages. To create the models there needs to be a dataset, and like all datasets, it needs to be normalized to remove noise.&lt;/p&gt;
-
-&lt;h3 id=&quot;step-1-making-an-indonesian-text-tokenizer&quot;&gt;Step 1: Making an Indonesian Text Tokenizer&lt;/h3&gt;
-
-&lt;p&gt;Before we can train the SMS classifier we will need to make an Indonesian Sentence Tokenizer. To do this we will use NLTK’s &lt;strong&gt;PunktSentenceTokenizer&lt;/strong&gt;. Other libraries include:&lt;/p&gt;
-
-&lt;p&gt;Libraries imported for this build.&lt;/p&gt;
-
-&lt;p&gt;First, a huge corpus filled with Indonesian literature will need to be loaded After we opened them we will need to read and process the texts to remove noise such as symbols, numbers, and emails to replace them with texts easily understood by the classifier.&lt;/p&gt;
-
-&lt;p&gt;Function to replace symbols, numbers, and email used in the text.&lt;/p&gt;
-
-&lt;p&gt;After processing the texts using the function above, we can train the tokenizer.&lt;/p&gt;
-
-&lt;p&gt;Training the PunktSentenceTokenizer.&lt;/p&gt;
-
-&lt;h3 id=&quot;step-2-lets-process-thedataset&quot;&gt;Step 2: Let’s process the dataset&lt;/h3&gt;
-
-&lt;p&gt;To train the classifier we will need a dataset, luckily I have made a dataset of about 200+ spam, promo, and normal SMS each.&lt;/p&gt;
-
-&lt;p&gt;Loading dataset into a data frame.&lt;/p&gt;
-
-&lt;p&gt;When loading the dataset into a data frame, as always we should remove the noise in the data. To remove noise in an SMS we can use this function.&lt;/p&gt;
-
-&lt;p&gt;Function to replace symbols, numbers, and email used in the text.&lt;/p&gt;
-
-&lt;h3 id=&quot;step-3-collecting-the-bag-ofwords&quot;&gt;Step 3: Collecting the Bag of Words…&lt;/h3&gt;
-
-&lt;p&gt;To separate classifiers between words, we can use a popular algorithm called Bag of Words. This algorithm will put words into a bag, and get the most used words.&lt;/p&gt;
-
-&lt;p&gt;Creating a bag-of-words to then find the features.&lt;/p&gt;
-
-&lt;p&gt;After collecting the bag-of-words we need to extract the word features and pair them with their corresponding class.&lt;/p&gt;
-
-&lt;p&gt;Attaching features to their corresponding sets.&lt;/p&gt;
-
-&lt;p&gt;This algorithm will put words of each class into a bag, making a correspondence between the word and the class involved. Before we can use this bag-of-words as a training set we need to randomize the data so that the classifier would train accurately.&lt;/p&gt;
-
-&lt;p&gt;Randomizing the features sets, to increase the accuracy of the classifier when training.&lt;/p&gt;
-
-&lt;h3 id=&quot;step-4-start-training-the-classifier&quot;&gt;Step 4: Start Training the Classifier!&lt;/h3&gt;
-
-&lt;p&gt;First, we must define the classifying algorithms that we will use.&lt;/p&gt;
-
-&lt;p&gt;Determining algorithms that are going to be used in the classifier.&lt;/p&gt;
-
-&lt;p&gt;Then all we need to do is to train the classifiers!&lt;/p&gt;
-
-&lt;p&gt;Training classifiers to generate the model.&lt;/p&gt;
-
-&lt;h3 id=&quot;step-5-last-but-not-least-start-classifying&quot;&gt;Step 5: Last but not least, start classifying!&lt;/h3&gt;
-
-&lt;p&gt;Because we have trained the model, we just need to open it and start classifying with it.&lt;/p&gt;
-
-&lt;p&gt;Opening the model and classifying text.&lt;/p&gt;
-
-&lt;p&gt;There are all kinds of characters used in a standard spam SMS. In this case, there is a unique characteristic in Indonesian spam messages. Spammers like to replace letters with words, for example:&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;1 = i&lt;/li&gt;
-  &lt;li&gt;3 = e&lt;/li&gt;
-  &lt;li&gt;4 = a&lt;/li&gt;
-  &lt;li&gt;5 = s&lt;/li&gt;
-  &lt;li&gt;6 = g&lt;/li&gt;
-  &lt;li&gt;7 = t&lt;/li&gt;
-  &lt;li&gt;8 = b&lt;/li&gt;
-  &lt;li&gt;9 = g&lt;/li&gt;
-  &lt;li&gt;0 = o&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;To normalize these types of texts we just need to create a function to decode it.&lt;/p&gt;
-
-&lt;p&gt;Function to replace rogue numbers used in the text as a replacement for letters.&lt;/p&gt;
-
-&lt;p&gt;In the function above the numbers that don’t have the ‘ribu’, ‘rbu’ or ‘rb’ in the back of the numbers will be replaced with normal letters (‘ribu’, ‘rbu’ or ‘rb’ is the Indonesian shortened slang for thousand).&lt;/p&gt;
-
-&lt;p&gt;&lt;em&gt;Voilà!&lt;/em&gt; these are the 5 steps to make your own Indonesian SMS Classifier.&lt;/p&gt;
-
-&lt;p&gt;If you want to check out my git repo on this subject, click &lt;a href=&quot;https://github.com/agustinustheo/sms-classifier-model&quot;&gt;here&lt;/a&gt;! I hope you understood this tutorial, have a nice spam-free day!&lt;/p&gt;</content><author><name>Agustinus Theodorus</name></author><category term="tech" /><summary type="html">Ever got a spam message on your phone? Annoying right?!  I mean from all of the things that could irritate me spam message is one of them. It especially ticks me off when I am waiting for an important text from a special someone and when my phone lit guess what? Some random numbers texted me offering me a free loan. Wonderful.</summary></entry></feed>
+&lt;p&gt;The whole project motto is &lt;em&gt;“Giving social networking back to you”&lt;/em&gt;. Independent organizations can host their own instance. But users from different servers can still connect to each other. Details can be seen on their &lt;a href=&quot;https://joinmastodon.org/&quot;&gt;site&lt;/a&gt;. The original source code is available on &lt;a href=&quot;https://github.com/tootsuite/mastodon&quot;&gt;GitHub&lt;/a&gt;.&lt;/p&gt;</content><author><name>Agustinus Theodorus</name></author><category term="tech" /><summary type="html">Ever wondered why Chrome (or the New Edge) is such a cool browser? For those of you, non-techies Chrome is a browsing software based on Chromium an open-source browser maintained by Google. The number of people committed to the project could number in the thousands. It is typical of an open-source project to have thousands of contributors to the project. Thus the software from the open-source projects is free-to-use.</summary></entry></feed>

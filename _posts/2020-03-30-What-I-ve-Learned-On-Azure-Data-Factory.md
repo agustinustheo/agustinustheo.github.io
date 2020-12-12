@@ -8,12 +8,12 @@ categories: ['tech']
 keywords: []
 slug: /a-simple-tutorial-on-azure-data-factory
 header:
-  teaser: /assets/img/1__V8Y31hS__cE39__liIeSDfnw.png
+  teaser: https://cdn-images-1.medium.com/max/600/1*V8Y31hS-cE39-liIeSDfnw.png
 ---
 
 Azure functions can now be added as a step in Azure Data Factory (ADF). It makes it easier to synchronize data and to make trigger functions that can help data engineering. I have had to use this technology for an upcoming project and my time was misspent on Google searches, that’s why I decided to share with you what I have learned after painstakingly trying to comprehend ADF in 2 days. The tutorial will cover **the specific** things that I needed to implement.
 
-![]({{ site.url }}/assets/img/1__V8Y31hS__cE39__liIeSDfnw.png)
+![](https://cdn-images-1.medium.com/max/600/1*V8Y31hS-cE39-liIeSDfnw.png)
 
 
 **TL;DR** You can **Ctrl + F** this:
@@ -36,7 +36,7 @@ Azure functions can now be added as a step in Azure Data Factory (ADF). It makes
 
 First, go to create an Azure Data Factory resource on portal.azure.com
 
-![]({{ site.url }}/assets/img/1__2LsoqiXiWLy6UVflgM0MkQ.png)
+![](https://cdn-images-1.medium.com/max/1200/1*2LsoqiXiWLy6UVflgM0MkQ.png)
 
 Fill in this New data factory form to generate one:
 
@@ -50,11 +50,11 @@ Fill in this New data factory form to generate one:
 
 Then open the ADF author page on adf.azure.com and add a new pipeline
 
-![]({{ site.url }}/assets/img/1__CzYCd__WREpn2dUsBZCxDuQ.png)
+![](https://cdn-images-1.medium.com/max/1200/1*CzYCd_WREpn2dUsBZCxDuQ.png)
 
 To add a new pipeline click the **+** sign and click Pipeline.
 
-![]({{ site.url }}/assets/img/1__1VINUUJqRE39md1WqQA1hQ.png)
+![](https://cdn-images-1.medium.com/max/1200/1*1VINUUJqRE39md1WqQA1hQ.png)
 
 _Voila_! There is your pipeline.
 
@@ -62,13 +62,13 @@ _Voila_! There is your pipeline.
 
 There is an **Activities** tab on the left side of the screen, drag Lookup Activities to the center Canvas
 
-![]({{ site.url }}/assets/img/1__MdzXV__Ong1N7hZN8eDjjzA.png)
+![](https://cdn-images-1.medium.com/max/1200/1*MdzXV-Ong1N7hZN8eDjjzA.png)
 
 At the bottom of the page, there are 3 tabs. Click on the **Settings** tab
 
 #### **Changing First-row only response to All in Lookup**
 
-![]({{ site.url }}/assets/img/1__mrWIOTEOON__So2SRTziQsg.png)
+![](https://cdn-images-1.medium.com/max/1200/1*mrWIOTEOON-So2SRTziQsg.png)
 
 Uncheck the **First row only** checkbox. **The first row only** will enable us to lookup the first row of data, unchecking this will allow us to get all of the data available.
 
@@ -76,39 +76,39 @@ Uncheck the **First row only** checkbox. **The first row only** will enable us t
 
 The next thing you have to do is to add or select a dataset. Click the **New** button to create a new dataset source.
 
-![]({{ site.url }}/assets/img/1__d__x3bQ2rKvw5GpAko8__aIA.png)
+![](https://cdn-images-1.medium.com/max/1200/1*d-x3bQ2rKvw5GpAko8_aIA.png)
 
 > Assuming that you already have pre-existing knowledge of configuring an SQL Database on Azure.
 
 For this tutorial, we will be using an **Azure SQL Database** for simplicity’s sake. Click **Continue**.
 
-![]({{ site.url }}/assets/img/1__KHV1jQ0pL__v__A12vA3qDAg.png)
+![](https://cdn-images-1.medium.com/max/1200/1*KHV1jQ0pL-v_A12vA3qDAg.png)
 
 The pipeline requires a dataset to be processed. Even though in this tutorial we are connecting to an Azure SQL Database it is also possible to connect to different databases like Postgres, MySQL, MariaDB, etc.
 
-![]({{ site.url }}/assets/img/1__8WI9z2aUz0bzdGniyHJzNA.png)
+![](https://cdn-images-1.medium.com/max/1200/1*8WI9z2aUz0bzdGniyHJzNA.png)
 
 Then click **New** to add a new **Linked service**. **Linked service** is used to sync the Lookup action to a database table.
 
-![]({{ site.url }}/assets/img/1__A__2XqoX6wgU2GPNCYYE7hg.png)
+![](https://cdn-images-1.medium.com/max/1200/1*A-2XqoX6wgU2GPNCYYE7hg.png)
 
 An Azure subscription is required. Choose the subscription you want to use and choose the server name. In my regard, I chose the Azure SQL Server I had and the **TrainingFunctions** database.
 
-![]({{ site.url }}/assets/img/1__B5kqy9QRHW1xzGaO8qmd__w.png)
+![](https://cdn-images-1.medium.com/max/1200/1*B5kqy9QRHW1xzGaO8qmd-w.png)
 
 Assuming you have filled in the form, click **Create** to connect to a database of your choosing. With this done, all we have to do is to change the Source Dataset directly at the **Settings** tab.
 
-![]({{ site.url }}/assets/img/1__0QiGXFEt36MWgIqMspRvWA.png)
+![](https://cdn-images-1.medium.com/max/1200/1*0QiGXFEt36MWgIqMspRvWA.png)
 
 The last thing to do is to determine what kind of action you would like your lookup to do, in my case I want it to select from a table called Attachments.
 
-![]({{ site.url }}/assets/img/1__GBLPcDNc5zoZvYF3SlhjwA.png)
+![](https://cdn-images-1.medium.com/max/1200/1*GBLPcDNc5zoZvYF3SlhjwA.png)
 
 Thus, the query would be like in the picture above. Otherwise, you can do other complex things such as joins and so on.
 
 #### Adding an Azure Function block in the Pipeline
 
-![]({{ site.url }}/assets/img/1__Q7d10F59LAUAC8vi5__6uMg.png)
+![](https://cdn-images-1.medium.com/max/1200/1*Q7d10F59LAUAC8vi5_6uMg.png)
 
 Adding the Azure Function block is just as easy, just drag and drop from the **Activities > Azure Function** tab to the main canvas.
 
@@ -118,7 +118,7 @@ It is not recommended to send the whole Lookup output to an Azure Function. It i
 
 #### Connecting Azure Function in Pipeline
 
-![]({{ site.url }}/assets/img/1__bsnFpOYrG4sYdGaMuytk8Q.png)
+![](https://cdn-images-1.medium.com/max/1200/1*bsnFpOYrG4sYdGaMuytk8Q.png)
 
 In the Azure Function go to the **Settings** tab.
 
@@ -128,21 +128,21 @@ In the Azure Function go to the **Settings** tab.
 
 Otherwise, to make a new linked service click the **\+ New** button
 
-![]({{ site.url }}/assets/img/1__Pia7TKWUNLhHKWvEm__dUzg.png)
+![](https://cdn-images-1.medium.com/max/1200/1*Pia7TKWUNLhHKWvEm-dUzg.png)
 
 Connecting to an Azure Function through a linked service is similar to connecting to a dataset.
 
-![]({{ site.url }}/assets/img/1__BjDKMEcf____SbReEjSINS0w.png)
+![](https://cdn-images-1.medium.com/max/1200/1*BjDKMEcf--SbReEjSINS0w.png)
 
 Fill in the linked service form to connect to your Azure Function, select a subscription and then pick the selected function. The next thing is to get your Function key.
 
-![]({{ site.url }}/assets/img/0__p5fp8V8tDE__nkNCk.jpg)
+![](https://cdn-images-1.medium.com/max/1200/0*p5fp8V8tDE-nkNCk)
 
 You can get your Function Key in **Home > All Services > Function App > Function Project > Functions > {Function Name} > Manage** at portal.azure.com.
 
 #### Adding a ForEach block in the Pipeline
 
-![]({{ site.url }}/assets/img/1__6E4YzT0lppfUn7X5GQURZQ.png)
+![](https://cdn-images-1.medium.com/max/1200/1*6E4YzT0lppfUn7X5GQURZQ.png)
 
 Adding the ForEach block is as simple as just dragging and dropping from the **Activities > Iterations & conditionals** tab to the main canvas.
 
@@ -152,11 +152,11 @@ Adding the ForEach block is as simple as just dragging and dropping from the **A
 
 In this premise, we need to connect the Lookup block to the ForEach block. Sending the Lookup output to be iterated and processed in the ForEach block.
 
-![]({{ site.url }}/assets/img/1__KJVw5D0XJ8gyORaSpBoT7g.png)
+![](https://cdn-images-1.medium.com/max/1200/1*KJVw5D0XJ8gyORaSpBoT7g.png)
 
 First, we need to connect the two blocks by activity, there are 4 types of activities: Success, Failure, Completion and Skipped. You can see this when you click on the **+** symbol on the **bottom-right side** of the Lookup box.
 
-![]({{ site.url }}/assets/img/1__hpxMSYVSUpDjkb4C5O2nSQ.png)
+![](https://cdn-images-1.medium.com/max/1200/1*hpxMSYVSUpDjkb4C5O2nSQ.png)
 
 In this example, we will be using Success activity. After connecting, click on the **ForEach** block, go to the **Settings** tab.
 
@@ -164,15 +164,15 @@ In this example, we will be using Success activity. After connecting, click on t
 
 Dynamic contents are used to customize the input.
 
-![]({{ site.url }}/assets/img/1__SGuttyb9WFy9S__oNwsmSJQ.png)
+![](https://cdn-images-1.medium.com/max/1200/1*SGuttyb9WFy9S_oNwsmSJQ.png)
 
 Click on the Items textbox and click the **Add dynamic content** button.
 
-![]({{ site.url }}/assets/img/1__v3KHCoOkxTzEugAPtK__SlA.png)
+![](https://cdn-images-1.medium.com/max/1200/1*v3KHCoOkxTzEugAPtK-SlA.png)
 
 In the **Add dynamic content** sub-page scroll to the bottom and click on the Lookup output expression, this will add the Lookup output to the ForEach input to be processed.
 
-![]({{ site.url }}/assets/img/1__84tIcfl7B3yRbCAnLnr2Ow.png)
+![](https://cdn-images-1.medium.com/max/1200/1*84tIcfl7B3yRbCAnLnr2Ow.png)
 
 This example is how you could join two lookup items together as one input using string Concat function, then converting them again to JSON to be then passed to the Azure Function. In the example above, the input will be passing 5 attributes **ID, Description, PIC, Attachments, and IsComplete**. With the **Attachment** attribute being a list of JSON objects from the previous lookup.
 

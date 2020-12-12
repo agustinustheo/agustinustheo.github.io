@@ -1,0 +1,788 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.21.0 by Michael Rose
+  Copyright 2013-2020 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>What I’ve Learned On Azure Data Factory - Agustinus Theodorus</title>
+<meta name="description" content="Bite-sized bits that will save you a day of learning">
+
+
+  <meta name="author" content="Agustinus Theodorus">
+  
+  <meta property="article:author" content="Agustinus Theodorus">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Agustinus Theodorus">
+<meta property="og:title" content="What I’ve Learned On Azure Data Factory">
+<meta property="og:url" content="https://agustinustheo.github.io/tech/2020/03/31/a-simple-tutorial-on-azure-data-factory.html">
+
+
+  <meta property="og:description" content="Bite-sized bits that will save you a day of learning">
+
+
+
+  <meta property="og:image" content="https://agustinustheo.github.io/assets/img/1__V8Y31hS__cE39__liIeSDfnw.png">
+
+
+
+
+
+  <meta property="article:published_time" content="2020-03-31T03:54:55+07:00">
+
+
+
+
+
+
+<link rel="canonical" href="https://agustinustheo.github.io/tech/2020/03/31/a-simple-tutorial-on-azure-data-factory.html">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": "Agustinus Theodorus",
+      "url": "https://agustinustheo.github.io/"
+    
+  }
+</script>
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+<link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Agustinus Theodorus Feed">
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css">
+
+<!--[if IE]>
+  <style>
+    /* old IE unsupported flexbox fixes */
+    .greedy-nav .site-title {
+      padding-right: 3em;
+    }
+    .greedy-nav button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+    }
+  </style>
+<![endif]-->
+
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single">
+    <nav class="skip-links">
+  <h2 class="screen-reader-text">Skip links</h2>
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/">
+          Agustinus Theodorus
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="https://agustinustheoo.medium.com">Blog</a>
+            </li><li class="masthead__menu-item">
+              <a href="https://id.linkedin.com/in/agustinus-theodorus">Profile</a>
+            </li></ul>
+        
+        <button class="search__toggle" type="button">
+          <span class="visually-hidden">Toggle search</span>
+          <svg class="icon" width="16" height="16" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15.99 16">
+            <path d="M15.5,13.12L13.19,10.8a1.69,1.69,0,0,0-1.28-.55l-0.06-.06A6.5,6.5,0,0,0,5.77,0,6.5,6.5,0,0,0,2.46,11.59a6.47,6.47,0,0,0,7.74.26l0.05,0.05a1.65,1.65,0,0,0,.5,1.24l2.38,2.38A1.68,1.68,0,0,0,15.5,13.12ZM6.4,2A4.41,4.41,0,1,1,2,6.4,4.43,4.43,0,0,1,6.4,2Z" transform="translate(-.01)"></path>
+          </svg>
+        </button>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person">
+
+  
+    <div class="author__avatar">
+      
+        <img src="/assets/img/bio-photo.jpg" alt="Agustinus Theodorus" itemprop="image">
+      
+    </div>
+  
+
+  <div class="author__content">
+    
+      <h3 class="author__name" itemprop="name">Agustinus Theodorus</h3>
+    
+    
+      <div class="author__bio" itemprop="description">
+        <p>I am primarily a web app developer. Most of my coding time is spent making new web apps, web APIs or bug fixing. My current hobby is writing, I usually spare time to write every month.</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+
+      
+        
+          
+            <li><a href="https://steego.link" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-link" aria-hidden="true"></i><span class="label">Website</span></a></li>
+          
+        
+          
+            <li><a href="https://id.linkedin.com/in/agustinus-theodorus" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span class="label">LinkedIn</span></a></li>
+          
+        
+          
+            <li><a href="https://github.com/agustinustheo" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i><span class="label">GitHub</span></a></li>
+          
+        
+          
+            <li><a href="https://twitter.com/agustinustheoo" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-twitter-square" aria-hidden="true"></i><span class="label">Twitter</span></a></li>
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="What I’ve Learned On Azure Data Factory">
+    <meta itemprop="description" content="Azure functions can now be added as a step in Azure Data Factory (ADF). It makes it easier to synchronize data and to make trigger functions that can help data engineering. I have had to use this technology for an upcoming project and my time was misspent on Google searches, that’s why I decided to share with you what I have learned after painstakingly trying to comprehend ADF in 2 days. The tutorial will cover the specific things that I needed to implement.">
+    <meta itemprop="datePublished" content="2020-03-31T03:54:55+07:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">What I’ve Learned On Azure Data Factory
+</h1>
+          
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          5 minute read
+        
+      </span>
+    
+  </p>
+
+
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <p>Azure functions can now be added as a step in Azure Data Factory (ADF). It makes it easier to synchronize data and to make trigger functions that can help data engineering. I have had to use this technology for an upcoming project and my time was misspent on Google searches, that’s why I decided to share with you what I have learned after painstakingly trying to comprehend ADF in 2 days. The tutorial will cover <strong>the specific</strong> things that I needed to implement.</p>
+
+<p><img src="https://agustinustheo.github.io/assets/img/1__V8Y31hS__cE39__liIeSDfnw.png" alt="" /></p>
+
+<p><strong>TL;DR</strong> You can <strong>Ctrl + F</strong> this:</p>
+
+<ul>
+  <li><strong>Creating an Azure Data Factory (ADF)</strong></li>
+  <li><strong>Pipelines in ADF</strong></li>
+  <li><strong>Adding a new Pipeline in ADF</strong></li>
+  <li><strong>Adding a Lookup block in the Pipeline</strong></li>
+  <li><strong>Changing First-row only response to All in Lookup</strong></li>
+  <li><strong>Adding a source dataset to a Lookup</strong></li>
+  <li><strong>Adding an Azure Function block in the Pipeline</strong></li>
+  <li><strong>Lookup to Azure Function Best Practice</strong></li>
+  <li><strong>Connecting Azure Function in Pipeline</strong></li>
+  <li><strong>Adding a ForEach block in the Pipeline</strong></li>
+  <li><strong>Connecting Pipeline Blocks</strong></li>
+  <li><strong>Connect a Lookup with ForEach</strong></li>
+  <li><strong>Using Dynamic Contents to add Object inside Object in ADF</strong></li>
+</ul>
+
+<h3 id="creating-an-azure-data-factoryadf">Creating an Azure Data Factory (ADF)</h3>
+
+<p>First, go to create an Azure Data Factory resource on portal.azure.com</p>
+
+<p><img src="https://agustinustheo.github.io/assets/img/1__2LsoqiXiWLy6UVflgM0MkQ.png" alt="" /></p>
+
+<p>Fill in this New data factory form to generate one:</p>
+
+<ul>
+  <li>Fill in the name of the data factory.</li>
+  <li>Choose the resource group, if you haven’t made one click the <strong>Create new</strong> button.</li>
+  <li>You can connect this to a GIT repository but I prefer to configure it later, thus I unchecked the <strong>Enable GIT</strong> checkbox.</li>
+</ul>
+
+<h3 id="pipelines-inadf">Pipelines in ADF</h3>
+
+<h4 id="adding-a-new-pipeline-inadf">Adding a new Pipeline in ADF</h4>
+
+<p>Then open the ADF author page on adf.azure.com and add a new pipeline</p>
+
+<p><img src="https://agustinustheo.github.io/assets/img/1__CzYCd__WREpn2dUsBZCxDuQ.png" alt="" /></p>
+
+<p>To add a new pipeline click the <strong>+</strong> sign and click Pipeline.</p>
+
+<p><img src="https://agustinustheo.github.io/assets/img/1__1VINUUJqRE39md1WqQA1hQ.png" alt="" /></p>
+
+<p><em>Voila</em>! There is your pipeline.</p>
+
+<h4 id="adding-a-lookup-block-in-thepipeline">Adding a Lookup block in the Pipeline</h4>
+
+<p>There is an <strong>Activities</strong> tab on the left side of the screen, drag Lookup Activities to the center Canvas</p>
+
+<p><img src="https://agustinustheo.github.io/assets/img/1__MdzXV__Ong1N7hZN8eDjjzA.png" alt="" /></p>
+
+<p>At the bottom of the page, there are 3 tabs. Click on the <strong>Settings</strong> tab</p>
+
+<h4 id="changing-first-row-only-response-to-all-inlookup"><strong>Changing First-row only response to All in Lookup</strong></h4>
+
+<p><img src="https://agustinustheo.github.io/assets/img/1__mrWIOTEOON__So2SRTziQsg.png" alt="" /></p>
+
+<p>Uncheck the <strong>First row only</strong> checkbox. <strong>The first row only</strong> will enable us to lookup the first row of data, unchecking this will allow us to get all of the data available.</p>
+
+<h4 id="adding-a-source-dataset-to-alookup">Adding a source dataset to a Lookup</h4>
+
+<p>The next thing you have to do is to add or select a dataset. Click the <strong>New</strong> button to create a new dataset source.</p>
+
+<p><img src="https://agustinustheo.github.io/assets/img/1__d__x3bQ2rKvw5GpAko8__aIA.png" alt="" /></p>
+
+<blockquote>
+  <p>Assuming that you already have pre-existing knowledge of configuring an SQL Database on Azure.</p>
+</blockquote>
+
+<p>For this tutorial, we will be using an <strong>Azure SQL Database</strong> for simplicity’s sake. Click <strong>Continue</strong>.</p>
+
+<p><img src="https://agustinustheo.github.io/assets/img/1__KHV1jQ0pL__v__A12vA3qDAg.png" alt="" /></p>
+
+<p>The pipeline requires a dataset to be processed. Even though in this tutorial we are connecting to an Azure SQL Database it is also possible to connect to different databases like Postgres, MySQL, MariaDB, etc.</p>
+
+<p><img src="https://agustinustheo.github.io/assets/img/1__8WI9z2aUz0bzdGniyHJzNA.png" alt="" /></p>
+
+<p>Then click <strong>New</strong> to add a new <strong>Linked service</strong>. <strong>Linked service</strong> is used to sync the Lookup action to a database table.</p>
+
+<p><img src="https://agustinustheo.github.io/assets/img/1__A__2XqoX6wgU2GPNCYYE7hg.png" alt="" /></p>
+
+<p>An Azure subscription is required. Choose the subscription you want to use and choose the server name. In my regard, I chose the Azure SQL Server I had and the <strong>TrainingFunctions</strong> database.</p>
+
+<p><img src="https://agustinustheo.github.io/assets/img/1__B5kqy9QRHW1xzGaO8qmd__w.png" alt="" /></p>
+
+<p>Assuming you have filled in the form, click <strong>Create</strong> to connect to a database of your choosing. With this done, all we have to do is to change the Source Dataset directly at the <strong>Settings</strong> tab.</p>
+
+<p><img src="https://agustinustheo.github.io/assets/img/1__0QiGXFEt36MWgIqMspRvWA.png" alt="" /></p>
+
+<p>The last thing to do is to determine what kind of action you would like your lookup to do, in my case I want it to select from a table called Attachments.</p>
+
+<p><img src="https://agustinustheo.github.io/assets/img/1__GBLPcDNc5zoZvYF3SlhjwA.png" alt="" /></p>
+
+<p>Thus, the query would be like in the picture above. Otherwise, you can do other complex things such as joins and so on.</p>
+
+<h4 id="adding-an-azure-function-block-in-thepipeline">Adding an Azure Function block in the Pipeline</h4>
+
+<p><img src="https://agustinustheo.github.io/assets/img/1__Q7d10F59LAUAC8vi5__6uMg.png" alt="" /></p>
+
+<p>Adding the Azure Function block is just as easy, just drag and drop from the <strong>Activities &gt; Azure Function</strong> tab to the main canvas.</p>
+
+<h4 id="lookup-to-azure-function-bestpractice">Lookup to Azure Function Best Practice</h4>
+
+<p>It is not recommended to send the whole Lookup output to an Azure Function. It is recommended to add a ForEach block beforehand. This is what we are going to do in this tutorial.</p>
+
+<h4 id="connecting-azure-function-inpipeline">Connecting Azure Function in Pipeline</h4>
+
+<p><img src="https://agustinustheo.github.io/assets/img/1__bsnFpOYrG4sYdGaMuytk8Q.png" alt="" /></p>
+
+<p>In the Azure Function go to the <strong>Settings</strong> tab.</p>
+
+<ul>
+  <li>Select the linked service to link to the Azure Function. To add a new linked service, click <strong>New</strong> link.</li>
+  <li>Fill in the <strong>Azure Function name</strong> in the Function name textbox, make sure the Function name is the same in the linked service.</li>
+  <li>Fill in the method used by the selected Azure Function. Usually, HTTP Methods like <strong>GET</strong> and <strong>POST</strong> are used.</li>
+</ul>
+
+<p>Otherwise, to make a new linked service click the <strong>+ New</strong> button</p>
+
+<p><img src="https://agustinustheo.github.io/assets/img/1__Pia7TKWUNLhHKWvEm__dUzg.png" alt="" /></p>
+
+<p>Connecting to an Azure Function through a linked service is similar to connecting to a dataset.</p>
+
+<p><img src="https://agustinustheo.github.io/assets/img/1__BjDKMEcf____SbReEjSINS0w.png" alt="" /></p>
+
+<p>Fill in the linked service form to connect to your Azure Function, select a subscription and then pick the selected function. The next thing is to get your Function key.</p>
+
+<p><img src="https://agustinustheo.github.io/assets/img/0__p5fp8V8tDE__nkNCk.jpg" alt="" /></p>
+
+<p>You can get your Function Key in <strong>Home &gt; All Services &gt; Function App &gt; Function Project &gt; Functions &gt; {Function Name} &gt; Manage</strong> at portal.azure.com.</p>
+
+<h4 id="adding-a-foreach-block-in-thepipeline">Adding a ForEach block in the Pipeline</h4>
+
+<p><img src="https://agustinustheo.github.io/assets/img/1__6E4YzT0lppfUn7X5GQURZQ.png" alt="" /></p>
+
+<p>Adding the ForEach block is as simple as just dragging and dropping from the <strong>Activities &gt; Iterations &amp; conditionals</strong> tab to the main canvas.</p>
+
+<h3 id="connecting-pipelineblocks">Connecting Pipeline Blocks</h3>
+
+<h4 id="connect-a-lookup-withforeach">Connect a Lookup with ForEach</h4>
+
+<p>In this premise, we need to connect the Lookup block to the ForEach block. Sending the Lookup output to be iterated and processed in the ForEach block.</p>
+
+<p><img src="https://agustinustheo.github.io/assets/img/1__KJVw5D0XJ8gyORaSpBoT7g.png" alt="" /></p>
+
+<p>First, we need to connect the two blocks by activity, there are 4 types of activities: Success, Failure, Completion and Skipped. You can see this when you click on the <strong>+</strong> symbol on the <strong>bottom-right side</strong> of the Lookup box.</p>
+
+<p><img src="https://agustinustheo.github.io/assets/img/1__hpxMSYVSUpDjkb4C5O2nSQ.png" alt="" /></p>
+
+<p>In this example, we will be using Success activity. After connecting, click on the <strong>ForEach</strong> block, go to the <strong>Settings</strong> tab.</p>
+
+<h4 id="using-dynamic-contents-to-add-object-inside-object-inadf">Using Dynamic Contents to add Object inside Object in ADF</h4>
+
+<p>Dynamic contents are used to customize the input.</p>
+
+<p><img src="https://agustinustheo.github.io/assets/img/1__SGuttyb9WFy9S__oNwsmSJQ.png" alt="" /></p>
+
+<p>Click on the Items textbox and click the <strong>Add dynamic content</strong> button.</p>
+
+<p><img src="https://agustinustheo.github.io/assets/img/1__v3KHCoOkxTzEugAPtK__SlA.png" alt="" /></p>
+
+<p>In the <strong>Add dynamic content</strong> sub-page scroll to the bottom and click on the Lookup output expression, this will add the Lookup output to the ForEach input to be processed.</p>
+
+<p><img src="https://agustinustheo.github.io/assets/img/1__84tIcfl7B3yRbCAnLnr2Ow.png" alt="" /></p>
+
+<p>This example is how you could join two lookup items together as one input using string Concat function, then converting them again to JSON to be then passed to the Azure Function. In the example above, the input will be passing 5 attributes <strong>ID, Description, PIC, Attachments, and IsComplete</strong>. With the <strong>Attachment</strong> attribute being a list of JSON objects from the previous lookup.</p>
+
+<h3 id="final-thoughts">Final Thoughts</h3>
+
+<p>Azure Data Factory is a good tool for data engineering and it is very beneficial in the long term, when your database grows so large until it is almost unmanageable ADF may be a choice for you. With the addition of Azure Functions, the potentials are endless. Even connecting to databases that are not Microsoft related is possible! I hope you found this tutorial useful.</p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+
+
+        
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2020-03-31T03:54:55+07:00">March 31, 2020</time></p>
+
+
+      </footer>
+
+      <section class="page__share">
+  
+
+  <a href="https://twitter.com/intent/tweet?text=What+I%E2%80%99ve+Learned+On+Azure+Data+Factory%20https%3A%2F%2Fagustinustheo.github.io%2Ftech%2F2020%2F03%2F31%2Fa-simple-tutorial-on-azure-data-factory.html" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fagustinustheo.github.io%2Ftech%2F2020%2F03%2F31%2Fa-simple-tutorial-on-azure-data-factory.html" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=https%3A%2F%2Fagustinustheo.github.io%2Ftech%2F2020%2F03%2F31%2Fa-simple-tutorial-on-azure-data-factory.html" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+
+      
+  <nav class="pagination">
+    
+      <a href="/tech/2019/07/30/making-an-indonesian-message-classifier.html" class="pagination--pager" title="Making an Indonesian Message Classifier
+">Previous</a>
+    
+    
+      <a href="/tech/2020/09/11/software-engineering-is-all-about-sharing.html" class="pagination--pager" title="Software Engineering Is All About Sharing
+">Next</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h4 class="page__related-title">You May Also Enjoy</h4>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/assets/img/0__9RPiaNqFjBvZay__Q.jpg" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/tech/2020/11/18/how-to-choose-your-first-techstack.html" rel="permalink">How To Choose Your First Techstack
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          7 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">For all these years in the tech industry. I assure you that I have had my fair share of technology. A multitude of different frameworks aiming to achieve the...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/assets/img/0__QkuSb8wVpC5wY7kj.jpg" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/tech/2020/10/20/how-to-deploy-net-core-on-iis.html" rel="permalink">How To Deploy Your .NET Core App on an IIS Server
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          3 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">When you work in an enterprise environment you can’t choose where you would want to publish your application, especially if you enter a very established comp...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/assets/img/1__u18ToVTMMZ8AN1M4fur0xw.jpeg" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/tech/2020/10/12/4-key-habits-i-learned-as-a-software-engineer.html" rel="permalink">4 Key Habits I Learned as a Software Engineer
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          4 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">I am almost 3 years into software engineering. Honestly, I don’t think I am that good at it yet (I don’t know if I’ll ever be). But there are times when I wi...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/assets/img/0__hqcdsOSzhIQ3LQXk.jpg" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/tech/2020/09/11/software-engineering-is-all-about-sharing.html" rel="permalink">Software Engineering Is All About Sharing
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          4 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">When I started my first job as a software engineer I would have never realized how narrow my world view regarding tech was. In my mind, the world of software...</p>
+  </article>
+</div>
+
+        
+      </div>
+    </div>
+  
+  
+</div>
+
+    </div>
+
+    
+      <div class="search-content">
+        <div class="search-content__inner-wrap"><form class="search-content__form" onkeydown="return event.key != 'Enter';">
+    <label class="sr-only" for="search">
+      Enter your search term...
+    </label>
+    <input type="search" id="search" class="search-input" tabindex="-1" placeholder="Enter your search term..." />
+  </form>
+  <div id="results" class="results"></div></div>
+
+      </div>
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+      
+        
+          <li><a href="https://steego.link" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-link" aria-hidden="true"></i> Website</a></li>
+        
+      
+        
+          <li><a href="https://id.linkedin.com/in/agustinus-theodorus" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i> LinkedIn</a></li>
+        
+      
+        
+          <li><a href="https://github.com/agustinustheo" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+        
+      
+        
+          <li><a href="https://twitter.com/agustinustheoo" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-twitter-square" aria-hidden="true"></i> Twitter</a></li>
+        
+      
+    
+
+    <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2020 Agustinus Theodorus. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+<script src="/assets/js/lunr/lunr.min.js"></script>
+<script src="/assets/js/lunr/lunr-store.js"></script>
+<script src="/assets/js/lunr/lunr-en.js"></script>
+
+
+
+
+
+
+
+  </body>
+</html>

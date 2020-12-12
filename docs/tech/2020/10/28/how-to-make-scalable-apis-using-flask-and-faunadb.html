@@ -1,0 +1,963 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.21.0 by Michael Rose
+  Copyright 2013-2020 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>How To Make Scalable APIs Using Flask and FaunaDB - Agustinus Theodorus</title>
+<meta name="description" content="A quick boilerplate to help construct fast APIs using Flask and FaunaDB.">
+
+
+  <meta name="author" content="Agustinus Theodorus">
+  
+  <meta property="article:author" content="Agustinus Theodorus">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Agustinus Theodorus">
+<meta property="og:title" content="How To Make Scalable APIs Using Flask and FaunaDB">
+<meta property="og:url" content="https://agustinustheo.github.io/tech/2020/10/28/how-to-make-scalable-apis-using-flask-and-faunadb.html">
+
+
+  <meta property="og:description" content="A quick boilerplate to help construct fast APIs using Flask and FaunaDB.">
+
+
+
+  <meta property="og:image" content="https://cdn-images-1.medium.com/max/800/0*DuZ_NXbhwmAfiMPM">
+
+
+
+
+
+  <meta property="article:published_time" content="2020-10-28T06:50:13+07:00">
+
+
+
+
+
+
+<link rel="canonical" href="https://agustinustheo.github.io/tech/2020/10/28/how-to-make-scalable-apis-using-flask-and-faunadb.html">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": "Agustinus Theodorus",
+      "url": "https://agustinustheo.github.io/"
+    
+  }
+</script>
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+<link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Agustinus Theodorus Feed">
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css">
+
+<!--[if IE]>
+  <style>
+    /* old IE unsupported flexbox fixes */
+    .greedy-nav .site-title {
+      padding-right: 3em;
+    }
+    .greedy-nav button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+    }
+  </style>
+<![endif]-->
+
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single">
+    <nav class="skip-links">
+  <h2 class="screen-reader-text">Skip links</h2>
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/">
+          Agustinus Theodorus
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="https://agustinustheoo.medium.com">Blog</a>
+            </li><li class="masthead__menu-item">
+              <a href="https://id.linkedin.com/in/agustinus-theodorus">Profile</a>
+            </li></ul>
+        
+        <button class="search__toggle" type="button">
+          <span class="visually-hidden">Toggle search</span>
+          <svg class="icon" width="16" height="16" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15.99 16">
+            <path d="M15.5,13.12L13.19,10.8a1.69,1.69,0,0,0-1.28-.55l-0.06-.06A6.5,6.5,0,0,0,5.77,0,6.5,6.5,0,0,0,2.46,11.59a6.47,6.47,0,0,0,7.74.26l0.05,0.05a1.65,1.65,0,0,0,.5,1.24l2.38,2.38A1.68,1.68,0,0,0,15.5,13.12ZM6.4,2A4.41,4.41,0,1,1,2,6.4,4.43,4.43,0,0,1,6.4,2Z" transform="translate(-.01)"></path>
+          </svg>
+        </button>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person">
+
+  
+    <div class="author__avatar">
+      
+        <img src="/assets/img/bio-photo.jpg" alt="Agustinus Theodorus" itemprop="image">
+      
+    </div>
+  
+
+  <div class="author__content">
+    
+      <h3 class="author__name" itemprop="name">Agustinus Theodorus</h3>
+    
+    
+      <div class="author__bio" itemprop="description">
+        <p>I am primarily a web app developer. Most of my coding time is spent making new web apps, web APIs or bug fixing. My current hobby is writing, I usually spare time to write every month.</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+
+      
+        
+          
+            <li><a href="https://steego.link" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-link" aria-hidden="true"></i><span class="label">Website</span></a></li>
+          
+        
+          
+            <li><a href="https://id.linkedin.com/in/agustinus-theodorus" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span class="label">LinkedIn</span></a></li>
+          
+        
+          
+            <li><a href="https://github.com/agustinustheo" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i><span class="label">GitHub</span></a></li>
+          
+        
+          
+            <li><a href="https://twitter.com/agustinustheoo" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-twitter-square" aria-hidden="true"></i><span class="label">Twitter</span></a></li>
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="How To Make Scalable APIs Using Flask and FaunaDB">
+    <meta itemprop="description" content="With the rise of serverless technology, making web services only gets easier. Serverless apps change the old monolithic architecture of apps and promote more of a microservice solution to technical problems.">
+    <meta itemprop="datePublished" content="2020-10-28T06:50:13+07:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">How To Make Scalable APIs Using Flask and FaunaDB
+</h1>
+          
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          7 minute read
+        
+      </span>
+    
+  </p>
+
+
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <p>With the rise of serverless technology, making web services only gets easier. Serverless apps change the old monolithic architecture of apps and promote more of a microservice solution to technical problems.</p>
+
+<p><img src="https://cdn-images-1.medium.com/max/800/0*DuZ_NXbhwmAfiMPM" alt="" /></p>
+
+<p>With the advantage of autoscaling, and multi-region deployments it is no wonder that serverless apps are making a quick rise in recent years. The cost of serverless has also redefined how we make software as it is now on a per request basis rather than a time-based service.</p>
+
+<blockquote>
+  <p>Even better, serverless also enables small services to be free altogether. Only being needed to be paid after a million requests or so. <a href="https://azure.microsoft.com/en-us/pricing/details/functions/#:~:text=Azure%20Functions%20consumption%20plan%20is,function%20apps%20in%20that%20subscription.">An example would be Azure Function’s consumption plan</a>.</p>
+</blockquote>
+
+<h3 id="what-does-serverless-have-to-do-with-this-tutorial">What does Serverless have to do with this tutorial?</h3>
+
+<p>The main reason serverless is being mentioned here is because <a href="https://fauna.com/features">FaunaDB</a> is a NoSQL database that is made for serverless in mind. The pricing on this database is request based, precisely what serverless apps need.</p>
+
+<p>Using a service like FaunaDB can help cut costs so much that the hosting capabilities of the app would be virtually free. Excluding the development costs of course. Thus, using a monthly billed database for serverless apps kind of kills the point.</p>
+
+<p>A free stack example would be a combination of Netlify, Netlify Functions, and FaunaDB. Though it would only be ‘free’ for a certain amount of requests. Unless you are making an app that gets thousands of users on day zero of deployment I don’t think it would be much of a problem.</p>
+
+<blockquote>
+  <p>In my opinion, using a monthly billed database for serverless apps kind of kills the point</p>
+</blockquote>
+
+<p>Flask on the other hand is a microframework written in Python. It is a minimalistic framework with no database abstraction layers, form validation, or any other particular functions provided by other frameworks.</p>
+
+<p>Flask is by large serverless compatible. You can make a serverless Flask app using AWS Lambda. <a href="https://www.serverless.com/flask">Here is an official guide to Flask serverless from serverless.com</a>.</p>
+
+<h3 id="getting-started">Getting Started</h3>
+
+<h4 id="setting-up-python-andpip">Setting up Python and Pip</h4>
+
+<p>First of all, install Python and Pip. I’m not going to list all the possible ways of installing it, for Windows users you can get the installer <a href="https://www.python.org/downloads/windows/">here</a>. As for Linux users if you are using a Debian/Ubuntu-based distro open your command prompt and install python and pip like this:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo apt update  
+sudo apt install python3 python3-pip
+</code></pre></div></div>
+
+<p>To check if the installation is correct try executing these commands:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>python --version  
+pip --version
+</code></pre></div></div>
+
+<p>The version numbers would then show for the corresponding commands.</p>
+
+<h4 id="installing-dependencies">Installing dependencies</h4>
+
+<p>After the environment setup is complete, the next step would be to install Flask itself. The installation process is simple just enter:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>pip install Flask
+</code></pre></div></div>
+
+<p>Then, install the python driver for FaunaDB:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>pip install faunadb
+</code></pre></div></div>
+
+<p><em>Voila!</em> You’re all set!</p>
+
+<h3 id="making-a-to-do-listapp">Making a To-Do List App</h3>
+
+<p>Now we are going to make an example app with the <strong>mother</strong> of all app ideas, the to-do list app.</p>
+
+<h4 id="to-do-listtemplate">To-Do List Template</h4>
+
+<p>For this example, because we will be focusing mainly on how to make the API we will be using the <a href="https://www.w3schools.com/howto/howto_js_todolist.asp">W3School template</a> for the to-do list app frontend.</p>
+
+<p><img src="https://cdn-images-1.medium.com/max/800/1*vd-pu5pZaaHq0pSjp39meQ.png" alt="" /></p>
+
+<h4 id="basic-project-structure">Basic Project Structure</h4>
+
+<p>Our project would be an implementation of a helper pattern. A simple outline of our project would be like so:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>\-
+ |--app.py   
+ |  
+ |--services  
+    |--todo_service.py  
+ |--helpers  
+    |--todo_helper.py  
+ |--entities  
+    |--faunadb_entity.py
+</code></pre></div></div>
+
+<h3 id="faunadb-indexes">FaunaDB Indexes</h3>
+
+<h4 id="wait-what-areindexes">Wait, what are indexes?</h4>
+
+<p>Indexes are how you make ‘where’ statements in FaunaDB. It allows you to get specific documents based on the field values.</p>
+
+<p>To create a new Index, just go to the Indexes section on your database and click <strong>New Index</strong>.</p>
+
+<p><img src="https://cdn-images-1.medium.com/max/800/1*o7EBsxeVx6QtvRmq4s0fLA.png" alt="" /></p>
+
+<p>When creating an Index, choose the collection you would want to interact with. Then define the field name you want to search by. Lastly, define your index name make sure it is unique and readable.</p>
+
+<p><img src="https://cdn-images-1.medium.com/max/800/1*LoR_MqlQX_is-ZtnAvDxCw.png" alt="" /></p>
+
+<p>For example, let’s make an index where we can get all the data in an existing collection.</p>
+
+<p><img src="https://cdn-images-1.medium.com/max/800/1*nOsbTxZXiyhH11zB-0qH_g.png" alt="" /></p>
+
+<p>Oh, what about an index to get todos by the user’s email? Easy.</p>
+
+<p><img src="https://cdn-images-1.medium.com/max/800/1*yWe7e6e0TlskA2NUrGI3GQ.png" alt="" /></p>
+
+<p>If you want to make the terms unique, check the Unique checkbox to add a constraint.</p>
+
+<p><img src="https://cdn-images-1.medium.com/max/800/1*DCaHNlv3bdj8WDIpb7IYcw.png" alt="" /></p>
+
+<p>To add constraints to a certain collection you need to create indexes with terms that contain unique fields.</p>
+
+<p>To help you understand better, <a href="https://docs.fauna.com/fauna/current/tutorials/indexes/index.html">here is an official article from Fauna to help you understand indexes.</a></p>
+
+<h3 id="lets-make-theapi">Let’s Make The API</h3>
+
+<h4 id="make-the-flask-startupfile">Make the Flask startup file</h4>
+
+<p>First, write a python file that would run Flask.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>from flask import Flask
+
+app = Flask(__name__)
+
+if __name__ == "__main__":
+    app.run(host='0.0.0.0')
+</code></pre></div></div>
+
+<h4 id="write-the-faunadb-entityscript">Write the FaunaDB entity script</h4>
+
+<p>Next, before we start writing our services and helpers we must first define an entity file to connect to FaunaDB.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>import os
+from faunadb import query as q
+from faunadb.objects import Ref
+from faunadb.client import FaunaClient
+
+def get(index, data):
+    try:
+        serverClient = FaunaClient(secret=os.environ.get("FAUNA_SERVER_SECRET"))
+        res = serverClient.query(q.get(q.match(q.index(index), data)))
+        res["data"]["ref_id"] = res["ref"].id()
+        return res["data"]
+    except Exception as ex:
+        raise ex
+</code></pre></div></div>
+
+<p>This is used to get a FaunaDB document by Index. The get function does not return multiple documents and is only able to return a single document at a time.</p>
+
+<p>To get multiple documents we need to use a map function to return multiple data by a certain index.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>def get_multiple(index, data=None):
+    try:
+        serverClient = FaunaClient(secret=os.environ.get("FAUNA_SERVER_SECRET"))
+        res_arr = []
+        if data is None:
+            res = serverClient.query(   
+                q.map_(
+                    q.lambda_("data", q.get(q.var("data"))), 
+                    q.paginate(q.match(q.index(index)))
+                )
+            )
+            res_arr.extend(res["data"])
+        elif isinstance(data, list):
+            for x in data:
+                res = serverClient.query(   
+                    q.map_(
+                        q.lambda_("data", q.get(q.var("data"))), 
+                        q.paginate(q.match(q.index(index), q.casefold(x)))
+                    )
+                )
+                res_arr.extend(res["data"])
+        else:
+            res = serverClient.query(   
+                q.map_(
+                    q.lambda_("data", q.get(q.var("data"))), 
+                    q.paginate(q.match(q.index(index), q.casefold(data)))
+                )
+            )
+            res_arr.extend(res["data"])
+
+        arr = []
+        for x in res_arr:
+            x["data"]["ref_id"] = x["ref"].id()
+            arr.append(x["data"])
+        return arr
+    except Exception as ex:
+        raise ex
+</code></pre></div></div>
+
+<p>The lambda function will pass the data needed in the Index while paginate will search for the specific documents in the collection, then the map function will return all matching documents as a list.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>def get_by_ref_id(collection, id):
+    try:
+        serverClient = FaunaClient(secret=os.environ.get("FAUNA_SERVER_SECRET"))
+        res = serverClient.query(q.get(q.ref(q.collection(collection), id)))
+        res["data"]["ref_id"] = res["ref"].id()
+        return res["data"]
+    except Exception as ex:
+        raise ex
+</code></pre></div></div>
+
+<p>Get document by reference Id is the only function that does not use an Index rather would utilize the document’s reference Id.</p>
+
+<p>The code for creating, updating, and deleting documents would be similar. Because FaunaDB is a NoSQL database the data structure doesn’t matter as long as it is passed as a dictionary. Updating and deleting documents would also need an extra reference Id parameter, similar to the Get document by reference Id function.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>def create(collection, data):
+    try:
+        serverClient = FaunaClient(secret=os.environ.get("FAUNA_SERVER_SECRET"))
+        res = serverClient.query(q.create(q.collection(collection), {"data": data}))
+        res["data"]["ref_id"] = res["ref"].id()
+        return res["data"]
+    except Exception as ex:
+        raise ex
+
+def update(collection, id, data):
+    try:
+        serverClient = FaunaClient(secret=os.environ.get("FAUNA_SERVER_SECRET"))
+        res = serverClient.query(q.update(q.ref(q.collection(collection), id), {"data": data}))
+        res["data"]["ref_id"] = res["ref"].id()
+        return res["data"]
+    except Exception as ex:
+        raise ex
+
+def delete(collection, id):
+    try:
+        serverClient = FaunaClient(secret=os.environ.get("FAUNA_SERVER_SECRET"))
+        serverClient.query(q.delete(q.ref(q.collection(collection), id)))
+        return True
+    except Exception as ex:
+        raise ex
+</code></pre></div></div>
+
+<h4 id="make-the-to-dohelper">Make the To-Do helper</h4>
+
+<p>After writing the FaunaDB entity script, write the helper functions for the collection. The helper functions need to be small precise functions that do exactly one thing.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>from entities.faunadb_entity import get, get_multiple, get_by_ref_id, create, update, delete
+
+def get_all_todos():
+    try:
+        return get_multiple('all_todos')
+    except Exception as ex:
+        raise ex
+
+def get_todo_by_ref_id(id):
+    try:
+        return get_by_ref_id('todo', id)
+    except Exception as ex:
+        raise ex
+
+def create_todo(data):
+    try:
+        return create('todo', data)
+    except Exception as ex:
+        raise ex
+
+def update_todo(id, data):
+    try:
+        return update('todo', id, data)
+    except Exception as ex:
+        raise ex
+
+def delete_todo(id):
+    try:
+        return delete('todo', id)
+    except Exception as ex:
+        raise ex
+</code></pre></div></div>
+
+<h4 id="make-the-to-doservice">Make the To-Do service</h4>
+
+<p>When all the helpers are ready, write the service file to be used as endpoints. All the requests are parsed at the service level, thus the helper level will only receive processed data.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>from flask import request, jsonify
+from helpers import todo_helper
+
+def get_all_todos():
+    try:
+        print(todo_helper.get_all_todos())
+        return jsonify(todo_helper.get_all_todos())
+    except Exception as ex:
+        raise ex
+
+def get_todo_by_ref_id(id):
+    try:
+        return jsonify(todo_helper.get_todo_by_ref_id(id))
+    except Exception as ex:
+        raise ex
+
+def create_todo():
+    try:
+        req_data = request.get_json()
+        return jsonify(todo_helper.create_todo(req_data))
+    except Exception as ex:
+        raise ex
+
+def update_todo(id):
+    try:
+        req_data = request.get_json()
+        return jsonify(todo_helper.update_todo(id, req_data["data"]))
+    except Exception as ex:
+        raise ex
+
+def delete_todo(id):
+    try:
+        return jsonify(todo_helper.delete_todo(id))
+    except Exception as ex:
+        raise ex
+</code></pre></div></div>
+
+<h4 id="attach-the-routes-to-the-service-endpoints">Attach the routes to the service endpoints</h4>
+
+<p>Finally, when the endpoints are set, add the endpoints to the app.py</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>from services.todo_service import get_all_todos, get_todo_by_ref_id, create_todo, update_todo, delete_todo
+from flask import Flask
+
+app = Flask(__name__)
+app.add_url_rule('/api/todos', methods=['GET'], view_func=get_all_todos)
+app.add_url_rule('/api/todos', methods=['POST'], view_func=create_todo)
+app.add_url_rule('/api/todos/&lt;string:id&gt;', methods=['GET'], view_func=get_todo_by_ref_id)
+app.add_url_rule('/api/todos/&lt;string:id&gt;', methods=['PUT'], view_func=update_todo)
+app.add_url_rule('/api/todos/&lt;string:id&gt;', methods=['DELETE'], view_func=delete_todo)
+
+if __name__ == "__main__":
+    app.run(host='0.0.0.0')
+</code></pre></div></div>
+
+<p>You’re done! Don’t forget to test the APIs with Postman before deployment.</p>
+
+<h3 id="summary">Summary</h3>
+
+<p><strong>TL;DR</strong> You can check out my Github repository for the project and try to run it yourself.</p>
+
+<p><a href="https://github.com/agustinustheo/flask-faunadb" title="https://github.com/agustinustheo/flask-faunadb"><strong>Boilerplate code for Flask and FaunaDB project</strong></a></p>
+
+<p>In this tutorial, you have learned to make an API using Flask and FaunaDB.</p>
+
+<p>To recap we have made:</p>
+
+<ul>
+  <li>API endpoints using Flask.</li>
+  <li>Indexes in FaunaDB.</li>
+  <li>A simple entity helper for FaunaDB.</li>
+  <li>A readable boilerplate for future API projects.</li>
+</ul>
+
+<p>You now have a quick boilerplate setup to use when you want to make a quick app in a matter of hours. Future plans include adding a Swagger implementation to the existing boilerplate.</p>
+
+<p>Hope this is a great start for you, have a nice day!</p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+
+
+        
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2020-10-28T06:50:13+07:00">October 28, 2020</time></p>
+
+
+      </footer>
+
+      <section class="page__share">
+  
+
+  <a href="https://twitter.com/intent/tweet?text=How+To+Make+Scalable+APIs+Using+Flask+and+FaunaDB%20https%3A%2F%2Fagustinustheo.github.io%2Ftech%2F2020%2F10%2F28%2Fhow-to-make-scalable-apis-using-flask-and-faunadb.html" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fagustinustheo.github.io%2Ftech%2F2020%2F10%2F28%2Fhow-to-make-scalable-apis-using-flask-and-faunadb.html" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=https%3A%2F%2Fagustinustheo.github.io%2Ftech%2F2020%2F10%2F28%2Fhow-to-make-scalable-apis-using-flask-and-faunadb.html" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+
+      
+  <nav class="pagination">
+    
+      <a href="/tech/2020/10/20/how-to-deploy-net-core-on-iis.html" class="pagination--pager" title="How To Deploy Your .NET Core App on an IIS Server
+">Previous</a>
+    
+    
+      <a href="/tech/2020/11/09/how-to-host-flutter-using-nginx.html" class="pagination--pager" title="How To Host Flutter Web In Linux Using Nginx
+">Next</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h4 class="page__related-title">You May Also Enjoy</h4>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="https://cdn-images-1.medium.com/max/800/0*zCSfGwYvrx7hc3DY" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/tech/2020/12/10/automate-your-linux-deployment-using-azure-devops.html" rel="permalink">Automate Your Linux Deployment Using Azure DevOps
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          9 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">Feel like you have been logging into your Linux servers too much lately? Good, this might be the right article for you. In teams, either large or small manua...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="https://cdn-images-1.medium.com/max/800/0*9RPiaNqFjBvZay_Q" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/tech/2020/11/18/how-to-choose-your-first-techstack.html" rel="permalink">How To Choose Your First Techstack
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          7 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">For all these years in the tech industry. I assure you that I have had my fair share of technology. A multitude of different frameworks aiming to achieve the...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="https://cdn-images-1.medium.com/max/800/0*4HwhJBcQU5Fcjv2U" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/tech/2020/11/09/how-to-host-flutter-using-nginx.html" rel="permalink">How To Host Flutter Web In Linux Using Nginx
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          5 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">Thinking of making a web app? I recommend you try Flutter. Flutter’s web capabilities are still in beta but it’s quite promising, to say the least. I have ex...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="https://cdn-images-1.medium.com/max/800/0*QkuSb8wVpC5wY7kj" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/tech/2020/10/20/how-to-deploy-net-core-on-iis.html" rel="permalink">How To Deploy Your .NET Core App on an IIS Server
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          3 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">When you work in an enterprise environment you can’t choose where you would want to publish your application, especially if you enter a very established comp...</p>
+  </article>
+</div>
+
+        
+      </div>
+    </div>
+  
+  
+</div>
+
+    </div>
+
+    
+      <div class="search-content">
+        <div class="search-content__inner-wrap"><form class="search-content__form" onkeydown="return event.key != 'Enter';">
+    <label class="sr-only" for="search">
+      Enter your search term...
+    </label>
+    <input type="search" id="search" class="search-input" tabindex="-1" placeholder="Enter your search term..." />
+  </form>
+  <div id="results" class="results"></div></div>
+
+      </div>
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+      
+        
+          <li><a href="https://steego.link" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-link" aria-hidden="true"></i> Website</a></li>
+        
+      
+        
+          <li><a href="https://id.linkedin.com/in/agustinus-theodorus" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i> LinkedIn</a></li>
+        
+      
+        
+          <li><a href="https://github.com/agustinustheo" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+        
+      
+        
+          <li><a href="https://twitter.com/agustinustheoo" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-twitter-square" aria-hidden="true"></i> Twitter</a></li>
+        
+      
+    
+
+    <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2020 Agustinus Theodorus. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+<script src="/assets/js/lunr/lunr.min.js"></script>
+<script src="/assets/js/lunr/lunr-store.js"></script>
+<script src="/assets/js/lunr/lunr-en.js"></script>
+
+
+
+
+
+
+
+  </body>
+</html>

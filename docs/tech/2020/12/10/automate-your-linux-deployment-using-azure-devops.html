@@ -1,0 +1,1015 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.21.0 by Michael Rose
+  Copyright 2013-2020 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Automate Your Linux Deployment Using Azure DevOps - Agustinus Theodorus</title>
+<meta name="description" content="A comprehensive guide on utilizing Azure DevOps to the fullest using CI/CD and shell scripts.">
+
+
+  <meta name="author" content="Agustinus Theodorus">
+  
+  <meta property="article:author" content="Agustinus Theodorus">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Agustinus Theodorus">
+<meta property="og:title" content="Automate Your Linux Deployment Using Azure DevOps">
+<meta property="og:url" content="https://agustinustheo.github.io/tech/2020/12/10/automate-your-linux-deployment-using-azure-devops.html">
+
+
+  <meta property="og:description" content="A comprehensive guide on utilizing Azure DevOps to the fullest using CI/CD and shell scripts.">
+
+
+
+  <meta property="og:image" content="https://cdn-images-1.medium.com/max/800/0*zCSfGwYvrx7hc3DY">
+
+
+
+
+
+  <meta property="article:published_time" content="2020-12-10T19:49:28+07:00">
+
+
+
+
+
+
+<link rel="canonical" href="https://agustinustheo.github.io/tech/2020/12/10/automate-your-linux-deployment-using-azure-devops.html">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": "Agustinus Theodorus",
+      "url": "https://agustinustheo.github.io/"
+    
+  }
+</script>
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+<link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Agustinus Theodorus Feed">
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css">
+
+<!--[if IE]>
+  <style>
+    /* old IE unsupported flexbox fixes */
+    .greedy-nav .site-title {
+      padding-right: 3em;
+    }
+    .greedy-nav button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+    }
+  </style>
+<![endif]-->
+
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single">
+    <nav class="skip-links">
+  <h2 class="screen-reader-text">Skip links</h2>
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/">
+          Agustinus Theodorus
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="https://agustinustheoo.medium.com">Blog</a>
+            </li><li class="masthead__menu-item">
+              <a href="https://id.linkedin.com/in/agustinus-theodorus">Profile</a>
+            </li></ul>
+        
+        <button class="search__toggle" type="button">
+          <span class="visually-hidden">Toggle search</span>
+          <svg class="icon" width="16" height="16" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15.99 16">
+            <path d="M15.5,13.12L13.19,10.8a1.69,1.69,0,0,0-1.28-.55l-0.06-.06A6.5,6.5,0,0,0,5.77,0,6.5,6.5,0,0,0,2.46,11.59a6.47,6.47,0,0,0,7.74.26l0.05,0.05a1.65,1.65,0,0,0,.5,1.24l2.38,2.38A1.68,1.68,0,0,0,15.5,13.12ZM6.4,2A4.41,4.41,0,1,1,2,6.4,4.43,4.43,0,0,1,6.4,2Z" transform="translate(-.01)"></path>
+          </svg>
+        </button>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person">
+
+  
+    <div class="author__avatar">
+      
+        <img src="/assets/img/bio-photo.jpg" alt="Agustinus Theodorus" itemprop="image">
+      
+    </div>
+  
+
+  <div class="author__content">
+    
+      <h3 class="author__name" itemprop="name">Agustinus Theodorus</h3>
+    
+    
+      <div class="author__bio" itemprop="description">
+        <p>I am primarily a web app developer. Most of my coding time is spent making new web apps, web APIs or bug fixing. My current hobby is writing, I usually spare time to write every month.</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+
+      
+        
+          
+            <li><a href="https://steego.link" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-link" aria-hidden="true"></i><span class="label">Website</span></a></li>
+          
+        
+          
+            <li><a href="https://id.linkedin.com/in/agustinus-theodorus" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span class="label">LinkedIn</span></a></li>
+          
+        
+          
+            <li><a href="https://github.com/agustinustheo" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i><span class="label">GitHub</span></a></li>
+          
+        
+          
+            <li><a href="https://twitter.com/agustinustheoo" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-twitter-square" aria-hidden="true"></i><span class="label">Twitter</span></a></li>
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Automate Your Linux Deployment Using Azure DevOps">
+    <meta itemprop="description" content="Feel like you have been logging into your Linux servers too much lately? Good, this might be the right article for you. In teams, either large or small manual deployments can be tedious. But they are also predictable. Deployment steps don’t really change that often unless you have a breaking change or you are implementing a major feature.">
+    <meta itemprop="datePublished" content="2020-12-10T19:49:28+07:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">Automate Your Linux Deployment Using Azure DevOps
+</h1>
+          
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          8 minute read
+        
+      </span>
+    
+  </p>
+
+
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <p>Feel like you have been logging into your Linux servers too much lately? Good, this might be the right article for you. In teams, either large or small manual deployments can be tedious. But they are also predictable. Deployment steps don’t really change that often unless you have a breaking change or you are implementing a major feature.</p>
+
+<p><img src="https://cdn-images-1.medium.com/max/800/0*zCSfGwYvrx7hc3DY" alt="" /></p>
+
+<blockquote>
+  <p>So, why don’t you just automate it? You don’t need to do it yourself. Do important things like <strong>writing code</strong> and let a machine do the deployments for you.</p>
+</blockquote>
+
+<p>If your team is blessed to use Azure DevOps here is a tutorial to finally automate <strong><em>the hell</em></strong> out of your deployments. You <em>seldom</em> have to log on to your Linux servers again.</p>
+
+<p><strong>In this tutorial, we will be making an automated pipeline to deploy .NET Core applications to a Centos 8 server. The app will be run as a service and we will serve those services through a reverse proxy using NGINX.</strong></p>
+
+<h3 id="installing-azure-agent-onlinux">Installing Azure Agent on Linux</h3>
+
+<p>In Azure DevOps, we use an agent to interact with our builds in the pipeline. Installing agents are straightforward, just follow these steps:</p>
+
+<h4 id="1-setting-up-a-deployment-group-in-azuredevops">1. Setting Up A Deployment Group in Azure DevOps</h4>
+
+<p>Deployment groups are the list of agents already installed on your servers. You would need to make a deployment group for each server.</p>
+
+<p>First, open your <strong>Azure DevOps</strong> dashboard.</p>
+
+<p><img src="https://cdn-images-1.medium.com/max/800/1*diKrTk5BKavbs076x6AqNQ.png" alt="" /></p>
+
+<p>Next, open your <strong>Pipelines</strong></p>
+
+<p><img src="https://cdn-images-1.medium.com/max/800/0*RQiW01F5omxuvnAV" alt="" /></p>
+
+<p>Go to <strong>Deployment Groups</strong>, and click <strong>New</strong>.</p>
+
+<p><img src="https://cdn-images-1.medium.com/max/800/0*wFxLJNCYSxD9PhN4" alt="" /></p>
+
+<p>Give your Linux VM an Alias, and the description. Then click <strong>Create</strong>.</p>
+
+<p><img src="https://cdn-images-1.medium.com/max/800/1*dC9GLQyFwPz4sVprOJ4l-g.png" alt="" /></p>
+
+<p>You have created a deployment group, now to install this deployment groups agent on your Linux server:</p>
+
+<ol>
+  <li>Change the target from Windows to <strong>Linux</strong>.</li>
+  <li>Check the <strong>Use a personal access token</strong> checkbox.</li>
+  <li>Save the script on a notepad for the next step.</li>
+</ol>
+
+<h4 id="2-installing-the-agent-on-the-linuxserver">2. Installing the Agent on the Linux Server</h4>
+
+<p>To install the agent, run the script copied from the previous step <strong>in the home directory</strong>, make sure you <strong>run the script with a user that has sudo enabled</strong>.</p>
+
+<p>After installation is finished run go into the <strong>azagent</strong> directory and check the installation by trying to run the agent:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cd azagent  
+./run.sh
+</code></pre></div></div>
+
+<p>If the agent returns a <strong><em>Listening for Jobs</em></strong> message, that means the installation was successful. The next step is to make a service that can run the agent in the background.</p>
+
+<p>To start to install the agent as a service, run:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo ./svc.sh install
+</code></pre></div></div>
+
+<p>This will install the service, and then run it in the background. To stop the service run:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo ./svc.sh stop
+</code></pre></div></div>
+
+<p>Otherwise, if we want to start an installed service, run:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo ./svc.sh start
+</code></pre></div></div>
+
+<p><img src="https://cdn-images-1.medium.com/max/800/0*vkJRjhEYQVPeemFc" alt="" /></p>
+
+<p>Check if the service is running by opening the Deployment Groups tab in Azure DevOps. If it is <strong>Online</strong> then your agent installation is successful and it is available for jobs.</p>
+
+<p>This short installation guide was based on an article by <a href="https://docs.microsoft.com/en-us/azure/devops/pipelines/agents/v2-linux?view=azure-devops">Microsoft</a>.</p>
+
+<h3 id="configure-your-linux-server-for-automation">Configure your Linux server for automation</h3>
+
+<p>Now, this would be the fun part. Microsoft already did all the heavy lifting with the boring installation things. Now it is our turn to automate things.</p>
+
+<h4 id="1-make-a-script-to-automate-nginx-configurations">1. Make a script to automate NGINX configurations</h4>
+
+<p>To add new NGINX configurations we will create a shell script, add this <em>add-nginx-conf.sh</em> script on the home directory:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>#!/bin/bash
+conf_path="/etc/nginx/conf.d/$1.conf"
+
+if [ -f "$conf_path" ]
+then
+    conf_text=`cat $conf_path`
+    if [[ "$conf_text" == *"$2"* ]] || [[ "$conf_text" == *"localhost:$3"* ]]
+    then
+        echo "Proxy route or localhost port has been used, please manually reconfigure your Nginx configuration."
+    else
+        word="\n\n\tlocation \/$2\/ {\
+\n\t\tproxy_pass http:\/\/localhost:$3\/;\
+\n\t}"
+        match="# Insert here"
+        echo "$conf_text" | sed "s/$match/&amp;$word/g" &gt; "$conf_path"
+    fi
+
+    nginx -t
+    systemctl reload nginx
+else
+    conf_text="server {
+	listen       80;
+	listen       [::]:80;
+	server_name  $1;
+
+	# Load configuration files for the default server block.
+	include /etc/nginx/default.d/*.conf;
+	
+	# Insert here
+
+	location /$2/ {
+		proxy_pass http://localhost:$3/;
+	}
+
+	error_page 404 /404.html;
+		location = /40x.html {
+	}
+
+	error_page 500 502 503 504 /50x.html;
+		location = /50x.html {
+	}
+}"
+
+    echo "$conf_text" &gt; "$conf_path"
+
+    chcon unconfined_u:object_r:httpd_config_t:s0 "$conf_path"
+    chown root:root "$conf_path"
+
+    nginx -t
+    systemctl reload nginx
+fi
+</code></pre></div></div>
+
+<p>This script will create a search for configuration files named using the associated DNS, it will create a new one if it was not found. Once found, the new configuration routes will be added there. Mind you, the configuration route in this script would be a basic proxy pass, you might want to add more configurations to the script if you want to use it for production.</p>
+
+<p>The shell script accepts three parameters. The DNS, proxy route, and the port being used:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo ~/add-nginx-conf.sh &lt;DNS&gt; &lt;proxy route&gt; &lt;app port&gt;
+</code></pre></div></div>
+
+<p>Example:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo ~/add-nginx-conf.sh yourdomain.com enrichment_track 14321
+</code></pre></div></div>
+
+<p>In this example, the script will add configurations for the yourdomain.com domain, with a reverse proxy to port 14321 in the enrichment_track.</p>
+
+<h4 id="2-make-a-script-to-automate-system-service-configurations">2. Make a script to automate system service configurations</h4>
+
+<p>To add new system service configurations we will create a shell script, add this <em>make-service.sh</em> script on the home directory:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>#!/bin/bash
+file_path=`pwd`
+service_path="/etc/systemd/system/$1.service"
+if [ -f "$service_path" ]
+then
+    echo "Service file already exists"
+else
+    touch "$service_path"
+    service_contents="[Unit]
+Description=.NET Web API for $1
+
+[Service]
+WorkingDirectory=$file_path/_$1/drop/s
+ExecStart=/usr/bin/dotnet $file_path/_$1/drop/s/$2.dll
+Restart=always
+# Restart service after 10 seconds if the dotnet service crashes:
+RestartSec=10
+KillSignal=SIGINT
+SyslogIdentifier=dotnet-example
+User=&lt;user&gt;
+Environment=ASPNETCORE_ENVIRONMENT=&lt;server environment&gt;
+Environment=DOTNET_PRINT_TELEMETRY_MESSAGE=false
+
+[Install]
+WantedBy=multi-user.target"
+    echo "$service_contents" &gt;&gt; "$service_path"
+    systemctl start $1.service
+    systemctl enable $1.service
+fi
+</code></pre></div></div>
+
+<p><strong>Before you copy and paste the code, notice the <code class="language-plaintext highlighter-rouge">&lt;user&gt;</code> and <code class="language-plaintext highlighter-rouge">&lt;server environment&gt;</code> tags in the script. Please change it to your corresponding user and server environment beforehand. Server environments in this case would be either Development or Production.</strong></p>
+
+<p>The script will generate new systemd service files that would run .NET Core projects. To generate scripts for other types of applications you would want to change the given template.</p>
+
+<p>The shell script accepts two parameters. The service name, and the project name used:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo ~/make-service.sh &lt;service name&gt; &lt;project name&gt;
+</code></pre></div></div>
+
+<p>Example:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo ~/make-service.sh CI-Build API-Project
+</code></pre></div></div>
+
+<p>In this example, the script will add a new system service file <em>CI-Build.service</em>, that runs a dll file named <em>API-Project.dll</em>.</p>
+
+<h4 id="3-setup-a-user-to-run-systemctl-and-nginx-commands-without-passwordprompts">3. Setup a user to run systemctl and Nginx commands without password prompts</h4>
+
+<p>For automation purposes, the user that you used to install your Azure Agent needs to be able to run systemctl and Nginx commands without a password prompt. To remove the password prompts on sudo run:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo visudo
+</code></pre></div></div>
+
+<p>We need to run all the commands in the script using sudo without having a password being prompted. So, we make exceptions for those commands, and the corresponding scripts we are going to use.</p>
+
+<p>Then add this on the last line <em>(change the <code class="language-plaintext highlighter-rouge">&lt;user&gt;</code> tag beforehand)</em>:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;user&gt; ALL=(ALL) NOPASSWD:/usr/bin/systemctl, /usr/sbin/nginx, /usr/bin/chcon, /usr/bin/chown, /usr/bin/echo, /usr/bin/touch, /usr/bin/sed, /home/&lt;user&gt;/make-service.sh, /home/&lt;user&gt;/add-nginx-conf.sh
+</code></pre></div></div>
+
+<p>Exit and save the config file, then try running one of these commands using sudo. You should not be prompted for a password.</p>
+
+<p>A full explanation on how to run a sudo command without a password can be seen <a href="https://www.cyberciti.biz/faq/linux-unix-running-sudo-command-without-a-password/">here</a>.</p>
+
+<h3 id="prepare-the-pipelines">Prepare the Pipelines</h3>
+
+<h4 id="prepare-the-cipipeline">Prepare the CI Pipeline</h4>
+
+<p><img src="https://cdn-images-1.medium.com/max/800/1*fRlXDaaNIGDMUXlx8ER1gg.png" alt="" /></p>
+
+<p>In this tutorial, we are going to use a .NET Core app as our example.</p>
+
+<ol>
+  <li>First, go to the Pipelines tab.</li>
+  <li>Click <strong>New Pipeline</strong>.</li>
+</ol>
+
+<p><img src="https://cdn-images-1.medium.com/max/800/0*lwYKW8-orAtqp1xr" alt="" /></p>
+
+<p>Use the classic editor.</p>
+
+<p><img src="https://cdn-images-1.medium.com/max/800/0*w9fgiTigSL8dU4Pu" alt="" /></p>
+
+<p>Choose a repository and click <strong>Continue</strong>.</p>
+
+<p><img src="https://cdn-images-1.medium.com/max/800/0*j8MZijq5kfQ3gFyo" alt="" /></p>
+
+<p>Apply the .NET Core template.</p>
+
+<ol>
+  <li>Search for <strong>“.NET Core”</strong>.</li>
+  <li>Then apply the template</li>
+</ol>
+
+<p><img src="https://cdn-images-1.medium.com/max/800/0*aJDSwZlIsa-uVRjl" alt="" /></p>
+
+<p>Because we are deploying a very small example app, I didn’t prepare any tests so:</p>
+
+<ol>
+  <li>Click the Test task.</li>
+  <li>Remove the task.</li>
+</ol>
+
+<p>Otherwise, if you are using tests, then don’t remove this task.</p>
+
+<p><img src="https://cdn-images-1.medium.com/max/800/0*i2vTHkZzgc3RK2Op" alt="" /></p>
+
+<p>Finally, this is what you are left with. In the next step, we will implement Continuous Development in our solution.</p>
+
+<ol>
+  <li>Change the name of your CI pipeline.</li>
+  <li>Save the Pipeline.</li>
+</ol>
+
+<h4 id="prepare-the-cdpipeline">Prepare the CD Pipeline</h4>
+
+<p><img src="https://cdn-images-1.medium.com/max/800/0*j4Oyuueu6v8jcAa-" alt="" /></p>
+
+<p>To add a new Continuous Development pipeline:</p>
+
+<ol>
+  <li>Go to the <strong>Releases</strong> tab.</li>
+  <li>Click the <strong>New</strong>.</li>
+  <li>Then click <strong>New release pipeline</strong> to create a new pipeline.</li>
+</ol>
+
+<p><img src="https://cdn-images-1.medium.com/max/800/0*PksyAUqhU2tdHkTW" alt="" /></p>
+
+<p>After clicking the <strong>New release pipeline</strong> button a pop-up will appear, then select <strong>Empty Job</strong>.</p>
+
+<p><img src="https://cdn-images-1.medium.com/max/800/0*B8Sh7jl3MZJ4qtF1" alt="" /></p>
+
+<p>To connect to a CI pipeline:</p>
+
+<ol>
+  <li>Click <strong>Add a new artifact</strong>.</li>
+  <li>Choose the project that contains the CI pipeline.</li>
+  <li>Choose the CI pipeline.</li>
+  <li>Give an alias to your artifact.</li>
+  <li>When all is done click <strong>Add</strong> to finish the configuration.</li>
+</ol>
+
+<p><img src="https://cdn-images-1.medium.com/max/800/0*38Fjnw3zUuPhvji9" alt="" /></p>
+
+<p>Then for the Continuous Deployment pipeline:</p>
+
+<ol>
+  <li>Click the thunderbolt icon.</li>
+  <li>Then check the <strong>Enabled</strong> button.</li>
+</ol>
+
+<p><img src="https://cdn-images-1.medium.com/max/800/0*0iqhBSovBPD7xVpL" alt="" /></p>
+
+<p>After creating a stage, on <strong>stages</strong>, double click on tasks to go to the <strong>Tasks</strong> section.</p>
+
+<p><img src="https://cdn-images-1.medium.com/max/800/0*ojZ6-NrtHwo0Aeie" alt="" /></p>
+
+<p>In the tasks section, make a deployment group job.</p>
+
+<ol>
+  <li>Click the three dots to show options.</li>
+  <li>Add a deployment group job.</li>
+</ol>
+
+<p><img src="https://cdn-images-1.medium.com/max/800/0*FyUB5L1Iei_pTuQN" alt="" /></p>
+
+<p>Choose the Linux deployment group we made on <a href="https://docs.google.com/document/d/1KauINvdb7BFPz9pdlGhwGw93Jj7unkbnTNWAXrstOeg/edit#heading=h.n6j71fd5yi6b">this step</a>.</p>
+
+<p><img src="https://cdn-images-1.medium.com/max/800/0*3XuKy89xJJyYXec8" alt="" /></p>
+
+<p>Add a task to the deployment job.</p>
+
+<ol>
+  <li>To add a new task click the <strong>+</strong> sign.</li>
+  <li>Then search for <strong>Download build artifacts</strong>. This task is to download artifacts from the CI pipeline to the Linux VM.</li>
+  <li>Finally, <strong>Add</strong> the task.</li>
+</ol>
+
+<p><img src="https://cdn-images-1.medium.com/max/800/0*7r1MUEHrP4G5AbB_" alt="" /></p>
+
+<p>Next is to configure your Download Build Artifacts job. Follow these 6 steps.</p>
+
+<ol>
+  <li>Click the <strong>Download Build Artifacts</strong> task.</li>
+  <li>Choose to download artifacts by <strong>Specific Build</strong>.</li>
+  <li>Define your Azure DevOps project</li>
+  <li>Define your CI pipeline.</li>
+  <li>Check the <strong>When appropriate download artifacts from the triggering build</strong> checkbox to trigger a download only after the build is finished.</li>
+  <li>As for the download, type choose <strong>Specific files</strong>.</li>
+</ol>
+
+<p><img src="https://cdn-images-1.medium.com/max/800/0*Y5iGYaSEcE2O1u1y" alt="" /></p>
+
+<p>Then search for the <strong>Command line</strong> task:</p>
+
+<ol>
+  <li>Create a new task by clicking the <strong>+</strong> button.</li>
+  <li>Search for <strong>“command”</strong>.</li>
+  <li>Click <strong>Add</strong> to add a new task to the existing job.</li>
+</ol>
+
+<p><img src="https://cdn-images-1.medium.com/max/800/1*EWRJZrvelnFdQywZNAAxJA.png" alt="" /></p>
+
+<p>Then in the command line, paste in the script you will be running:</p>
+
+<ol>
+  <li>Copy the <strong>appsettings.json</strong> file from the home directory to the build folder.</li>
+  <li>Generate system service configuration files and start <strong>if not exist</strong> using the <em>make-service.sh</em> script.</li>
+  <li>Restart the service for the .NET Core project.</li>
+  <li>Add NGINX configuration <strong>if not exist</strong> using the <em>add-nginx-conf.sh</em> script.</li>
+</ol>
+
+<blockquote>
+  <p>Notice in the command line, there are tags like <strong>$(Build.DefinitionName)</strong>. This is one of Azure Pipeline’s pre-defined variables you can learn more about it <a href="https://docs.microsoft.com/en-us/azure/devops/pipelines/build/variables?view=azure-devops&amp;tabs=yaml">here</a>.</p>
+</blockquote>
+
+<p><img src="https://cdn-images-1.medium.com/max/800/0*sxB70Pit7xBQICV3" alt="" /></p>
+
+<p>After you’re done with the configuration, save your Release pipeline:</p>
+
+<ol>
+  <li>Change the name of the Pipeline</li>
+  <li>Save the pipeline.</li>
+</ol>
+
+<h3 id="testing-thepipeline">Testing the pipeline</h3>
+
+<p>To test the pipeline, go to the Pipelines section, open the pipeline you just created, and click <strong>Run Pipeline</strong>.</p>
+
+<p><img src="https://cdn-images-1.medium.com/max/800/1*ulEJaZGiPYdzOIEoOt8iWw.png" alt="" /></p>
+
+<p>We run it from the CI pipeline because both CI and CD pipelines are already connected.</p>
+
+<h3 id="summary">Summary</h3>
+
+<p>In this tutorial, you have learned how to automate CI/CD deployments using Azure DevOps and some shell scripts. We tested it out using a .NET Core project. The Linux server used was a Centos 8.</p>
+
+<p>To recap what we have done:</p>
+
+<ul>
+  <li>Installed an Azure Agent on Linux.</li>
+  <li>Configured our Linux server for automation.</li>
+  <li>Prepared the CI/CD Pipelines.</li>
+</ul>
+
+<p>You now have an open playbook to use when you want to automate deployments. Hope this tutorial was of help and have a nice day!</p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+
+
+        
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2020-12-10T19:49:28+07:00">December 10, 2020</time></p>
+
+
+      </footer>
+
+      <section class="page__share">
+  
+
+  <a href="https://twitter.com/intent/tweet?text=Automate+Your+Linux+Deployment+Using+Azure+DevOps%20https%3A%2F%2Fagustinustheo.github.io%2Ftech%2F2020%2F12%2F10%2Fautomate-your-linux-deployment-using-azure-devops.html" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fagustinustheo.github.io%2Ftech%2F2020%2F12%2F10%2Fautomate-your-linux-deployment-using-azure-devops.html" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=https%3A%2F%2Fagustinustheo.github.io%2Ftech%2F2020%2F12%2F10%2Fautomate-your-linux-deployment-using-azure-devops.html" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+
+      
+  <nav class="pagination">
+    
+      <a href="/tech/2020/11/18/how-to-choose-your-first-techstack.html" class="pagination--pager" title="How To Choose Your First Techstack
+">Previous</a>
+    
+    
+      <a href="#" class="pagination--pager disabled">Next</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h4 class="page__related-title">You May Also Enjoy</h4>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="https://cdn-images-1.medium.com/max/800/0*9RPiaNqFjBvZay_Q" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/tech/2020/11/18/how-to-choose-your-first-techstack.html" rel="permalink">How To Choose Your First Techstack
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          7 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">For all these years in the tech industry. I assure you that I have had my fair share of technology. A multitude of different frameworks aiming to achieve the...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="https://cdn-images-1.medium.com/max/800/0*4HwhJBcQU5Fcjv2U" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/tech/2020/11/09/how-to-host-flutter-using-nginx.html" rel="permalink">How To Host Flutter Web In Linux Using Nginx
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          5 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">Thinking of making a web app? I recommend you try Flutter. Flutter’s web capabilities are still in beta but it’s quite promising, to say the least. I have ex...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="https://cdn-images-1.medium.com/max/800/0*DuZ_NXbhwmAfiMPM" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/tech/2020/10/28/how-to-make-scalable-apis-using-flask-and-faunadb.html" rel="permalink">How To Make Scalable APIs Using Flask and FaunaDB
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          7 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">With the rise of serverless technology, making web services only gets easier. Serverless apps change the old monolithic architecture of apps and promote more...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="https://cdn-images-1.medium.com/max/800/0*QkuSb8wVpC5wY7kj" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/tech/2020/10/20/how-to-deploy-net-core-on-iis.html" rel="permalink">How To Deploy Your .NET Core App on an IIS Server
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          3 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">When you work in an enterprise environment you can’t choose where you would want to publish your application, especially if you enter a very established comp...</p>
+  </article>
+</div>
+
+        
+      </div>
+    </div>
+  
+  
+</div>
+
+    </div>
+
+    
+      <div class="search-content">
+        <div class="search-content__inner-wrap"><form class="search-content__form" onkeydown="return event.key != 'Enter';">
+    <label class="sr-only" for="search">
+      Enter your search term...
+    </label>
+    <input type="search" id="search" class="search-input" tabindex="-1" placeholder="Enter your search term..." />
+  </form>
+  <div id="results" class="results"></div></div>
+
+      </div>
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+      
+        
+          <li><a href="https://steego.link" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-link" aria-hidden="true"></i> Website</a></li>
+        
+      
+        
+          <li><a href="https://id.linkedin.com/in/agustinus-theodorus" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i> LinkedIn</a></li>
+        
+      
+        
+          <li><a href="https://github.com/agustinustheo" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+        
+      
+        
+          <li><a href="https://twitter.com/agustinustheoo" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-twitter-square" aria-hidden="true"></i> Twitter</a></li>
+        
+      
+    
+
+    <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2020 Agustinus Theodorus. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+<script src="/assets/js/lunr/lunr.min.js"></script>
+<script src="/assets/js/lunr/lunr-store.js"></script>
+<script src="/assets/js/lunr/lunr-en.js"></script>
+
+
+
+
+
+
+
+  </body>
+</html>

@@ -1,0 +1,746 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.21.0 by Michael Rose
+  Copyright 2013-2020 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>How To Host Flutter Web In Linux Using Nginx - Agustinus Theodorus</title>
+<meta name="description" content="An alternative to Firebase. DIY on your private server!">
+
+
+  <meta name="author" content="Agustinus Theodorus">
+  
+  <meta property="article:author" content="Agustinus Theodorus">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Agustinus Theodorus">
+<meta property="og:title" content="How To Host Flutter Web In Linux Using Nginx">
+<meta property="og:url" content="https://agustinustheo.github.io/tech/2020/11/09/how-to-host-flutter-using-nginx.html">
+
+
+  <meta property="og:description" content="An alternative to Firebase. DIY on your private server!">
+
+
+
+  <meta property="og:image" content="https://cdn-images-1.medium.com/max/800/0*4HwhJBcQU5Fcjv2U">
+
+
+
+
+
+  <meta property="article:published_time" content="2020-11-09T05:02:42+07:00">
+
+
+
+
+
+
+<link rel="canonical" href="https://agustinustheo.github.io/tech/2020/11/09/how-to-host-flutter-using-nginx.html">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": "Agustinus Theodorus",
+      "url": "https://agustinustheo.github.io/"
+    
+  }
+</script>
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+<link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Agustinus Theodorus Feed">
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css">
+
+<!--[if IE]>
+  <style>
+    /* old IE unsupported flexbox fixes */
+    .greedy-nav .site-title {
+      padding-right: 3em;
+    }
+    .greedy-nav button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+    }
+  </style>
+<![endif]-->
+
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single">
+    <nav class="skip-links">
+  <h2 class="screen-reader-text">Skip links</h2>
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/">
+          Agustinus Theodorus
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="https://agustinustheoo.medium.com">Blog</a>
+            </li><li class="masthead__menu-item">
+              <a href="https://id.linkedin.com/in/agustinus-theodorus">Profile</a>
+            </li></ul>
+        
+        <button class="search__toggle" type="button">
+          <span class="visually-hidden">Toggle search</span>
+          <svg class="icon" width="16" height="16" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15.99 16">
+            <path d="M15.5,13.12L13.19,10.8a1.69,1.69,0,0,0-1.28-.55l-0.06-.06A6.5,6.5,0,0,0,5.77,0,6.5,6.5,0,0,0,2.46,11.59a6.47,6.47,0,0,0,7.74.26l0.05,0.05a1.65,1.65,0,0,0,.5,1.24l2.38,2.38A1.68,1.68,0,0,0,15.5,13.12ZM6.4,2A4.41,4.41,0,1,1,2,6.4,4.43,4.43,0,0,1,6.4,2Z" transform="translate(-.01)"></path>
+          </svg>
+        </button>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person">
+
+  
+    <div class="author__avatar">
+      
+        <img src="/assets/img/bio-photo.jpg" alt="Agustinus Theodorus" itemprop="image">
+      
+    </div>
+  
+
+  <div class="author__content">
+    
+      <h3 class="author__name" itemprop="name">Agustinus Theodorus</h3>
+    
+    
+      <div class="author__bio" itemprop="description">
+        <p>I am primarily a web app developer. Most of my coding time is spent making new web apps, web APIs or bug fixing. My current hobby is writing, I usually spare time to write every month.</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+
+      
+        
+          
+            <li><a href="https://steego.link" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-link" aria-hidden="true"></i><span class="label">Website</span></a></li>
+          
+        
+          
+            <li><a href="https://id.linkedin.com/in/agustinus-theodorus" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span class="label">LinkedIn</span></a></li>
+          
+        
+          
+            <li><a href="https://github.com/agustinustheo" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i><span class="label">GitHub</span></a></li>
+          
+        
+          
+            <li><a href="https://twitter.com/agustinustheoo" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-twitter-square" aria-hidden="true"></i><span class="label">Twitter</span></a></li>
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="How To Host Flutter Web In Linux Using Nginx">
+    <meta itemprop="description" content="Thinking of making a web app? I recommend you try Flutter. Flutter’s web capabilities are still in beta but it’s quite promising, to say the least. I have experienced first hand how quick it is to build UIs using Flutter and I think it could soon be a competitive alternative to the Javascript ecosystem such as React, Vue, and Angular.">
+    <meta itemprop="datePublished" content="2020-11-09T05:02:42+07:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">How To Host Flutter Web In Linux Using Nginx
+</h1>
+          
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          5 minute read
+        
+      </span>
+    
+  </p>
+
+
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <p>Thinking of making a web app? I recommend you try Flutter. Flutter’s web capabilities are still in beta but it’s quite promising, to say the least. I have experienced first hand how quick it is to build UIs using Flutter and I think it could soon be a competitive alternative to the Javascript ecosystem such as React, Vue, and Angular.</p>
+
+<p><img src="https://cdn-images-1.medium.com/max/800/0*4HwhJBcQU5Fcjv2U" alt="" /></p>
+
+<p>So to help out the future Flutter community members, a tutorial on how to host your Flutter web app on a DIY private server would help. As a healthy alternative to Firebase.</p>
+
+<h3 id="what-would-youneed">What would you need?</h3>
+
+<h4 id="umm-first-of-all-a-privateserver">Umm, first of all, a private server.</h4>
+
+<p>With serverless capabilities nowadays it is no wonder that people prefer Firebase, it’s free and it’s painless. Obvious choice.</p>
+
+<p>But what if we want to go independent? Away from the norms? Well, you have to learn it all yourself. Because we are using Nginx, then the server must be a Linux server, not a Windows server.</p>
+
+<p>Assuming you use a Debian/Ubuntu-based Linux distro. Here’s a starter script to help you get started.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo apt update  
+sudo apt install nginx
+</code></pre></div></div>
+
+<p>There, I just saved you some googling time. If you want an in-depth guide on Nginx, I suggest you read <a href="https://www.digitalocean.com/community/tutorials/how-to-install-nginx-on-ubuntu-18-04">this post by Digital Ocean</a>.</p>
+
+<h4 id="do-we-need-to-install-the-flutter-sdk-on-ourserver">Do we need to install the Flutter SDK on our server?</h4>
+
+<p>Umm, yes, and no.</p>
+
+<p>Let me elaborate. It is possible to install the SDK, but why do you need exactly? Installing the SDK helps you to test quick changes to the code on the server to try to fix a few production-related bugs like a cowboy!</p>
+
+<p><img src="https://cdn-images-1.medium.com/max/600/0*chBNVmBfQ2j2KpyA.jpg" alt="" /></p>
+
+<p>I won’t do it though because SDKs consumes a lot of memory and requires a lot of RAM to be compiled. Your private server might not have enough RAM to process it. Believe me, I’ve tried. My VPS only had around 400MB of RAM enough to run a small app but not enough to compile the SDK. <strong>So I didn’t install it</strong>.</p>
+
+<p>So this just leaves one option either you use CI/CD to deploy your Flutter app to your VPS or just use plain old git. By using Git I mean by pushing your builds to the repository. This might not be a best practice for some teams as the entire software world almost unilaterally agree on using CI/CD, but hey — a cowboy’s gotta do what a cowboy’s gotta do.</p>
+
+<p>I am not going into how much of a best practice this tutorial is going to be rather how simple and understandable it is. So let me just leave this choice to you.</p>
+
+<h4 id="do-i-need-adomain">Do I need a domain?</h4>
+
+<p>Do you need a domain? No. It is not required because we are learning <strong>how to host a Flutter web app using Nginx</strong> using a domain or not is not of this tutorial’s concern.</p>
+
+<h3 id="build-yourapp">Build your app</h3>
+
+<p>After your app has been tested, run the Flutter build command.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>flutter build web
+</code></pre></div></div>
+
+<p>That should generate a build folder within your project structure. Within the build folder, there is another folder named <strong>web</strong> which contains the essential files to be used for hosting.</p>
+
+<p>The web directory should contain a file named <strong>index.html</strong>.</p>
+
+<h3 id="configure-nginx">Configure Nginx</h3>
+
+<p>Here come’s the fun part. Now copy that web directory to your VPS in any fashion you would want. Then make sure you move the build files to /var/www/html.</p>
+
+<p>Let’s say your application name is <strong>todos</strong> so a good folder naming convention would be /var/www/html/todos. Inside the todos directory is the build files, <strong>index.html,</strong> etc. If you’re not familiar with Linux commands this should help, assuming that your build files are in your home directory.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo mv web /var/www/html/todos
+</code></pre></div></div>
+
+<p>Next, you need to go to the Nginx directory on your server more precisely /etc/nginx/sites-enabled. There should be a file named <strong>default</strong>. Open it using a vim/nano text editor of your choice and change the root directory on the configuration file to /var/www/html/todos.</p>
+
+<h4 id="no-domainsetup">No Domain Setup</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># Default server configuration
+server {
+       listen 80 default_server;
+       listen [::]:80 default_server;
+
+       root /var/www/html/todos;
+       index index.html index.htm;
+
+       server_name _;
+
+       location / {
+              try_files $uri $uri/ =404;
+       }
+}
+</code></pre></div></div>
+
+<p>Here is an example. The original file should be filled with comments, but I left those comments out in the gist. After changing your config files, check your Nginx config using this command:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo nginx -t
+</code></pre></div></div>
+
+<p>If all is well, then restart the Nginx service:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo systemctl reload nginx
+</code></pre></div></div>
+
+<p>This should restart your Nginx server and get the updated config file. When all is done open up your VPS IP Address from the browser. Your Flutter app should already be up.</p>
+
+<p>I prefer people access my app by domain so I’ll include how to set up the app using a domain here too.</p>
+
+<h4 id="domain-setup">Domain Setup</h4>
+
+<p>When you don’t want to use a domain, changing the <strong>default</strong> file should be fine (even though some people prefer to leave the default as-is and create a new one).</p>
+
+<p>But when you want to use a domain, make sure you make a new configuration file. The file should have a .conf extension.</p>
+
+<p>I have attached the corresponding gist. The setup should be similar to the previous one with a difference in the server_name. Then before you open your app from the browser, run:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo nginx -t
+</code></pre></div></div>
+
+<p>If configuration health checks pass, reload the Nginx service.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo systemctl reload nginx
+</code></pre></div></div>
+
+<p>After restarting Nginx, try to open your domain from your browser. It should be done by then.</p>
+
+<h3 id="further-note">Further Note</h3>
+
+<h4 id="dont-forget-to-update-domain-nameservers">Don’t forget to update domain nameservers</h4>
+
+<p>When you want to use a domain, please make sure you point your domain nameservers to your VPS. You are required to do this before any further configuration is to be done.</p>
+
+<h4 id="install-an-ssl-certificate-usingcertbot">Install an SSL certificate using Certbot</h4>
+
+<p>There’s a technology called Let’s Encrypt. It gives you free SSL certificates to be used for your apps, securing your app, and adding HTTPS to your domain. Install Certbot for Nginx using this command:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo apt install python-certbot-nginx
+</code></pre></div></div>
+
+<p>Then, install SSL certificates on your domains:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo certbot --nginx -d your\_domain -d www.your\_domain
+</code></pre></div></div>
+
+<h3 id="summary">Summary</h3>
+
+<p>In this tutorial, you have learned how to serve a Flutter application using Nginx. You now have an open playbook to use when you want to deploy Flutter web applications using Nginx on your own server. Hope this tutorial was of help and have a nice day!</p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+
+
+        
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2020-11-09T05:02:42+07:00">November 9, 2020</time></p>
+
+
+      </footer>
+
+      <section class="page__share">
+  
+
+  <a href="https://twitter.com/intent/tweet?text=How+To+Host+Flutter+Web+In+Linux+Using+Nginx%20https%3A%2F%2Fagustinustheo.github.io%2Ftech%2F2020%2F11%2F09%2Fhow-to-host-flutter-using-nginx.html" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fagustinustheo.github.io%2Ftech%2F2020%2F11%2F09%2Fhow-to-host-flutter-using-nginx.html" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=https%3A%2F%2Fagustinustheo.github.io%2Ftech%2F2020%2F11%2F09%2Fhow-to-host-flutter-using-nginx.html" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+
+      
+  <nav class="pagination">
+    
+      <a href="/tech/2020/10/28/how-to-make-scalable-apis-using-flask-and-faunadb.html" class="pagination--pager" title="How To Make Scalable APIs Using Flask and FaunaDB
+">Previous</a>
+    
+    
+      <a href="/tech/2020/11/18/how-to-choose-your-first-techstack.html" class="pagination--pager" title="How To Choose Your First Techstack
+">Next</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h4 class="page__related-title">You May Also Enjoy</h4>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="https://cdn-images-1.medium.com/max/800/0*zCSfGwYvrx7hc3DY" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/tech/2020/12/10/automate-your-linux-deployment-using-azure-devops.html" rel="permalink">Automate Your Linux Deployment Using Azure DevOps
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          9 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">Feel like you have been logging into your Linux servers too much lately? Good, this might be the right article for you. In teams, either large or small manua...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="https://cdn-images-1.medium.com/max/800/0*9RPiaNqFjBvZay_Q" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/tech/2020/11/18/how-to-choose-your-first-techstack.html" rel="permalink">How To Choose Your First Techstack
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          7 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">For all these years in the tech industry. I assure you that I have had my fair share of technology. A multitude of different frameworks aiming to achieve the...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="https://cdn-images-1.medium.com/max/800/0*DuZ_NXbhwmAfiMPM" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/tech/2020/10/28/how-to-make-scalable-apis-using-flask-and-faunadb.html" rel="permalink">How To Make Scalable APIs Using Flask and FaunaDB
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          7 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">With the rise of serverless technology, making web services only gets easier. Serverless apps change the old monolithic architecture of apps and promote more...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="https://cdn-images-1.medium.com/max/800/0*QkuSb8wVpC5wY7kj" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/tech/2020/10/20/how-to-deploy-net-core-on-iis.html" rel="permalink">How To Deploy Your .NET Core App on an IIS Server
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          3 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">When you work in an enterprise environment you can’t choose where you would want to publish your application, especially if you enter a very established comp...</p>
+  </article>
+</div>
+
+        
+      </div>
+    </div>
+  
+  
+</div>
+
+    </div>
+
+    
+      <div class="search-content">
+        <div class="search-content__inner-wrap"><form class="search-content__form" onkeydown="return event.key != 'Enter';">
+    <label class="sr-only" for="search">
+      Enter your search term...
+    </label>
+    <input type="search" id="search" class="search-input" tabindex="-1" placeholder="Enter your search term..." />
+  </form>
+  <div id="results" class="results"></div></div>
+
+      </div>
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+      
+        
+          <li><a href="https://steego.link" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-link" aria-hidden="true"></i> Website</a></li>
+        
+      
+        
+          <li><a href="https://id.linkedin.com/in/agustinus-theodorus" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i> LinkedIn</a></li>
+        
+      
+        
+          <li><a href="https://github.com/agustinustheo" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+        
+      
+        
+          <li><a href="https://twitter.com/agustinustheoo" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-twitter-square" aria-hidden="true"></i> Twitter</a></li>
+        
+      
+    
+
+    <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2020 Agustinus Theodorus. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+<script src="/assets/js/lunr/lunr.min.js"></script>
+<script src="/assets/js/lunr/lunr-store.js"></script>
+<script src="/assets/js/lunr/lunr-en.js"></script>
+
+
+
+
+
+
+
+  </body>
+</html>

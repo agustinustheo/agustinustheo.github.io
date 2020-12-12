@@ -10,11 +10,11 @@ categories: ['tech']
 keywords: []
 slug: /software-engineering-is-all-about-sharing
 header:
-  teaser: /assets/img/0__hqcdsOSzhIQ3LQXk.jpg
+  teaser: https://cdn-images-1.medium.com/max/800/0*hqcdsOSzhIQ3LQXk
 ---
 When I started my first job as a software engineer I would have never realized how narrow my world view regarding tech was. In my mind, the world of software is as large a pool when it is an ocean.
 
-![]({{ site.url }}/assets/img/0__hqcdsOSzhIQ3LQXk.jpg)
+![](https://cdn-images-1.medium.com/max/800/0*hqcdsOSzhIQ3LQXk)
 
 ### 1\. Everyone Starts Confused
 
@@ -25,9 +25,6 @@ This coincides with previously available roles like Database Administrators, Sys
 I honestly entered the tech world thinking I would end up as a Frontend Engineer. Today I am mainly focusing on backend services, system administration, and machine learning. If you’ve ever _touched_ any one of these skills you would understand how different these 4 roles are.
 
 I ended up learning everything I can. Though I am currently focusing more on machine learning than any other field. I find making computers do menial and repetitive jobs amusing.
-
-[**Thoughts About Being A Software Project Manager | Data Driven Investor**  
-_I have been a programmer for 3 years now and I think it's about time I led my own team. As project manager I now can…_www.datadriveninvestor.com](https://www.datadriveninvestor.com/2020/06/26/understanding-software-project-management/ "https://www.datadriveninvestor.com/2020/06/26/understanding-software-project-management/")[](https://www.datadriveninvestor.com/2020/06/26/understanding-software-project-management/)
 
 ### 2\. Your Not In A Pool — Your In An Ocean
 
@@ -76,7 +73,3 @@ When given the responsibility of sharing your knowledge, of course, you want to 
 So you think you are ready for the tech world? Don’t ever be afraid to ask for help. It is completely normal to not know about somethings in this field. You don’t have to be the know-it-all.
 
 Be humble! It may be one of the most important traits you would ever need. If you know something your desk neighbor doesn’t it wouldn’t hurt to share a bit. Being a mentor can get you further than you would ever expect.
-
-_Originally published at_ [_https://www.datadriveninvestor.com_](https://www.datadriveninvestor.com/2020/09/11/software-engineering-is-all-about-sharing/) _on September 11, 2020._
-
-**Gain Access to Expert View —** [**Subscribe to DDI Intel**](https://datadriveninvestor.com/ddi-intel)

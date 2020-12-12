@@ -8,11 +8,11 @@ categories: ['tech']
 keywords: []
 slug: /how-to-choose-your-first-techstack
 header:
-  teaser: /assets/img/0__9RPiaNqFjBvZay__Q.jpg
+  teaser: https://cdn-images-1.medium.com/max/800/0*9RPiaNqFjBvZay_Q
 ---
 For all these years in the tech industry. I assure you that I have had my fair share of technology. A multitude of different frameworks aiming to achieve the same thing with their own different takes. Teams that prefer different tech stacks. It doesn’t matter what you learn but how fast can you adapt.
 
-![]({{ site.url }}/assets/img/0__9RPiaNqFjBvZay__Q.jpg)
+![](https://cdn-images-1.medium.com/max/800/0*9RPiaNqFjBvZay_Q)
 
 In this article, I might not give you **exact** answers to what you should choose. Because I believe that you should find what is comfortable for yourself. I would just explain what my ideas were when I chose my stack.
 
@@ -100,11 +100,11 @@ For front-end purposes, I use Javascript frameworks. This limits my capabilities
 
 Furthermore, Javascript has another benefit of being **a free tech stack**. Here’s what I mean. There is a service called [Netlify](https://www.netlify.com/). Netlify hosts JAM Stack applications, and if you have reasonably small traffic, Netlify covers the costs for free. JAM stands for Javascript, APIs, Markup. Add to that Netlify also has a service called [Netlify Functions](https://www.netlify.com/products/functions/).
 
-![]({{ site.url }}/assets/img/1__Sjwe6yN2B25zJI91MAqMmA.png)
+![](https://cdn-images-1.medium.com/max/800/1*Sjwe6yN2B25zJI91MAqMmA.png)
 
 Netlify Functions utilize serverless technologies to make simple APIs using Javascript using [AWS Lambda](https://aws.amazon.com/lambda/) as their base. You are only charged after 125k~ requests or so.
 
-![]({{ site.url }}/assets/img/1__wl90hwJrFDI7__UW1jHQfjQ.png)
+![](https://cdn-images-1.medium.com/max/800/1*wl90hwJrFDI7-UW1jHQfjQ.png)
 
 My next statement might sound controversial, but in my opinion, adding Javascript to your knowledge repository can help you get a job. It is very popular and very flexible. Being multiplatform it is cost-effective and the choice of many modern startups. Some corporations are also planning to migrate to Javascript environments.
 
@@ -115,5 +115,3 @@ So? Found your calling yet? Don’t rush. It’s fine. Do what you think is righ
 > “The master has failed more times than the beginner has even tried.” — [Stephen McCranie](https://www.goodreads.com/quotes/1252243-the-master-has-failed-more-times-than-the-beginner-has)
 
 Don’t be afraid to try. Failure is only a step. Thank you and have a nice day!
-
-_Originally published at_ [_https://www.datadriveninvestor.com_](https://www.datadriveninvestor.com/2020/11/18/how-to-choose-your-first-techstack/) _on November 18, 2020._

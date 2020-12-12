@@ -1,0 +1,680 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.21.0 by Michael Rose
+  Copyright 2013-2020 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>The Master-Slave Database Concept For Beginners - Agustinus Theodorus</title>
+<meta name="description" content="A database concept for microservices. A short introduction.">
+
+
+  <meta name="author" content="Agustinus Theodorus">
+  
+  <meta property="article:author" content="Agustinus Theodorus">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Agustinus Theodorus">
+<meta property="og:title" content="The Master-Slave Database Concept For Beginners">
+<meta property="og:url" content="https://agustinustheo.github.io/tech/2020/05/28/the-master-slave-database-concept-for-beginners.html">
+
+
+  <meta property="og:description" content="A database concept for microservices. A short introduction.">
+
+
+
+  <meta property="og:image" content="https://miro.medium.com/max/700/1*Uwa5km4MJpjH42AXtr6ftA.jpeg">
+
+
+
+
+
+  <meta property="article:published_time" content="2020-05-28T23:01:16+07:00">
+
+
+
+
+
+
+<link rel="canonical" href="https://agustinustheo.github.io/tech/2020/05/28/the-master-slave-database-concept-for-beginners.html">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": "Agustinus Theodorus",
+      "url": "https://agustinustheo.github.io/"
+    
+  }
+</script>
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+<link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Agustinus Theodorus Feed">
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css">
+
+<!--[if IE]>
+  <style>
+    /* old IE unsupported flexbox fixes */
+    .greedy-nav .site-title {
+      padding-right: 3em;
+    }
+    .greedy-nav button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+    }
+  </style>
+<![endif]-->
+
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single">
+    <nav class="skip-links">
+  <h2 class="screen-reader-text">Skip links</h2>
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/">
+          Agustinus Theodorus
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="https://agustinustheoo.medium.com">Blog</a>
+            </li><li class="masthead__menu-item">
+              <a href="https://id.linkedin.com/in/agustinus-theodorus">Profile</a>
+            </li></ul>
+        
+        <button class="search__toggle" type="button">
+          <span class="visually-hidden">Toggle search</span>
+          <svg class="icon" width="16" height="16" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15.99 16">
+            <path d="M15.5,13.12L13.19,10.8a1.69,1.69,0,0,0-1.28-.55l-0.06-.06A6.5,6.5,0,0,0,5.77,0,6.5,6.5,0,0,0,2.46,11.59a6.47,6.47,0,0,0,7.74.26l0.05,0.05a1.65,1.65,0,0,0,.5,1.24l2.38,2.38A1.68,1.68,0,0,0,15.5,13.12ZM6.4,2A4.41,4.41,0,1,1,2,6.4,4.43,4.43,0,0,1,6.4,2Z" transform="translate(-.01)"></path>
+          </svg>
+        </button>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person">
+
+  
+    <div class="author__avatar">
+      
+        <img src="/assets/img/bio-photo.jpg" alt="Agustinus Theodorus" itemprop="image">
+      
+    </div>
+  
+
+  <div class="author__content">
+    
+      <h3 class="author__name" itemprop="name">Agustinus Theodorus</h3>
+    
+    
+      <div class="author__bio" itemprop="description">
+        <p>I am primarily a web app developer. Most of my coding time is spent making new web apps, web APIs or bug fixing. My current hobby is writing, I usually spare time to write every month.</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+
+      
+        
+          
+            <li><a href="https://steego.link" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-link" aria-hidden="true"></i><span class="label">Website</span></a></li>
+          
+        
+          
+            <li><a href="https://id.linkedin.com/in/agustinus-theodorus" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span class="label">LinkedIn</span></a></li>
+          
+        
+          
+            <li><a href="https://github.com/agustinustheo" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i><span class="label">GitHub</span></a></li>
+          
+        
+          
+            <li><a href="https://twitter.com/agustinustheoo" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-twitter-square" aria-hidden="true"></i><span class="label">Twitter</span></a></li>
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="The Master-Slave Database Concept For Beginners">
+    <meta itemprop="description" content="The master-slave concept has been around for a while now. This is a fairly simple concept actually, all you need to understand is that there is one master and there are many slaves. Master-slave is a way to optimize the I/O in your application other than using caching. The master database serves as the keeper of information, so to speak. The true data is kept at the master database, thus writing only occurs there. Reading, on the other hand, is only done in the slave. What is this for? This architecture serves the purpose of safeguarding site reliability. If a site receives a lot of traffic and the only available database is one master, it will be overloaded with reading and writing requests. Making the entire system slow for everyone on the site.">
+    <meta itemprop="datePublished" content="2020-05-28T23:01:16+07:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">The Master-Slave Database Concept For Beginners
+</h1>
+          
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          5 minute read
+        
+      </span>
+    
+  </p>
+
+
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <p>The master-slave concept has been around for a while now. This is a fairly simple concept actually, all you need to understand is that there is one master and there are many slaves. Master-slave is a way to optimize the I/O in your application other than using caching. The master database serves as the keeper of information, so to speak. The true data is kept at the master database, thus writing only occurs there. Reading, on the other hand, is only done in the slave. What is this for? This architecture serves the purpose of safeguarding site reliability. If a site receives a lot of traffic and the only available database is one master, it will be overloaded with reading and writing requests. Making the entire system slow for everyone on the site.</p>
+
+<h3 id="visualization-of-an-implementation">Visualization of an implementation</h3>
+
+<p><img src="https://miro.medium.com/max/700/1*Uwa5km4MJpjH42AXtr6ftA.jpeg" alt="" /></p>
+
+<p>In the example diagram, I use Postgresql as my master. Postgres is a relational database. Relational databases are structured and easy to maintain. For the slave, I use MongoDB because MongoDB is a non-relational database or NoSQL. You can learn how to implement this architecture in <a href="https://www.endpoint.com/blog/2011/06/12/mongodb-replication-from-postgres-using">a blog post by Greg Sabino</a>. Though slave databases don’t have to be NoSQL, there is <a href="https://www.toptal.com/mysql/mysql-master-slave-replication-tutorial">another example of using MySQL as both master and slave</a>. Having one type of database for both master and slave can serve to be convenient because in the end maintaining the codebase will be a lot easier.</p>
+
+<p>The process for handling the data transfer/synchronization from the master to slave databases is called <strong>replication</strong>. To replicate data you can, for example, use a serverless function as a pipeline to distribute data to the slaves. Making your own solution to replicate databases can be tedious so I recommend a database replication tool. <a href="https://www.g2.com/categories/data-replication">Here is a list of database replication tools in 2020 by g2.com</a>. You can also make an insert function to add data to both master and slave databases if you want to do realtime data management.</p>
+
+<h3 id="wait-what">Wait, what?</h3>
+
+<p>Why is the master-slave concept a thing? Well imagine it this way, you are trying to manage a large scale system and you end up with a server bottleneck. A few debug later you find out one of the causes is the read/write traffic to your database server. You stop and think. <em>“What now?”</em> one of the solutions would be to apply master-slave. Sure this might not be the <strong>first</strong> thing to come to your mind, other methods such as using a Redis cluster might be enough to sustain yourself for a few years, but this concept can be another great option.</p>
+
+<p>Well, obviously the downside would be the insurmountable <strong>complexity</strong> surrounding this setup. You would need a team of dedicated systems and database administrators to be able to pull this off on a large scale system infrastructure. Not saying that it’s impossible but just saying that some costs outweigh the benefits.</p>
+
+<h3 id="opinions">Opinions</h3>
+
+<h4 id="costs">Costs</h4>
+
+<p>Compared to add more clusters to Postgres/SQL Server setup I would say the master-slave concept would be cheaper and could have similar or even better results than the former.</p>
+
+<p>In the end, how much traffic would a relational database efficiently handle? Probably a lot, but not as much as about 3 MongoDB slave clusters. I’m not implying that 3 MongoDB clusters are more efficient than a single relational database but in the long run, I would say having NoSQL slave databases could be an advantage.</p>
+
+<h4 id="implementation-differences">Implementation differences</h4>
+
+<p>In a way, the master-slave concept can be interpreted as a method to cache data from the master to all the slave databases, so to add a simple Redis implementation to your system can <strong>technically</strong> work as a master-slave system though this concept is not entirely about caching. The initial purpose is to help users get data from the database faster, <strong>any data</strong>. To help you visualize how I would do master-slave, see the diagram below:</p>
+
+<p><img src="https://miro.medium.com/max/700/1*IV1Tuwvdj9-dCrJLgI8KLw.jpeg" alt="" /></p>
+
+<p>Implementing caching wouldn’t really help the database much either. Caching will only result in select data that will be available on your cache. If the data requested is not available then the reading process will happen in the master. Implementing caching is great to optimize your site, but the master-slave concept works better if we have a separate data source identical to the master that can be used to read. Here is how I imagine caching would be, this is not an example of how to do master-slave:</p>
+
+<p><img src="https://miro.medium.com/max/700/1*wqYwiB9-o7yMZ2gTmsCvwA.jpeg" alt="" /></p>
+
+<p>In the example above, the architecture is an example of how caching and master-slave is different. To do a master-slave <strong>WITH</strong> caching I would probably do it like this:</p>
+
+<p><img src="https://miro.medium.com/max/700/1*1m6mZynfl0qy38VOZicMTA.jpeg" alt="" /></p>
+
+<h4 id="architecture-complexity">Architecture Complexity</h4>
+
+<p>Imagine this, you already have enough trouble having to code and keep your business afloat and now you burden yourself and your team with an additional load to constantly manage a master-slave system.</p>
+
+<p>To be honest, many things can go wrong here. What do you do when you have a failed replication? How long does the synchronization between the master Postgres database and MongoDB should take? Wouldn’t Redis suffice? Why should you bother in the first place?</p>
+
+<p>Look there are many reasons to choose this architecture also as many reasons not to. The fact of the matter is, this is an <strong>option</strong> if you deem yourself ready and capable to handle a master-slave database system then go for it! It may just benefit your organization. I’m not evangelizing this concept I’m just trying to share this concept to programmers who do not know beforehand.</p>
+
+<p>An easy way would be to use a distributed database like CosmosDB a NoSQL MongoDB alternative from Microsoft Azure. CosmosDB works by adding clusters to itself and it’s data to handle exceptional loads. Thus, when using this service on Azure you are charged on the RU (a type of data read/write meter used for CosmosDB) usage rather than the number of CosmosDB clusters active.</p>
+
+<blockquote>
+  <p>But let’s face it, sometimes an easy way out is <strong>just not fun!</strong></p>
+</blockquote>
+
+<p>We need thrill in our lives, people! The thrill of making a master-slave system would be an experience you should not pass up if had the chance.</p>
+
+<h3 id="conclusion">Conclusion</h3>
+
+<p>To summarize master-slave database architectures are usually used to help stabilize the system. Because reading data can be done through the slave database while inserting data needs to be done to the master database. Synchronizing data from the master to slave is called data replication, and some techniques to get realtime data can involve inserting in both master and slave database to even realtime data replication depends on your needs. To help you understand more regarding master-slave database architecture here are some good resources for you to check out:</p>
+
+<ul>
+  <li><a href="https://mariadb.com/resources/blog/database-master-slave-replication-in-the-cloud/">Database Master-Slave Replication in the Cloud — <em>MariaDB</em></a></li>
+  <li><a href="https://stackoverflow.com/questions/3736969/master-master-vs-master-slave-database-architecture">Master-master vs master-slave database architecture? — <em>Stackoverflow</em></a></li>
+  <li><a href="https://intellipaat.com/community/6605/master-master-vs-master-slave-database-architecture">Master-master vs master-slave database architecture? — <em>IntelliPaat</em></a></li>
+  <li><a href="https://www.quora.com/What-are-Master-and-Slave-databases-and-how-does-pairing-them-make-web-apps-faster">What are Master and Slave databases and how does pairing them make web apps faster? — <em>Quora</em></a></li>
+  <li><a href="https://en.wikipedia.org/wiki/Master/slave_%28technology%29">Master/slave (technology) — <em>Wikipedia</em></a></li>
+</ul>
+
+<p><em>A special thanks to</em> <a href="https://medium.com/u/abd0c33e19b2"><em>Richard M Simarmata</em></a> <em>for the valuable inputs.</em></p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+
+
+        
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2020-05-28T23:01:16+07:00">May 28, 2020</time></p>
+
+
+      </footer>
+
+      <section class="page__share">
+  
+
+  <a href="https://twitter.com/intent/tweet?text=The+Master-Slave+Database+Concept+For+Beginners%20https%3A%2F%2Fagustinustheo.github.io%2Ftech%2F2020%2F05%2F28%2Fthe-master-slave-database-concept-for-beginners.html" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fagustinustheo.github.io%2Ftech%2F2020%2F05%2F28%2Fthe-master-slave-database-concept-for-beginners.html" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=https%3A%2F%2Fagustinustheo.github.io%2Ftech%2F2020%2F05%2F28%2Fthe-master-slave-database-concept-for-beginners.html" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+
+      
+  <nav class="pagination">
+    
+      <a href="/tech/2020/04/21/5-awesome-open-source-software-in-2020.html" class="pagination--pager" title="5 Awesome Open Source Software In 2020
+">Previous</a>
+    
+    
+      <a href="/tech/2020/06/27/thoughts-about-being-a-software-project-manager.html" class="pagination--pager" title="Thoughts About Being A Software Project Manager
+">Next</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h4 class="page__related-title">You May Also Enjoy</h4>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="https://cdn-images-1.medium.com/max/800/0*zCSfGwYvrx7hc3DY" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/tech/2020/12/10/automate-your-linux-deployment-using-azure-devops.html" rel="permalink">Automate Your Linux Deployment Using Azure DevOps
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          9 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">Feel like you have been logging into your Linux servers too much lately? Good, this might be the right article for you. In teams, either large or small manua...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="https://cdn-images-1.medium.com/max/800/0*9RPiaNqFjBvZay_Q" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/tech/2020/11/18/how-to-choose-your-first-techstack.html" rel="permalink">How To Choose Your First Techstack
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          7 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">For all these years in the tech industry. I assure you that I have had my fair share of technology. A multitude of different frameworks aiming to achieve the...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="https://cdn-images-1.medium.com/max/800/0*4HwhJBcQU5Fcjv2U" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/tech/2020/11/09/how-to-host-flutter-using-nginx.html" rel="permalink">How To Host Flutter Web In Linux Using Nginx
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          5 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">Thinking of making a web app? I recommend you try Flutter. Flutter’s web capabilities are still in beta but it’s quite promising, to say the least. I have ex...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="https://cdn-images-1.medium.com/max/800/0*DuZ_NXbhwmAfiMPM" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/tech/2020/10/28/how-to-make-scalable-apis-using-flask-and-faunadb.html" rel="permalink">How To Make Scalable APIs Using Flask and FaunaDB
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          7 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">With the rise of serverless technology, making web services only gets easier. Serverless apps change the old monolithic architecture of apps and promote more...</p>
+  </article>
+</div>
+
+        
+      </div>
+    </div>
+  
+  
+</div>
+
+    </div>
+
+    
+      <div class="search-content">
+        <div class="search-content__inner-wrap"><form class="search-content__form" onkeydown="return event.key != 'Enter';">
+    <label class="sr-only" for="search">
+      Enter your search term...
+    </label>
+    <input type="search" id="search" class="search-input" tabindex="-1" placeholder="Enter your search term..." />
+  </form>
+  <div id="results" class="results"></div></div>
+
+      </div>
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+      
+        
+          <li><a href="https://steego.link" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-link" aria-hidden="true"></i> Website</a></li>
+        
+      
+        
+          <li><a href="https://id.linkedin.com/in/agustinus-theodorus" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i> LinkedIn</a></li>
+        
+      
+        
+          <li><a href="https://github.com/agustinustheo" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+        
+      
+        
+          <li><a href="https://twitter.com/agustinustheoo" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-twitter-square" aria-hidden="true"></i> Twitter</a></li>
+        
+      
+    
+
+    <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2020 Agustinus Theodorus. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+<script src="/assets/js/lunr/lunr.min.js"></script>
+<script src="/assets/js/lunr/lunr-store.js"></script>
+<script src="/assets/js/lunr/lunr-en.js"></script>
+
+
+
+
+
+
+
+  </body>
+</html>

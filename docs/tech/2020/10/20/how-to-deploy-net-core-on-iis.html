@@ -30,7 +30,7 @@
 
 
 
-  <meta property="og:image" content="https://agustinustheo.github.io/assets/img/0__QkuSb8wVpC5wY7kj.jpg">
+  <meta property="og:image" content="https://cdn-images-1.medium.com/max/800/0*QkuSb8wVpC5wY7kj">
 
 
 
@@ -315,17 +315,17 @@
         
         <p>When you work in an enterprise environment you can’t choose where you would want to publish your application, especially if you enter a very established company. There would be times that you have to publish in a Linux environment, but in this case publishing in a Windows environment.</p>
 
-<p><img src="https://agustinustheo.github.io/assets/img/0__QkuSb8wVpC5wY7kj.jpg" alt="" /></p>
+<p><img src="https://cdn-images-1.medium.com/max/800/0*QkuSb8wVpC5wY7kj" alt="" /></p>
 
 <h3 id="configure-yournet-coreproject">Configure your .NET Core project</h3>
 
 <p>When trying to deploy on an IIS Server, make sure you already configure your Startup.cs and Program.cs accordingly. On the <strong>Startup.cs</strong> you should add this config:</p>
 
-<p><img src="https://agustinustheo.github.io/assets/img/0__WH3WzOX03__rPBePK.jpg" alt="" /></p>
+<p><img src="https://cdn-images-1.medium.com/max/800/0*WH3WzOX03-rPBePK" alt="" /></p>
 
 <p>On the <strong>Program.cs</strong> add this config:</p>
 
-<p><img src="https://agustinustheo.github.io/assets/img/0__7ndyVaQEnF108l4V.jpg" alt="" /></p>
+<p><img src="https://cdn-images-1.medium.com/max/800/0*7ndyVaQEnF108l4V" alt="" /></p>
 
 <h3 id="configure-your-iisserver">Configure your IIS Server</h3>
 
@@ -350,21 +350,21 @@
 
 <p>Find the latest release <a href="https://github.com/Microsoft/artifacts-credprovider/releases">here</a>, and download the .zip package.</p>
 
-<p><img src="https://agustinustheo.github.io/assets/img/0__tlJiw8J58KyBZk1D.jpg" alt="" /></p>
+<p><img src="https://cdn-images-1.medium.com/max/800/0*tlJiw8J58KyBZk1D" alt="" /></p>
 
 <p>After downloading the zip archive, copy the plugins folder to <strong>%USERPROFILE%/.nuget</strong></p>
 
-<p><img src="https://agustinustheo.github.io/assets/img/0__DNrZNycYxJ7EmmAK.jpg" alt="" /></p>
+<p><img src="https://cdn-images-1.medium.com/max/800/0*DNrZNycYxJ7EmmAK" alt="" /></p>
 
 <p>Set your environment variables, open <strong>User Variables</strong> and create a new entry.</p>
 
-<p><img src="https://agustinustheo.github.io/assets/img/0__jPaoP30GSXaE__mvK.jpg" alt="" /></p>
+<p><img src="https://cdn-images-1.medium.com/max/800/0*jPaoP30GSXaE-mvK" alt="" /></p>
 
 <p>Set the variable name to <strong>NUGET_PLUGIN_PATHS</strong>, and because in this case, we are going to be using the dotnet credential provider, so set the value to</p>
 
 <p><strong>%USERPROFILE%\.nuget\plugins\netcore\CredentialProvider.Microsoft\CredentialProvider.Microsoft.dll</strong></p>
 
-<p><img src="https://agustinustheo.github.io/assets/img/0__1IbSM3kmog2__9kWl.jpg" alt="" /></p>
+<p><img src="https://cdn-images-1.medium.com/max/800/0*1IbSM3kmog2-9kWl" alt="" /></p>
 
 <p>Then finish the setup by clicking <strong>OK</strong> on the <strong>Environment Variables</strong> dialog.</p>
 
@@ -374,17 +374,17 @@
 
 <p>Get into the directory where you want to put the application.</p>
 
-<p><img src="https://agustinustheo.github.io/assets/img/1__JdLjczILQMnVA9QutYSYog.png" alt="" /></p>
+<p><img src="https://cdn-images-1.medium.com/max/800/1*JdLjczILQMnVA9QutYSYog.png" alt="" /></p>
 
 <p>Get inside the newly formed folder and run the dotnet publish command. Further info regarding the commands can be seen <a href="https://docs.google.com/document/d/14YRTCJ8XO7yumjwmwyN67ZrEpc4LDrbg6UXlGC4noI0/edit#heading=h.eyphkxwv1b7">here</a>.</p>
 
-<p><img src="https://agustinustheo.github.io/assets/img/1__bVpZ052xiPvEIl34UfVtfg.png" alt="" /></p>
+<p><img src="https://cdn-images-1.medium.com/max/800/1*bVpZ052xiPvEIl34UfVtfg.png" alt="" /></p>
 
 <p>If an authorization prompt to <a href="https://microsoft.com/devicelogin">https://microsoft.com/devicelogin</a> pops up, login using the <a href="https://azure.microsoft.com/en-us/services/devops/">Azure DevOps</a> account and enter the code shown in the window.</p>
 
 <p>Otherwise, it should show a successful build like so:</p>
 
-<p><img src="https://agustinustheo.github.io/assets/img/1__9x3fssWVV25Ks0JUIHOaWw.png" alt="" /></p>
+<p><img src="https://cdn-images-1.medium.com/max/800/1*9x3fssWVV25Ks0JUIHOaWw.png" alt="" /></p>
 
 <p>In this case, <strong>D:\deploy\api.test\bin\Release\netcoreapp3.1\publish</strong> is the <strong><em>physical path</em></strong><em>.</em></p>
 
@@ -396,15 +396,15 @@
 
 <p>Right-click on the <strong>Application Pools</strong> option.</p>
 
-<p><img src="https://agustinustheo.github.io/assets/img/0__Ntuy9f755WVik0zY.jpg" alt="" /></p>
+<p><img src="https://cdn-images-1.medium.com/max/800/0*Ntuy9f755WVik0zY" alt="" /></p>
 
 <p>Choose the <strong>Add Application Pool</strong> option</p>
 
-<p><img src="https://agustinustheo.github.io/assets/img/0__KW3cmVX3rTQ7Lwjs.jpg" alt="" /></p>
+<p><img src="https://cdn-images-1.medium.com/max/800/0*KW3cmVX3rTQ7Lwjs" alt="" /></p>
 
 <p>Name your application pool and set the .NET CLR version to <strong>No Managed Code.</strong></p>
 
-<p><img src="https://agustinustheo.github.io/assets/img/0__yZqj4kWhU7wpVDp1.jpg" alt="" /></p>
+<p><img src="https://cdn-images-1.medium.com/max/800/0*yZqj4kWhU7wpVDp1" alt="" /></p>
 
 <p>Then click <strong>OK</strong>.</p>
 
@@ -414,23 +414,23 @@
 
 <p>Right-click on the <strong>Site</strong> option</p>
 
-<p><img src="https://agustinustheo.github.io/assets/img/0__fOXUHP0QgMyt__NXO.jpg" alt="" /></p>
+<p><img src="https://cdn-images-1.medium.com/max/800/0*fOXUHP0QgMyt-NXO" alt="" /></p>
 
 <p>Click <strong>Add Website</strong></p>
 
-<p><img src="https://agustinustheo.github.io/assets/img/0__ZFzoqMNSIj7Mmwb5.jpg" alt="" /></p>
+<p><img src="https://cdn-images-1.medium.com/max/800/0*ZFzoqMNSIj7Mmwb5" alt="" /></p>
 
 <p>Set the <strong>Site name</strong> and the physical path to the .NET Core build.</p>
 
-<p><img src="https://agustinustheo.github.io/assets/img/0__IHxAaO__VohU2op1x.jpg" alt="" /></p>
+<p><img src="https://cdn-images-1.medium.com/max/800/0*IHxAaO_VohU2op1x" alt="" /></p>
 
 <p>Click the <strong>Connect as…</strong> button, to connect as a specific user. Set your user credentials and click <strong>OK</strong></p>
 
-<p><img src="https://agustinustheo.github.io/assets/img/0__hqYDTod9W9vsmTgM.jpg" alt="" /></p>
+<p><img src="https://cdn-images-1.medium.com/max/800/0*hqYDTod9W9vsmTgM" alt="" /></p>
 
 <p>Click <strong>Test Settings</strong> and it should show a pop up like this</p>
 
-<p><img src="https://agustinustheo.github.io/assets/img/0__6zwI7X__4N98nhBPn.jpg" alt="" /></p>
+<p><img src="https://cdn-images-1.medium.com/max/800/0*6zwI7X_4N98nhBPn" alt="" /></p>
 
 <p>Then on the <strong>Add Website</strong> dialog click <strong>OK</strong> to finish the setup.</p>
 
@@ -438,27 +438,27 @@
 
 <p>On the site’s homepage, click on the <strong>View Applications</strong> button.</p>
 
-<p><img src="https://agustinustheo.github.io/assets/img/0__xZT4AhnRwDe3__EjL.jpg" alt="" /></p>
+<p><img src="https://cdn-images-1.medium.com/max/800/0*xZT4AhnRwDe3-EjL" alt="" /></p>
 
 <p>Click on the <strong>Add Application</strong> action</p>
 
-<p><img src="https://agustinustheo.github.io/assets/img/0__dInCu25X3VsVexlZ.jpg" alt="" /></p>
+<p><img src="https://cdn-images-1.medium.com/max/800/0*dInCu25X3VsVexlZ" alt="" /></p>
 
 <p>Set your alias, this will be the path on the Url. Then, set the physical path to the .NET Core build.</p>
 
-<p><img src="https://agustinustheo.github.io/assets/img/0__n0yJiu4l94muBAXB.jpg" alt="" /></p>
+<p><img src="https://cdn-images-1.medium.com/max/800/0*n0yJiu4l94muBAXB" alt="" /></p>
 
 <p>Next, select the application pool you previously made, then click <strong>OK</strong></p>
 
-<p><img src="https://agustinustheo.github.io/assets/img/0__RWYhIfs7zUhkEePs.jpg" alt="" /></p>
+<p><img src="https://cdn-images-1.medium.com/max/800/0*RWYhIfs7zUhkEePs" alt="" /></p>
 
 <p>Click the <strong>Connect as…</strong> button. Set your user credentials and click <strong>OK</strong></p>
 
-<p><img src="https://agustinustheo.github.io/assets/img/0__60abQOP6lDndEYGS.jpg" alt="" /></p>
+<p><img src="https://cdn-images-1.medium.com/max/800/0*60abQOP6lDndEYGS" alt="" /></p>
 
 <p>Click <strong>Test Settings</strong> and it should show a pop up like this</p>
 
-<p><img src="https://agustinustheo.github.io/assets/img/0__yDHFWEiPupCSrfsL.jpg" alt="" /></p>
+<p><img src="https://cdn-images-1.medium.com/max/800/0*yDHFWEiPupCSrfsL" alt="" /></p>
 
 <p>Then on the <strong>Add Application</strong> dialog click <strong>OK</strong> to finish the setup.</p>
 
@@ -511,7 +511,7 @@
 ">Previous</a>
     
     
-      <a href="/tech/2020/11/18/how-to-choose-your-first-techstack.html" class="pagination--pager" title="How To Choose Your First Techstack
+      <a href="/tech/2020/10/28/how-to-make-scalable-apis-using-flask-and-faunadb.html" class="pagination--pager" title="How To Make Scalable APIs Using Flask and FaunaDB
 ">Next</a>
     
   </nav>
@@ -535,7 +535,50 @@
   <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
     
       <div class="archive__item-teaser">
-        <img src="/assets/img/0__9RPiaNqFjBvZay__Q.jpg" alt="">
+        <img src="https://cdn-images-1.medium.com/max/800/0*zCSfGwYvrx7hc3DY" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/tech/2020/12/10/automate-your-linux-deployment-using-azure-devops.html" rel="permalink">Automate Your Linux Deployment Using Azure DevOps
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          9 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">Feel like you have been logging into your Linux servers too much lately? Good, this might be the right article for you. In teams, either large or small manua...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="https://cdn-images-1.medium.com/max/800/0*9RPiaNqFjBvZay_Q" alt="">
       </div>
     
     <h2 class="archive__item-title no_toc" itemprop="headline">
@@ -578,98 +621,12 @@
   <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
     
       <div class="archive__item-teaser">
-        <img src="/assets/img/1__u18ToVTMMZ8AN1M4fur0xw.jpeg" alt="">
+        <img src="https://cdn-images-1.medium.com/max/800/0*4HwhJBcQU5Fcjv2U" alt="">
       </div>
     
     <h2 class="archive__item-title no_toc" itemprop="headline">
       
-        <a href="/tech/2020/10/12/4-key-habits-i-learned-as-a-software-engineer.html" rel="permalink">4 Key Habits I Learned as a Software Engineer
-</a>
-      
-    </h2>
-    
-
-  <p class="page__meta">
-    
-
-    
-
-    
-      
-      
-
-      <span class="page__meta-readtime">
-        <i class="far fa-clock" aria-hidden="true"></i>
-        
-          4 minute read
-        
-      </span>
-    
-  </p>
-
-
-    <p class="archive__item-excerpt" itemprop="description">I am almost 3 years into software engineering. Honestly, I don’t think I am that good at it yet (I don’t know if I’ll ever be). But there are times when I wi...</p>
-  </article>
-</div>
-
-        
-          
-
-
-
-<div class="grid__item">
-  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
-    
-      <div class="archive__item-teaser">
-        <img src="/assets/img/0__hqcdsOSzhIQ3LQXk.jpg" alt="">
-      </div>
-    
-    <h2 class="archive__item-title no_toc" itemprop="headline">
-      
-        <a href="/tech/2020/09/11/software-engineering-is-all-about-sharing.html" rel="permalink">Software Engineering Is All About Sharing
-</a>
-      
-    </h2>
-    
-
-  <p class="page__meta">
-    
-
-    
-
-    
-      
-      
-
-      <span class="page__meta-readtime">
-        <i class="far fa-clock" aria-hidden="true"></i>
-        
-          4 minute read
-        
-      </span>
-    
-  </p>
-
-
-    <p class="archive__item-excerpt" itemprop="description">When I started my first job as a software engineer I would have never realized how narrow my world view regarding tech was. In my mind, the world of software...</p>
-  </article>
-</div>
-
-        
-          
-
-
-
-<div class="grid__item">
-  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
-    
-      <div class="archive__item-teaser">
-        <img src="/assets/img/1__V8Y31hS__cE39__liIeSDfnw.png" alt="">
-      </div>
-    
-    <h2 class="archive__item-title no_toc" itemprop="headline">
-      
-        <a href="/tech/2020/03/31/a-simple-tutorial-on-azure-data-factory.html" rel="permalink">What I’ve Learned On Azure Data Factory
+        <a href="/tech/2020/11/09/how-to-host-flutter-using-nginx.html" rel="permalink">How To Host Flutter Web In Linux Using Nginx
 </a>
       
     </h2>
@@ -694,7 +651,50 @@
   </p>
 
 
-    <p class="archive__item-excerpt" itemprop="description">Azure functions can now be added as a step in Azure Data Factory (ADF). It makes it easier to synchronize data and to make trigger functions that can help da...</p>
+    <p class="archive__item-excerpt" itemprop="description">Thinking of making a web app? I recommend you try Flutter. Flutter’s web capabilities are still in beta but it’s quite promising, to say the least. I have ex...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="https://cdn-images-1.medium.com/max/800/0*DuZ_NXbhwmAfiMPM" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/tech/2020/10/28/how-to-make-scalable-apis-using-flask-and-faunadb.html" rel="permalink">How To Make Scalable APIs Using Flask and FaunaDB
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          7 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">With the rise of serverless technology, making web services only gets easier. Serverless apps change the old monolithic architecture of apps and promote more...</p>
   </article>
 </div>
 
