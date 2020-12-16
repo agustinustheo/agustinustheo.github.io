@@ -1,5 +1,5 @@
 main:
-  - title: "Blog"
-    url: https://agustinustheoo.medium.com
+  - title: "Articles"
+    url: /tech-articles
   - title: "Profile"
-    url: https://id.linkedin.com/in/agustinus-theodorus
+    url: /about
