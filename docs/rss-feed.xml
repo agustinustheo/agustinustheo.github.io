@@ -1296,7 +1296,7 @@ if __name__ == &quot;__main__&quot;:
       </item>
     
       <item>
-        <title>Software Engineering Is All About Sharing</title>
+        <title>4 Things I Learned About The Software Engineering Culture</title>
         <description>&lt;p&gt;When I started my first job as a software engineer I would have never realized how narrow my world view regarding tech was. In my mind, the world of software is as large a pool when it is an ocean.&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&quot;https://cdn-images-1.medium.com/max/800/0*hqcdsOSzhIQ3LQXk&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
@@ -1368,8 +1368,8 @@ if __name__ == &quot;__main__&quot;:
 &lt;p&gt;Be humble! It may be one of the most important traits you would ever need. If you know something your desk neighbor doesn’t it wouldn’t hurt to share a bit. Being a mentor can get you further than you would ever expect.&lt;/p&gt;
 </description>
         <pubDate>Fri, 11 Sep 2020 18:20:37 +0700</pubDate>
-        <link>https://agustinustheo.github.io//tech/2020/09/11/software-engineering-is-all-about-sharing.html</link>
-        <guid isPermaLink="true">https://agustinustheo.github.io//tech/2020/09/11/software-engineering-is-all-about-sharing.html</guid>
+        <link>https://agustinustheo.github.io//tech/2020/09/11/4-things-i-learned-about-the-software-engineering-culture.html</link>
+        <guid isPermaLink="true">https://agustinustheo.github.io//tech/2020/09/11/4-things-i-learned-about-the-software-engineering-culture.html</guid>
       </item>
     
       <item>
@@ -1454,6 +1454,8 @@ if __name__ == &quot;__main__&quot;:
 
 &lt;p&gt;I know that this is software project 101 but I am honestly saying that I missed that. &lt;strong&gt;I really blew it&lt;/strong&gt;.&lt;/p&gt;
 
+&lt;p&gt;&lt;img src=&quot;https://miro.medium.com/max/500/0*YNrrfiMSoLTXJprW.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
 &lt;p&gt;Now look at this diagram, can you imagine the number of roles needed when we want to create this application? It is written on the diagram and it is as clear as day.&lt;/p&gt;
 
 &lt;p&gt;Now imagine having no diagram and trying to understand this system by writing. Better yet, try to translate this diagram into a paragraph. Good luck! I didn’t make this and it made me forget what I wanted to do indefinitely. A big lesson learned.&lt;/p&gt;
@@ -1461,6 +1463,8 @@ if __name__ == &quot;__main__&quot;:
 &lt;p&gt;Feature-wise there should be a clear application flow to explain how the system works, how the users register, and so on.&lt;/p&gt;
 
 &lt;p&gt;Sadly I also didn’t make it. It contributed to the disarray of the trainees under my wing. It showed how a project with good intentions became a complicated one at best. &lt;em&gt;“If only”&lt;/em&gt;, I said to my self, &lt;em&gt;“I have done this”&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://miro.medium.com/max/600/0*FYeIWVNRO6-pQtHW.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;I used waterfall as the software development lifecycle because the requirements were constant and the user wasn’t much of a hassle.&lt;/p&gt;
 

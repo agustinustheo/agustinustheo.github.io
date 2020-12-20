@@ -8,7 +8,7 @@ description: >-
 date: '2020-09-11T11:20:37.000Z'
 categories: ['tech']
 keywords: []
-slug: /software-engineering-is-all-about-sharing
+slug: /4-things-i-learned-about-the-software-engineering-culture
 header:
   teaser: https://cdn-images-1.medium.com/max/800/0*hqcdsOSzhIQ3LQXk
 ---

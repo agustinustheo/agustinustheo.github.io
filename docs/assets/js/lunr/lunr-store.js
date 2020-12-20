@@ -59,10 +59,10 @@ var store = [{
         "url": "https://agustinustheo.github.io/tech/2020/06/27/thoughts-about-being-a-software-project-manager.html",
         "teaser": "https://cdn-images-1.medium.com/max/800/0*DuZ_NXbhwmAfiMPM"
       },{
-        "title": "Software Engineering Is All About Sharing",
+        "title": "4 Things I Learned About The Software Engineering Culture",
         "excerpt":"When I started my first job as a software engineer I would have never realized how narrow my world view regarding tech was. In my mind, the world of software is as large a pool when it is an ocean. 1. Everyone Starts Confused It is commonly said that most software...","categories": ["tech"],
         "tags": [],
-        "url": "https://agustinustheo.github.io/tech/2020/09/11/software-engineering-is-all-about-sharing.html",
+        "url": "https://agustinustheo.github.io/tech/2020/09/11/4-things-i-learned-about-the-software-engineering-culture.html",
         "teaser": "https://cdn-images-1.medium.com/max/800/0*hqcdsOSzhIQ3LQXk"
       },{
         "title": "4 Key Habits I Learned as a Software Engineer",

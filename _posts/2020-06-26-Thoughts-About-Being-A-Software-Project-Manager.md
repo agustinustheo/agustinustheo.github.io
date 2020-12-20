@@ -92,6 +92,8 @@ I didn’t have a good design doc to look up, only a few notes on how it would b
 
 I know that this is software project 101 but I am honestly saying that I missed that. **I really blew it**.
 
+![](https://miro.medium.com/max/500/0*YNrrfiMSoLTXJprW.png)
+
 Now look at this diagram, can you imagine the number of roles needed when we want to create this application? It is written on the diagram and it is as clear as day.
 
 Now imagine having no diagram and trying to understand this system by writing. Better yet, try to translate this diagram into a paragraph. Good luck! I didn’t make this and it made me forget what I wanted to do indefinitely. A big lesson learned.
@@ -99,6 +101,8 @@ Now imagine having no diagram and trying to understand this system by writing. B
 Feature-wise there should be a clear application flow to explain how the system works, how the users register, and so on.
 
 Sadly I also didn’t make it. It contributed to the disarray of the trainees under my wing. It showed how a project with good intentions became a complicated one at best. _“If only”_, I said to my self, _“I have done this”_.
+
+![](https://miro.medium.com/max/600/0*FYeIWVNRO6-pQtHW.jpg)
 
 I used waterfall as the software development lifecycle because the requirements were constant and the user wasn’t much of a hassle.
 
