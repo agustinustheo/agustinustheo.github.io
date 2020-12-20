@@ -1,7 +1,7 @@
 ---
 layout: single
 author: Agustinus Theodorus
-title: Software Engineering Is All About Sharing
+title: 4 Things I Learned About The Software Engineering Culture
 description: >-
   Software engineering is one of the most confusing jobs anyone can do, here are
   5 facts why sharing should be the norm
