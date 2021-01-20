@@ -1,0 +1,847 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.21.0 by Michael Rose
+  Copyright 2013-2020 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Setting Up A Multinode RabbitMQ Cluster On Linux - Agustinus Theodorus</title>
+<meta name="description" content="A 5-minute tutorial on how to increase your RabbitMQ load capacity with multiple instances as one.">
+
+
+  <meta name="author" content="Agustinus Theodorus">
+  
+  <meta property="article:author" content="Agustinus Theodorus">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Agustinus Theodorus">
+<meta property="og:title" content="Setting Up A Multinode RabbitMQ Cluster On Linux">
+<meta property="og:url" content="https://agustinustheo.github.io/tech/2021/01/20/setting-up-multinode-rabbitmq-cluster-on-linux.html">
+
+
+  <meta property="og:description" content="A 5-minute tutorial on how to increase your RabbitMQ load capacity with multiple instances as one.">
+
+
+
+  <meta property="og:image" content="https://cdn-images-1.medium.com/max/800/0*noAgkXTihXU2PYuu">
+
+
+
+
+
+  <meta property="article:published_time" content="2021-01-20T00:51:10+07:00">
+
+
+
+
+
+
+<link rel="canonical" href="https://agustinustheo.github.io/tech/2021/01/20/setting-up-multinode-rabbitmq-cluster-on-linux.html">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": "Agustinus Theodorus",
+      "url": "https://agustinustheo.github.io/"
+    
+  }
+</script>
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+<link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Agustinus Theodorus Feed">
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css">
+
+<!--[if IE]>
+  <style>
+    /* old IE unsupported flexbox fixes */
+    .greedy-nav .site-title {
+      padding-right: 3em;
+    }
+    .greedy-nav button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+    }
+  </style>
+<![endif]-->
+
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/img/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/assets/img/favicon-16x16.png">
+<link rel="manifest" href="/assets/img/site.webmanifest">
+<link rel="mask-icon" href="/assets/img/safari-pinned-tab.svg" color="#5bbad5">
+<link rel="shortcut icon" href="/assets/img/favicon.ico">
+<meta name="msapplication-TileColor" content="#da532c">
+<meta name="msapplication-config" content="/assets/img/browserconfig.xml">
+<meta name="theme-color" content="#ffffff">
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single">
+    <nav class="skip-links">
+  <h2 class="screen-reader-text">Skip links</h2>
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/">
+          Agustinus Theodorus
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/tech-articles">Articles</a>
+            </li><li class="masthead__menu-item">
+              <a href="/about">Profile</a>
+            </li></ul>
+        
+        <button class="search__toggle" type="button">
+          <span class="visually-hidden">Toggle search</span>
+          <svg class="icon" width="16" height="16" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15.99 16">
+            <path d="M15.5,13.12L13.19,10.8a1.69,1.69,0,0,0-1.28-.55l-0.06-.06A6.5,6.5,0,0,0,5.77,0,6.5,6.5,0,0,0,2.46,11.59a6.47,6.47,0,0,0,7.74.26l0.05,0.05a1.65,1.65,0,0,0,.5,1.24l2.38,2.38A1.68,1.68,0,0,0,15.5,13.12ZM6.4,2A4.41,4.41,0,1,1,2,6.4,4.43,4.43,0,0,1,6.4,2Z" transform="translate(-.01)"></path>
+          </svg>
+        </button>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person">
+
+  
+    <div class="author__avatar">
+      
+        <img src="/assets/img/bio-photo.jpg" alt="Agustinus Theodorus" itemprop="image">
+      
+    </div>
+  
+
+  <div class="author__content">
+    
+      <h3 class="author__name" itemprop="name">Agustinus Theodorus</h3>
+    
+    
+      <div class="author__bio" itemprop="description">
+        <p>I am primarily a web app developer. Most of my coding time is spent making new web apps, web APIs or bug fixing. My current hobby is writing, I usually spare time to write every month.</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+
+      
+        
+          
+            <li><a href="https://id.linkedin.com/in/agustinus-theodorus" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span class="label">LinkedIn</span></a></li>
+          
+        
+          
+            <li><a href="https://agustinustheoo.medium.com" rel="nofollow noopener noreferrer"><i class="fab fa-medium" aria-hidden="true"></i><span class="label">Medium</span></a></li>
+          
+        
+          
+            <li><a href="https://github.com/agustinustheo" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i><span class="label">GitHub</span></a></li>
+          
+        
+          
+            <li><a href="https://dev.to/agustinustheo" rel="nofollow noopener noreferrer"><i class="fab fa-dev" aria-hidden="true"></i><span class="label">Dev.to</span></a></li>
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Setting Up A Multinode RabbitMQ Cluster On Linux">
+    <meta itemprop="description" content="Installing RabbitMq on multiple remote servers can be a hassle. To connect multiple instances into one cluster we must first install RabbitMq on each remote server. These next two steps will walk through how we can install RabbitMq instances.">
+    <meta itemprop="datePublished" content="2021-01-20T00:51:10+07:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">Setting Up A Multinode RabbitMQ Cluster On Linux
+</h1>
+          
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          5 minute read
+        
+      </span>
+    
+  </p>
+
+
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <p>Installing RabbitMq on multiple remote servers can be a hassle. To connect multiple instances into one cluster we must first install RabbitMq on each remote server. These next two steps will walk through how we can install RabbitMq instances.</p>
+
+<p><img src="https://cdn-images-1.medium.com/max/800/0*noAgkXTihXU2PYuu" alt="" /></p>
+
+<p><strong>In this tutorial, we will be installing RabbitMq using a Centos 8 Linux distro. The RabbitMq version used in this tutorial is 3.8.9.</strong></p>
+
+<h3 id="what-is-clustering-for">What is clustering for?</h3>
+
+<p><img src="https://cdn-images-1.medium.com/max/800/0*hiLQ86ofVEj3P8Ke" alt="" /></p>
+
+<p>Well, clustering is used to combine multiple instances of RabbitMq into one giant central message queue. Clustering can be done on remote instances of RabbitMq on different servers. The purpose of the cluster is to handle massive amounts of message queues from apps, balancing the load on multiple servers rather than on a single server.</p>
+
+<h3 id="add-the-required-dependencies">Add the required dependencies</h3>
+
+<h4 id="install-the-required-repositories">Install the required repositories</h4>
+
+<p>Add the RabbitMq repository in the repo configurations file. Open the config file:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo vi /etc/yum.repos.d/rabbitmq-server.repo
+</code></pre></div></div>
+
+<p>Add this to the lines below:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[rabbitmq-server]  
+name=rabbitmq-server  
+baseurl=[https://packagecloud.io/rabbitmq/rabbitmq-server/el/7/$basearch](https://packagecloud.io/rabbitmq/rabbitmq-server/el/7/$basearch)  
+repo_gpgcheck=1  
+gpgcheck=0  
+enabled=1  
+gpgkey=[https://packagecloud.io/rabbitmq/rabbitmq-server/gpgkey](https://packagecloud.io/rabbitmq/rabbitmq-server/gpgkey)  
+sslverify=1  
+sslcacert=/etc/pki/tls/certs/ca-bundle.crt  
+metadata_expire=300
+</code></pre></div></div>
+
+<h4 id="add-hostname-to-the-hostsfile">Add Hostname to the <code class="language-plaintext highlighter-rouge">hosts</code> file</h4>
+
+<p>RabbitMq is built on top of Erlang. So it would make sense for us to install it beforehand. <strong>This part is very crucial as if you do not ad the hostname to</strong> <code class="language-plaintext highlighter-rouge">/etc/hosts</code> <strong>then</strong> <code class="language-plaintext highlighter-rouge">rabbitmqctl status</code> <strong>will not work.</strong></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>echo “127.0.0.1 $(hostname -s)” | sudo tee -a /etc/hosts
+</code></pre></div></div>
+
+<h3 id="setting-up-rabbitmqserver">Setting Up RabbitMq Server</h3>
+
+<h4 id="install-rabbitmqserver">Install RabbitMq Server</h4>
+
+<p>After completing the previous configuration setup steps, install RabbitMq by using this command:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo dnf install -y rabbitmq-server
+</code></pre></div></div>
+
+<p>After installation is completed, check if the installation is correct by running:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>rpm -qi rabbitmq-server
+</code></pre></div></div>
+
+<h4 id="open-ports">Open Ports</h4>
+
+<p>Centos has a pre-installed firewall called <code class="language-plaintext highlighter-rouge">firewalld</code>. It blocks all ports from connecting unless asked to. So we must whitelist the TCP ports that are going to be used by RabbitMq.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo firewall-cmd --zone=public --permanent --add-port={5672,15672}/tcp  
+sudo firewall-cmd --reload
+</code></pre></div></div>
+
+<h4 id="start-the-rabbitmqservice">Start the RabbitMq service</h4>
+
+<p>The RabbitMq service doesn’t start on its own when you install it. You have to start it manually, then enable it to run on server startup. To start the RabbitMq service (the service might take a minute or two to start):</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo systemctl start rabbitmq-server.service
+</code></pre></div></div>
+
+<p>To enable the service run:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo systemctl enable rabbitmq-server.service
+</code></pre></div></div>
+
+<p>To check if the service is still running:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo rabbitmqctl status
+</code></pre></div></div>
+
+<h4 id="enable-rabbitmq-management">Enable RabbitMq Management</h4>
+
+<p>If you want to enable the RabbitMq admin dashboard, run:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo rabbitmq-plugins enable rabbitmq_management
+</code></pre></div></div>
+
+<p>Then try to open the dashboard from the browser:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>http://*your-server-ip*:15672
+</code></pre></div></div>
+
+<h3 id="setting-up-rabbitmqcluster">Setting Up RabbitMq Cluster</h3>
+
+<p>After setting up RabbitMq on multiple servers (minimum of 2 servers) we now can continue to set up instances for the master and slave nodes. Choose one server as the master node as the cluster host, then use the other nodes as a slave cluster.</p>
+
+<h4 id="setting-up-the-masternode">Setting Up The Master Node</h4>
+
+<p>Whitelist the TCP port 4369 for <code class="language-plaintext highlighter-rouge">epmd</code>, a helper discovery daemon used by RabbitMQ nodes and CLI tools, and port 25672 for instance finding.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo firewall-cmd —-zone=public —-permanent —-add-port={4369,25672}/tcp  
+sudo firewall-cmd —-reload
+</code></pre></div></div>
+
+<p>Add the hosts for each cluster, in the <code class="language-plaintext highlighter-rouge">/etc/hosts</code> file</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo vi /etc/hosts
+</code></pre></div></div>
+
+<p>In the <code class="language-plaintext highlighter-rouge">hosts</code> file add the IP and hostname for each instance. The configuration would be as follows:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>node 1 IP node 1 hostname  
+node 2 IP node 2 hostname  
+node 3 IP node 3 hostname
+</code></pre></div></div>
+
+<p>The order doesn’t have to be master first, but it does need to have all cluster IPs and hostnames for it to work. An example configuration is as follows:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>10.240.200.111 rabbitmq-1  
+10.240.200.112 rabbitmq-2  
+10.240.200.113 rabbitmq-3
+</code></pre></div></div>
+
+<p>Get the <code class="language-plaintext highlighter-rouge">.erlang.cookie</code> from the master node</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo cat /var/lib/rabbitmq/.erlang.cookie
+</code></pre></div></div>
+
+<p>Save the token output in your notepad.</p>
+
+<h4 id="setting-up-the-slavenodes">Setting Up The Slave Nodes</h4>
+
+<p>Whitelist the TCP port 4369 for <code class="language-plaintext highlighter-rouge">epmd</code> a helper discovery daemon used by RabbitMQ nodes and CLI tools, and port 25672 for instance finding.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo firewall-cmd —-zone=public —-permanent —-add-port={4369,25672}/tcp  
+sudo firewall-cmd —-reload
+</code></pre></div></div>
+
+<p>Add the hosts for each cluster, in the <code class="language-plaintext highlighter-rouge">/etc/hosts</code> file</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo vi /etc/hosts
+</code></pre></div></div>
+
+<p>In the <code class="language-plaintext highlighter-rouge">hosts</code> file add the IP and hostname for each instance. The configuration would be as follows:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>node 1 IP node 1 hostname  
+node 2 IP node 2 hostname  
+node 3 IP node 3 hostname
+</code></pre></div></div>
+
+<p>The order doesn’t have to be master first, but it does need to have all cluster IPs and hostnames for it to work. An example configuration is as follows:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>10.240.200.111 rabbitmq-1  
+10.240.200.112 rabbitmq-2  
+10.240.200.113 rabbitmq-3
+</code></pre></div></div>
+
+<p>Stop the <code class="language-plaintext highlighter-rouge">rabbitmq-server</code> instance and replace the <code class="language-plaintext highlighter-rouge">.erlang.cookie</code> inside the slave node with the masters.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo su  
+systemctl stop rabbitmq-server  
+echo -n “*erlang cookie from master node*” &gt; /var/lib/rabbitmq/.erlang.cookie  
+systemctl start rabbitmq-server
+</code></pre></div></div>
+
+<p><strong>Repeat this setup on all the nodes!</strong></p>
+
+<h3 id="join-the-slave-nodes-with-the-masternode">Join The Slave Nodes With The Master Node</h3>
+
+<p>Stop the <code class="language-plaintext highlighter-rouge">rabbitmq-server</code> instance, reset the node and join it with the master node.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo rabbitmqctl stop_app  
+sudo rabbitmqctl reset  
+sudo rabbitmqctl join_cluster rabbit@*master node hostname*  
+sudo rabbitmqctl start_app
+</code></pre></div></div>
+
+<h3 id="reset-the-masternode">Reset The Master Node</h3>
+
+<p>Reset the <code class="language-plaintext highlighter-rouge">rabbitmq-server</code> in the master node.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo rabbitmqctl stop_app  
+sudo rabbitmqctl reset  
+sudo rabbitmqctl start_app
+</code></pre></div></div>
+
+<h3 id="check-the-clusterstatus">Check The Cluster Status</h3>
+
+<p>To check the cluster status, run this command:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo rabbitmqctl cluster_status
+</code></pre></div></div>
+
+<h3 id="conclusion">Conclusion</h3>
+
+<p>In the end, when we have finished installation, login to the RabbitMq management dashboard for one of the nodes and it would have more than one cluster like so:</p>
+
+<p><img src="https://cdn-images-1.medium.com/max/800/0*Vx0rb7MN4gugsctF" alt="" />
+undefined</p>
+
+<p>Of course, there are advantages in using manual installs for RabbitMq. The pros would be:</p>
+
+<ul>
+  <li>You can save space on each server by only installing RabbitMq and nothing else.</li>
+  <li>Particularly on VMs, you can use Ansible to speed up the installation process by doing the repeatable tasks from a single command line.</li>
+  <li>You understand thoroughly the process of building a RabbitMq instance from the ground up.</li>
+</ul>
+
+<p>Then the cons would be:</p>
+
+<ul>
+  <li>Managing the firewalls for each server can be complicated.</li>
+  <li>It is faster for us to use Docker during container set up for each server.</li>
+</ul>
+
+<p>But if you want to read more on this topic, and read some of the references I had when making this tutorial you can check out these links below:</p>
+
+<ol>
+  <li><a href="https://www.rabbitmq.com/clustering.html">Official RabbitMQ Clustering Guide</a>.</li>
+  <li><a href="https://www.osradar.com/how-to-install-rabbitmq-on-rhel-8-centos-8/">How to Install RabbitMQ on RHEL 8 / CentOS 8 — Linux Windows and android Tutorials (osradar.com)</a>.</li>
+  <li><a href="https://gist.github.com/pobsuwan/22aa4a9e0a217d22e12800a432933881">How to config rabbitmq server cluster [3 nodes] (github.com)</a>.</li>
+</ol>
+
+<p>Now we have an open playbook for you to use the next time you want to setup RabbitMq on your systems manually.</p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+
+
+        
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2021-01-20T00:51:10+07:00">January 20, 2021</time></p>
+
+
+      </footer>
+
+      <section class="page__share">
+  
+
+  <a href="https://twitter.com/intent/tweet?text=Setting+Up+A+Multinode+RabbitMQ+Cluster+On+Linux%20https%3A%2F%2Fagustinustheo.github.io%2Ftech%2F2021%2F01%2F20%2Fsetting-up-multinode-rabbitmq-cluster-on-linux.html" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fagustinustheo.github.io%2Ftech%2F2021%2F01%2F20%2Fsetting-up-multinode-rabbitmq-cluster-on-linux.html" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=https%3A%2F%2Fagustinustheo.github.io%2Ftech%2F2021%2F01%2F20%2Fsetting-up-multinode-rabbitmq-cluster-on-linux.html" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+
+      
+  <nav class="pagination">
+    
+      <a href="/tech/2020/12/31/the-microservice-architecture-perspective.html" class="pagination--pager" title="The Microservice Architecture Perspective
+">Previous</a>
+    
+    
+      <a href="/tech/2021/01/20/how-to-deploy-flutter-web-to-netlify-using-ci-cd-and-azure-pipelines.html" class="pagination--pager" title="How to Deploy Flutter Web to Netlify Using CI/CD and Azure Pipelines
+">Next</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h4 class="page__related-title">You May Also Enjoy</h4>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="https://cdn-images-1.medium.com/max/800/0*Zuxm0Houm1FyBdTE" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/tech/2021/01/20/how-to-deploy-flutter-web-to-netlify-using-ci-cd-and-azure-pipelines.html" rel="permalink">How to Deploy Flutter Web to Netlify Using CI/CD and Azure Pipelines
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          8 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">Developing web apps has become easier over the years. With Flutter it became very easy and fun. But to be honest, deploying it is sometimes a pain. Most serv...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="https://cdn-images-1.medium.com/max/800/0*VzeqoAS5yZrIpeZQ" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/tech/2020/12/31/the-microservice-architecture-perspective.html" rel="permalink">The Microservice Architecture Perspective
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          8 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">Making software that serves more than a couple of thousand users can be hard. The difficulty is not in making the app itself but in how we make the app relia...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="https://miro.medium.com/max/700/0*rjDmgSKL-lNurUpp" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/tech/2020/12/28/automating-flutter-web-deployments-to-netlify-using-github-actions.html" rel="permalink">Automating Flutter Web Deployments to Netlify Using GitHub Actions
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          4 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">Lately, there has been a lot of fuss over Flutter. Some people call it the future, while some say it’s overrated. But I think it’s a good framework to learn ...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="https://cdn-images-1.medium.com/max/800/0*zCSfGwYvrx7hc3DY" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/tech/2020/12/10/automate-your-linux-deployment-using-azure-devops.html" rel="permalink">Automate Your Linux Deployment Using Azure DevOps
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          8 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">Feel like you have been logging into your Linux servers too much lately? Good, this might be the right article for you. In teams, either large or small manua...</p>
+  </article>
+</div>
+
+        
+      </div>
+    </div>
+  
+  
+</div>
+
+    </div>
+
+    
+      <div class="search-content">
+        <div class="search-content__inner-wrap"><form class="search-content__form" onkeydown="return event.key != 'Enter';">
+    <label class="sr-only" for="search">
+      Enter your search term...
+    </label>
+    <input type="search" id="search" class="search-input" tabindex="-1" placeholder="Enter your search term..." />
+  </form>
+  <div id="results" class="results"></div></div>
+
+      </div>
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+      
+        
+          <li><a href="https://id.linkedin.com/in/agustinus-theodorus" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i> LinkedIn</a></li>
+        
+      
+        
+          <li><a href="https://agustinustheoo.medium.com" rel="nofollow noopener noreferrer"><i class="fab fa-medium" aria-hidden="true"></i> Medium</a></li>
+        
+      
+        
+          <li><a href="https://github.com/agustinustheo" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+        
+      
+        
+          <li><a href="https://dev.to/agustinustheo" rel="nofollow noopener noreferrer"><i class="fab fa-dev" aria-hidden="true"></i> Dev.to</a></li>
+        
+      
+    
+
+    <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2021 Agustinus Theodorus. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+<script src="/assets/js/lunr/lunr.min.js"></script>
+<script src="/assets/js/lunr/lunr-store.js"></script>
+<script src="/assets/js/lunr/lunr-en.js"></script>
+
+
+
+
+
+
+
+  </body>
+</html>

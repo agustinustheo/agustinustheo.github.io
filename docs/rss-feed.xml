@@ -7,6 +7,973 @@
     <atom:link href="https://agustinustheo.github.io/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>How to Deploy Flutter Web to Netlify Using CI/CD and Azure Pipelines</title>
+        <description>&lt;p&gt;Developing web apps has become easier over the years. With Flutter it became very easy and fun. But to be honest, deploying it is sometimes a pain. Most services are not ready for Flutter projects being hosted on the web. Sure, &lt;strong&gt;&lt;em&gt;some are&lt;/em&gt;&lt;/strong&gt; but it needs a bit of tinkering.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://cdn-images-1.medium.com/max/800/0*Zuxm0Houm1FyBdTE&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;I don’t mind tinkering a bit, I mean… Why not?&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;Here in this tutorial, I am going to share with you how to implement CI/CD on your Flutter web deployments using Azure DevOps Pipelines. And best of all, we are going to use Netlify! Why do I sound excited? Because honestly, Netlify is very easy to use. Now, without further ado let’s get to it.&lt;/p&gt;
+
+&lt;h3 id=&quot;installing-dependencies&quot;&gt;Installing Dependencies&lt;/h3&gt;
+
+&lt;p&gt;Before we start, we need to install the required dependencies beforehand.&lt;/p&gt;
+
+&lt;h4 id=&quot;1-installing-the-flutterplugin&quot;&gt;1. Installing the Flutter plugin&lt;/h4&gt;
+
+&lt;p&gt;Well, you can use the &lt;a href=&quot;https://marketplace.visualstudio.com/items?itemName=aloisdeniel.flutter&quot;&gt;Flutter plugin for DevOps&lt;/a&gt; a dev already made the tool for us. Thanks, &lt;a href=&quot;https://marketplace.visualstudio.com/publishers/aloisdeniel&quot;&gt;Aloïs&lt;/a&gt; for doing the heavy work! We can use this tool for our purpose.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://cdn-images-1.medium.com/max/800/1*ngPggahl55mBGRJ-FGlSRg.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;After clicking that button, you would be shown on this screen:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://cdn-images-1.medium.com/max/800/1*52i3t0Qhvy239I_MS3GPpA.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Now in what you have to do is:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Choose the &lt;strong&gt;organization&lt;/strong&gt; you want to install.&lt;/li&gt;
+  &lt;li&gt;Click install.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h4 id=&quot;2-installing-the-nelitfyplugin&quot;&gt;2. Installing the Nelitfy plugin&lt;/h4&gt;
+
+&lt;p&gt;Install the &lt;a href=&quot;https://marketplace.visualstudio.com/items?itemName=aliencube.netlify-cli-extensions&quot;&gt;Netlify plugin for DevOps&lt;/a&gt;. Thanks, &lt;a href=&quot;https://marketplace.visualstudio.com/publishers/aliencube&quot;&gt;Aliencube&lt;/a&gt; for doing the heavy work! We can use this tool for our purpose.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://cdn-images-1.medium.com/max/800/1*jv3I_5-xsOTw5rvU9OwA8A.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;After clicking that button, you would be shown on this screen:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://cdn-images-1.medium.com/max/800/1*MuPn6jiFUqW8KnVkxl4Xww.jpeg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Now in what you have to do is:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Choose the &lt;strong&gt;organization&lt;/strong&gt; you want to install.&lt;/li&gt;
+  &lt;li&gt;Click install.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3 id=&quot;creating-your-netlifysite&quot;&gt;Creating your Netlify site&lt;/h3&gt;
+
+&lt;p&gt;This section will discuss how you can create an empty Netlify site using Netlify CLI. We will be using npm to install it for us. In my case, I use Ubuntu 18.04 as the host OS for the npm installation.&lt;/p&gt;
+
+&lt;h4 id=&quot;1-install-netlifycli&quot;&gt;1. Install Netlify CLI&lt;/h4&gt;
+
+&lt;p&gt;To install Netlify CLI you just need to run:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;npm install netlify-cli -g
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;After the installation is complete, check if it’s installed correctly by running this command:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;netlify
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h4 id=&quot;2-log-in-to-netlify-from-thecli&quot;&gt;2. Log in to Netlify from the CLI&lt;/h4&gt;
+
+&lt;p&gt;Before you can start using the CLI, Netlify needs you to authenticate yourself.&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;netlify login
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Then a browser window will open:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://cdn-images-1.medium.com/max/800/0*4FnW4DUyG4w5_kPC.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h4 id=&quot;3-creating-a-blanksite&quot;&gt;3. Creating a blank site&lt;/h4&gt;
+
+&lt;p&gt;After finishing your login, create a blank site using this command:&lt;/p&gt;
+
+&lt;p&gt;netlify sites:create –name _&lt;site name=&quot;&quot;&gt;_&lt;/site&gt;&lt;/p&gt;
+
+&lt;h4 id=&quot;4-retrieving-your-site-id-and-personal-accesstoken&quot;&gt;4. Retrieving your Site ID and personal access token&lt;/h4&gt;
+
+&lt;p&gt;To run continuous development remotely you would need both your site ID and personal access token to help you&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://cdn-images-1.medium.com/max/800/1*PxWjk8axlVeVwmUt33_gQw.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Retrieve your Site ID by:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Going into the site settings.&lt;/li&gt;
+  &lt;li&gt;Copy the API ID value.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;The next step would be to retrieve the personal access token.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://cdn-images-1.medium.com/max/800/1*tbk9PgZpJudHMFp6kUvdvg.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Go to the User settings.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://cdn-images-1.medium.com/max/800/1*AKe8XmKjoeIzeCfples1MA.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;To get an access token, you would have to make a new one:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Go to the Applications tab.&lt;/li&gt;
+  &lt;li&gt;Click &lt;strong&gt;New access token&lt;/strong&gt;.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Copy and save the access token shown on the next screen, and save it because you will need it for later.&lt;/p&gt;
+
+&lt;h3 id=&quot;creating-the-cicdpipeline&quot;&gt;Creating the CI/CD Pipeline&lt;/h3&gt;
+
+&lt;p&gt;This part is my favorite because it uses Azure DevOps. I honestly love the pipeline building experience using the UI (e.g the classic editor). But how do you build Flutter projects using Azure DevOps you ask?&lt;/p&gt;
+
+&lt;h4 id=&quot;1-creating-the-cipipeline&quot;&gt;1. Creating the CI pipeline&lt;/h4&gt;
+
+&lt;p&gt;If you are using Azure DevOps there is no way we can attach a CI/CD pipeline from Netlify’s side as with Github, Gitlab, or Bitbucket. So, we have to get down and dirty and do it ourselves (well with a little help).&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://cdn-images-1.medium.com/max/800/1*tlnoTcTVMomfdREqv4-3gg.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;First, create your pipeline:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Click on &lt;strong&gt;Pipelines&lt;/strong&gt; on the left pane.&lt;/li&gt;
+  &lt;li&gt;Open the &lt;strong&gt;Pipelines&lt;/strong&gt; directory.&lt;/li&gt;
+  &lt;li&gt;Click &lt;strong&gt;New pipeline&lt;/strong&gt;.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Now the beautiful thing about Azure DevOps is they have a UI for all of this, so you don’t need to use YAML at all. Though you can generate YAML code from the UI. Using the classic editor, you don’t have two remember YAML syntaxes and can easily make deployment steps using the visuals.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://cdn-images-1.medium.com/max/800/1*QedkUDLpwccXAdxvYegBYg.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;You can always configure using YAML in other services, but let’s face it, using UI is so much better. To enable pipeline configurations using the UI, when you are creating your pipeline click the small &lt;strong&gt;use classic editor&lt;/strong&gt; link below:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://cdn-images-1.medium.com/max/800/1*kkHm8ht19fXaH29NTHqcyw.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;After selecting the classic editor, configure your project:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://cdn-images-1.medium.com/max/800/1*eKEEhy8lVmAWILNp5D8kcg.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;These configurations would be needed to state which project you will be using in the pipeline, start by:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Selecting Azure Repos Git, to select repositories from Azure DevOps.&lt;/li&gt;
+  &lt;li&gt;Selecting your team project.&lt;/li&gt;
+  &lt;li&gt;Selecting the repository you want to CI.&lt;/li&gt;
+  &lt;li&gt;Select the repository branch.&lt;/li&gt;
+  &lt;li&gt;Click continue.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://cdn-images-1.medium.com/max/800/1*Xy65VtOhVJU4j-Td-3Pk7w.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Select the &lt;strong&gt;Empty job&lt;/strong&gt; button to create a clean slate for our Flutter deployment configuration.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://cdn-images-1.medium.com/max/800/1*TS7XNzRgBE7XTmMSC879Jw.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;After &lt;strong&gt;Agent job 1&lt;/strong&gt; show up you need to:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Click the &lt;strong&gt;+&lt;/strong&gt; button to add new tasks in the pipeline.&lt;/li&gt;
+  &lt;li&gt;Search for &lt;strong&gt;Flutter Install&lt;/strong&gt;.&lt;/li&gt;
+  &lt;li&gt;Click &lt;strong&gt;Flutter Install&lt;/strong&gt;.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://cdn-images-1.medium.com/max/800/1*XGnxKbjSWXkEBuElDjgNAg.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;After adding Flutter install we can add the Flutter test task to enable testing in our pipeline before being built and deployed. But because I prepared a small app and I am focusing on deployments I wouldn’t be adding testing to the task list.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://cdn-images-1.medium.com/max/800/1*1wCLnwZr7P-flEIcxA3W8g.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Next, add two &lt;strong&gt;Flutter Command&lt;/strong&gt; tasks to the pipeline. FYI, tasks are forms of stages deliberately visualizing how our CI/CD pipeline connects.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Let’s face it, using UI is so much better.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://cdn-images-1.medium.com/max/800/1*EFSPGRwA00ZhLFDP72DNrQ.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;The first &lt;strong&gt;Flutter Command&lt;/strong&gt; task will be to enable web configurations (i.e allow builds for web projects).&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Click the &lt;strong&gt;Flutter Command&lt;/strong&gt; task.&lt;/li&gt;
+  &lt;li&gt;Change the display name to &lt;strong&gt;Flutter Enable Web&lt;/strong&gt; (optional).&lt;/li&gt;
+  &lt;li&gt;Add the Flutter arguments to enable web configurations:&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;config –enable-web&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://cdn-images-1.medium.com/max/800/1*oeQhNtLL0XWYoPA0Uzh51Q.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;To build the web project, we have to run it manually using the &lt;strong&gt;Flutter Command&lt;/strong&gt; task.&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Click the &lt;strong&gt;Flutter Command&lt;/strong&gt; task.&lt;/li&gt;
+  &lt;li&gt;Change the display name to &lt;strong&gt;Flutter Run Build Web&lt;/strong&gt; (optional).&lt;/li&gt;
+  &lt;li&gt;Add the Flutter arguments to build web projects:&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;build web&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://cdn-images-1.medium.com/max/800/1*xsFcjMbriYuUmwspfakwLw.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Add a new task to &lt;strong&gt;Copy files&lt;/strong&gt;:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Click the &lt;strong&gt;+&lt;/strong&gt; button to add a new task.&lt;/li&gt;
+  &lt;li&gt;Search for &lt;strong&gt;copy files&lt;/strong&gt;.&lt;/li&gt;
+  &lt;li&gt;Add the &lt;strong&gt;Copy files&lt;/strong&gt; task.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://cdn-images-1.medium.com/max/800/1*JcHH8-BvCC1_pmuI7oDiNQ.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;After we build the project, build files will need to be copied to the artifacts directory:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Click the &lt;strong&gt;Copy Files&lt;/strong&gt; task.&lt;/li&gt;
+  &lt;li&gt;Change the source folder to &lt;strong&gt;$(Build.SourcesDirectory)/build/web&lt;/strong&gt;.&lt;/li&gt;
+  &lt;li&gt;Change the target folder to &lt;strong&gt;$(Build.ArtifactStagingDirectory)&lt;/strong&gt;.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://cdn-images-1.medium.com/max/800/1*i2HONWrqH04lMo1WEatx0w.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Add a new task to &lt;strong&gt;Publish build artifacts&lt;/strong&gt;:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Click the &lt;strong&gt;+&lt;/strong&gt; button to add a new task.&lt;/li&gt;
+  &lt;li&gt;Search for &lt;strong&gt;publish build artifact&lt;/strong&gt;.&lt;/li&gt;
+  &lt;li&gt;Add the &lt;strong&gt;Publish build artifacts&lt;/strong&gt; task.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://cdn-images-1.medium.com/max/800/1*K1sbK9jzcue5qpJNITm3iw.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;After adding the &lt;strong&gt;Publish build artifacts&lt;/strong&gt; task you can change the name of the artifact after publishing in this case I changed it to &lt;strong&gt;ci-artifact&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://cdn-images-1.medium.com/max/800/1*WSvqzb2DlskuGHlrnIE8qw.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;When all is done, save the CI pipeline.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;TL;DR&lt;/strong&gt; &lt;strong&gt;If you want to use YAML you can copy and paste this YAML file here:&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;undefined
+undefined&lt;/p&gt;
+
+&lt;h4 id=&quot;2-creating-the-cdpipeline&quot;&gt;2. Creating the CD pipeline&lt;/h4&gt;
+
+&lt;p&gt;The continuous deployment section will be used to push our builds directly to Netlify. This part is similar to most JAMStack apps such as React, Vue, Next, and Flutter Web. &lt;a href=&quot;https://codeburst.io/deploying-a-site-to-netlify-with-azure-devops-2743abb61db0&quot;&gt;An article by Clyde D’Souza&lt;/a&gt; influenced this particular section. But of course, I modified it slightly because the project we’re using is a Flutter project.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://cdn-images-1.medium.com/max/800/1*OygcnF5mrnsRGgLFKBMisg.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Open the releases pipeline, click on the Releases tab on the left side of the screen:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Click the &lt;strong&gt;Pipelines&lt;/strong&gt; on the left side of the tab.&lt;/li&gt;
+  &lt;li&gt;Open &lt;strong&gt;Releases&lt;/strong&gt;.&lt;/li&gt;
+  &lt;li&gt;Click &lt;strong&gt;New&lt;/strong&gt;.&lt;/li&gt;
+  &lt;li&gt;Click &lt;strong&gt;New release pipeline&lt;/strong&gt;.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://cdn-images-1.medium.com/max/800/1*9jXOfo-ozzfogunzdGCO_A.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Create an empty job.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://cdn-images-1.medium.com/max/800/1*H8SF23SAP0kioaI358_YTA.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Connect your CD pipeline with your CI pipeline:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Add an artifact.&lt;/li&gt;
+  &lt;li&gt;Select your project.&lt;/li&gt;
+  &lt;li&gt;Choose your CI pipeline&lt;/li&gt;
+  &lt;li&gt;Add the pipeline.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://cdn-images-1.medium.com/max/800/1*4TAHp-48BRxcxNa7805bPQ.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Enable the continuous deployment trigger to start after a successful build:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Click the lightning logo to open the trigger page.&lt;/li&gt;
+  &lt;li&gt;Click the &lt;strong&gt;Enabled&lt;/strong&gt; button.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://cdn-images-1.medium.com/max/800/1*ZnM9xtSoIvqoer3DITJUmw.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Add a new task to the new CD pipeline:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Open your &lt;strong&gt;Tasks&lt;/strong&gt; tab.&lt;/li&gt;
+  &lt;li&gt;Click the &lt;strong&gt;+&lt;/strong&gt; button.&lt;/li&gt;
+  &lt;li&gt;Search for &lt;strong&gt;Extract files&lt;/strong&gt;.&lt;/li&gt;
+  &lt;li&gt;Add the task to the pipeline.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://cdn-images-1.medium.com/max/800/1*Yuz4WMvTXt9tQm_4pj3MZQ.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Extract the artifacts according to the build Id.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://cdn-images-1.medium.com/max/800/1*w341jpMUhSmQmu0DVNk3SA.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Add a new task to the new CD pipeline:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Click the &lt;strong&gt;+&lt;/strong&gt; button.&lt;/li&gt;
+  &lt;li&gt;Search for &lt;strong&gt;Netlify&lt;/strong&gt;.&lt;/li&gt;
+  &lt;li&gt;Add the &lt;strong&gt;Install Netlify CLI&lt;/strong&gt; task to the pipeline.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://cdn-images-1.medium.com/max/800/1*Z9Vq4cGKp6rd1U0YeKSbZQ.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Add a new task to the new CD pipeline:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Click the &lt;strong&gt;+&lt;/strong&gt; button.&lt;/li&gt;
+  &lt;li&gt;Search for &lt;strong&gt;Netlify&lt;/strong&gt;.&lt;/li&gt;
+  &lt;li&gt;Add the &lt;strong&gt;Deploy Website&lt;/strong&gt; task to the pipeline.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;To connect our CD pipeline to our Netlify site, we need to have our access tokens and our site ID. We utilize pipeline variables to make it more accessible and provide secrecy to the token.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://cdn-images-1.medium.com/max/800/1*tEpST9H8SwhfhWj8z-NsyQ.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Click the &lt;strong&gt;+ Add&lt;/strong&gt; button twice.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://cdn-images-1.medium.com/max/800/1*HKk674mSac5xSASz-rfr2A.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;You will be shown with 4 input boxes. Put the name of the variable inside the left boxes and the values in the right. For convenience name the access token variable PAT, and name the other variable SiteID respectively.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://cdn-images-1.medium.com/max/800/1*6Qamra986ORQOxI7nLyg8w.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Change the deployment configuration:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Click &lt;strong&gt;Deploy to Netlify&lt;/strong&gt;.&lt;/li&gt;
+  &lt;li&gt;Insert your access token.&lt;/li&gt;
+  &lt;li&gt;Insert the Site ID.&lt;/li&gt;
+  &lt;li&gt;Select the build source directory.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Your CD pipeline should be finished, save the pipeline and try running it yourself! You can check the dummy site I deployed &lt;a href=&quot;https://miniature-flutter-milkstore.netlify.app/#/&quot;&gt;here&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h3 id=&quot;summary&quot;&gt;Summary&lt;/h3&gt;
+
+&lt;p&gt;In this tutorial, you have learned how to Flutter web deployments using CI/CD and Azure DevOps. We then deployed the site on Netlify.&lt;/p&gt;
+
+&lt;p&gt;To recap what we have done:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Installed the Flutter and Netlify dependencies.&lt;/li&gt;
+  &lt;li&gt;Created a blank site on Netlify.&lt;/li&gt;
+  &lt;li&gt;Retrieved the authorization token and site ID from Netlify.&lt;/li&gt;
+  &lt;li&gt;Prepared the CI/CD Pipelines.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;You now have an open playbook to use when you want to automate deployments. In the next tutorial, we will be looking into how we can utilize &lt;a href=&quot;https://link.medium.com/mI4Cq5Y9Acb&quot;&gt;Github Actions to make a CI/CD pipeline for Flutter Web and Netlify.&lt;/a&gt;&lt;/p&gt;
+</description>
+        <pubDate>Wed, 20 Jan 2021 21:44:42 +0700</pubDate>
+        <link>https://agustinustheo.github.io//tech/2021/01/20/how-to-deploy-flutter-web-to-netlify-using-ci-cd-and-azure-pipelines.html</link>
+        <guid isPermaLink="true">https://agustinustheo.github.io//tech/2021/01/20/how-to-deploy-flutter-web-to-netlify-using-ci-cd-and-azure-pipelines.html</guid>
+      </item>
+    
+      <item>
+        <title>Setting Up A Multinode RabbitMQ Cluster On Linux</title>
+        <description>&lt;p&gt;Installing RabbitMq on multiple remote servers can be a hassle. To connect multiple instances into one cluster we must first install RabbitMq on each remote server. These next two steps will walk through how we can install RabbitMq instances.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://cdn-images-1.medium.com/max/800/0*noAgkXTihXU2PYuu&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;In this tutorial, we will be installing RabbitMq using a Centos 8 Linux distro. The RabbitMq version used in this tutorial is 3.8.9.&lt;/strong&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;what-is-clustering-for&quot;&gt;What is clustering for?&lt;/h3&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://cdn-images-1.medium.com/max/800/0*hiLQ86ofVEj3P8Ke&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Well, clustering is used to combine multiple instances of RabbitMq into one giant central message queue. Clustering can be done on remote instances of RabbitMq on different servers. The purpose of the cluster is to handle massive amounts of message queues from apps, balancing the load on multiple servers rather than on a single server.&lt;/p&gt;
+
+&lt;h3 id=&quot;add-the-required-dependencies&quot;&gt;Add the required dependencies&lt;/h3&gt;
+
+&lt;h4 id=&quot;install-the-required-repositories&quot;&gt;Install the required repositories&lt;/h4&gt;
+
+&lt;p&gt;Add the RabbitMq repository in the repo configurations file. Open the config file:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sudo vi /etc/yum.repos.d/rabbitmq-server.repo
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Add this to the lines below:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;[rabbitmq-server]  
+name=rabbitmq-server  
+baseurl=[https://packagecloud.io/rabbitmq/rabbitmq-server/el/7/$basearch](https://packagecloud.io/rabbitmq/rabbitmq-server/el/7/$basearch)  
+repo_gpgcheck=1  
+gpgcheck=0  
+enabled=1  
+gpgkey=[https://packagecloud.io/rabbitmq/rabbitmq-server/gpgkey](https://packagecloud.io/rabbitmq/rabbitmq-server/gpgkey)  
+sslverify=1  
+sslcacert=/etc/pki/tls/certs/ca-bundle.crt  
+metadata_expire=300
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h4 id=&quot;add-hostname-to-the-hostsfile&quot;&gt;Add Hostname to the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;hosts&lt;/code&gt; file&lt;/h4&gt;
+
+&lt;p&gt;RabbitMq is built on top of Erlang. So it would make sense for us to install it beforehand. &lt;strong&gt;This part is very crucial as if you do not ad the hostname to&lt;/strong&gt; &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/etc/hosts&lt;/code&gt; &lt;strong&gt;then&lt;/strong&gt; &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;rabbitmqctl status&lt;/code&gt; &lt;strong&gt;will not work.&lt;/strong&gt;&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;echo “127.0.0.1 $(hostname -s)” | sudo tee -a /etc/hosts
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;setting-up-rabbitmqserver&quot;&gt;Setting Up RabbitMq Server&lt;/h3&gt;
+
+&lt;h4 id=&quot;install-rabbitmqserver&quot;&gt;Install RabbitMq Server&lt;/h4&gt;
+
+&lt;p&gt;After completing the previous configuration setup steps, install RabbitMq by using this command:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sudo dnf install -y rabbitmq-server
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;After installation is completed, check if the installation is correct by running:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;rpm -qi rabbitmq-server
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h4 id=&quot;open-ports&quot;&gt;Open Ports&lt;/h4&gt;
+
+&lt;p&gt;Centos has a pre-installed firewall called &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;firewalld&lt;/code&gt;. It blocks all ports from connecting unless asked to. So we must whitelist the TCP ports that are going to be used by RabbitMq.&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sudo firewall-cmd --zone=public --permanent --add-port={5672,15672}/tcp  
+sudo firewall-cmd --reload
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h4 id=&quot;start-the-rabbitmqservice&quot;&gt;Start the RabbitMq service&lt;/h4&gt;
+
+&lt;p&gt;The RabbitMq service doesn’t start on its own when you install it. You have to start it manually, then enable it to run on server startup. To start the RabbitMq service (the service might take a minute or two to start):&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sudo systemctl start rabbitmq-server.service
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;To enable the service run:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sudo systemctl enable rabbitmq-server.service
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;To check if the service is still running:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sudo rabbitmqctl status
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h4 id=&quot;enable-rabbitmq-management&quot;&gt;Enable RabbitMq Management&lt;/h4&gt;
+
+&lt;p&gt;If you want to enable the RabbitMq admin dashboard, run:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sudo rabbitmq-plugins enable rabbitmq_management
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Then try to open the dashboard from the browser:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;http://*your-server-ip*:15672
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;setting-up-rabbitmqcluster&quot;&gt;Setting Up RabbitMq Cluster&lt;/h3&gt;
+
+&lt;p&gt;After setting up RabbitMq on multiple servers (minimum of 2 servers) we now can continue to set up instances for the master and slave nodes. Choose one server as the master node as the cluster host, then use the other nodes as a slave cluster.&lt;/p&gt;
+
+&lt;h4 id=&quot;setting-up-the-masternode&quot;&gt;Setting Up The Master Node&lt;/h4&gt;
+
+&lt;p&gt;Whitelist the TCP port 4369 for &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;epmd&lt;/code&gt;, a helper discovery daemon used by RabbitMQ nodes and CLI tools, and port 25672 for instance finding.&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sudo firewall-cmd —-zone=public —-permanent —-add-port={4369,25672}/tcp  
+sudo firewall-cmd —-reload
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Add the hosts for each cluster, in the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/etc/hosts&lt;/code&gt; file&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sudo vi /etc/hosts
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;In the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;hosts&lt;/code&gt; file add the IP and hostname for each instance. The configuration would be as follows:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;node 1 IP node 1 hostname  
+node 2 IP node 2 hostname  
+node 3 IP node 3 hostname
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;The order doesn’t have to be master first, but it does need to have all cluster IPs and hostnames for it to work. An example configuration is as follows:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;10.240.200.111 rabbitmq-1  
+10.240.200.112 rabbitmq-2  
+10.240.200.113 rabbitmq-3
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Get the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;.erlang.cookie&lt;/code&gt; from the master node&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sudo cat /var/lib/rabbitmq/.erlang.cookie
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Save the token output in your notepad.&lt;/p&gt;
+
+&lt;h4 id=&quot;setting-up-the-slavenodes&quot;&gt;Setting Up The Slave Nodes&lt;/h4&gt;
+
+&lt;p&gt;Whitelist the TCP port 4369 for &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;epmd&lt;/code&gt; a helper discovery daemon used by RabbitMQ nodes and CLI tools, and port 25672 for instance finding.&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sudo firewall-cmd —-zone=public —-permanent —-add-port={4369,25672}/tcp  
+sudo firewall-cmd —-reload
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Add the hosts for each cluster, in the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/etc/hosts&lt;/code&gt; file&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sudo vi /etc/hosts
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;In the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;hosts&lt;/code&gt; file add the IP and hostname for each instance. The configuration would be as follows:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;node 1 IP node 1 hostname  
+node 2 IP node 2 hostname  
+node 3 IP node 3 hostname
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;The order doesn’t have to be master first, but it does need to have all cluster IPs and hostnames for it to work. An example configuration is as follows:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;10.240.200.111 rabbitmq-1  
+10.240.200.112 rabbitmq-2  
+10.240.200.113 rabbitmq-3
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Stop the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;rabbitmq-server&lt;/code&gt; instance and replace the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;.erlang.cookie&lt;/code&gt; inside the slave node with the masters.&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sudo su  
+systemctl stop rabbitmq-server  
+echo -n “*erlang cookie from master node*” &amp;gt; /var/lib/rabbitmq/.erlang.cookie  
+systemctl start rabbitmq-server
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;Repeat this setup on all the nodes!&lt;/strong&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;join-the-slave-nodes-with-the-masternode&quot;&gt;Join The Slave Nodes With The Master Node&lt;/h3&gt;
+
+&lt;p&gt;Stop the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;rabbitmq-server&lt;/code&gt; instance, reset the node and join it with the master node.&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sudo rabbitmqctl stop_app  
+sudo rabbitmqctl reset  
+sudo rabbitmqctl join_cluster rabbit@*master node hostname*  
+sudo rabbitmqctl start_app
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;reset-the-masternode&quot;&gt;Reset The Master Node&lt;/h3&gt;
+
+&lt;p&gt;Reset the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;rabbitmq-server&lt;/code&gt; in the master node.&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sudo rabbitmqctl stop_app  
+sudo rabbitmqctl reset  
+sudo rabbitmqctl start_app
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;check-the-clusterstatus&quot;&gt;Check The Cluster Status&lt;/h3&gt;
+
+&lt;p&gt;To check the cluster status, run this command:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sudo rabbitmqctl cluster_status
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;conclusion&quot;&gt;Conclusion&lt;/h3&gt;
+
+&lt;p&gt;In the end, when we have finished installation, login to the RabbitMq management dashboard for one of the nodes and it would have more than one cluster like so:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://cdn-images-1.medium.com/max/800/0*Vx0rb7MN4gugsctF&quot; alt=&quot;&quot; /&gt;
+undefined&lt;/p&gt;
+
+&lt;p&gt;Of course, there are advantages in using manual installs for RabbitMq. The pros would be:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;You can save space on each server by only installing RabbitMq and nothing else.&lt;/li&gt;
+  &lt;li&gt;Particularly on VMs, you can use Ansible to speed up the installation process by doing the repeatable tasks from a single command line.&lt;/li&gt;
+  &lt;li&gt;You understand thoroughly the process of building a RabbitMq instance from the ground up.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Then the cons would be:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Managing the firewalls for each server can be complicated.&lt;/li&gt;
+  &lt;li&gt;It is faster for us to use Docker during container set up for each server.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;But if you want to read more on this topic, and read some of the references I had when making this tutorial you can check out these links below:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;&lt;a href=&quot;https://www.rabbitmq.com/clustering.html&quot;&gt;Official RabbitMQ Clustering Guide&lt;/a&gt;.&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://www.osradar.com/how-to-install-rabbitmq-on-rhel-8-centos-8/&quot;&gt;How to Install RabbitMQ on RHEL 8 / CentOS 8 — Linux Windows and android Tutorials (osradar.com)&lt;/a&gt;.&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://gist.github.com/pobsuwan/22aa4a9e0a217d22e12800a432933881&quot;&gt;How to config rabbitmq server cluster [3 nodes] (github.com)&lt;/a&gt;.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Now we have an open playbook for you to use the next time you want to setup RabbitMq on your systems manually.&lt;/p&gt;
+</description>
+        <pubDate>Wed, 20 Jan 2021 00:51:10 +0700</pubDate>
+        <link>https://agustinustheo.github.io//tech/2021/01/20/setting-up-multinode-rabbitmq-cluster-on-linux.html</link>
+        <guid isPermaLink="true">https://agustinustheo.github.io//tech/2021/01/20/setting-up-multinode-rabbitmq-cluster-on-linux.html</guid>
+      </item>
+    
+      <item>
+        <title>The Microservice Architecture Perspective</title>
+        <description>&lt;p&gt;Making software that serves more than a couple of thousand users can be hard. The difficulty is not in making the app itself but in how we make the app reliable. Microservices is a solution to messy problems like these. Instead of relying on one large server, we use a bunch of small ones to solve our problem. To elaborate on this subject further here are a few perspectives I have on the microservices architecture.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://cdn-images-1.medium.com/max/800/0*VzeqoAS5yZrIpeZQ&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;one-down-many-more-togo&quot;&gt;One Down, Many More To Go&lt;/h3&gt;
+
+&lt;p&gt;In my honest opinion, one of the reasons I go with a microservice is the reliability factor. With multiple servers, this can be the case. We add reliability to the service by adding more of them. This technique is called &lt;a href=&quot;https://www.citrix.com/en-id/glossary/load-balancing.html#:~:text=Load%20balancing%20is%20defined%20as,server%20capable%20of%20fulfilling%20them.&quot;&gt;load balancing.&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://cdn-images-1.medium.com/max/800/0*trVIG9l2V7inAkov.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Instead of burdening all the traffic to one server, you can balance it to multiple servers. So it can be nearly impossible to down the service. The best part of this is that you don’t need to have expensive high throughput servers to make this happen. For example, you can host your server on a few &lt;a href=&quot;https://www.digitalocean.com/products/droplets/&quot;&gt;digital ocean droplets&lt;/a&gt;, instead of one large one.&lt;/p&gt;
+
+&lt;p&gt;Though load balancing alone cannot determine a microservice, there are other characteristics that would need to be fulfilled. This is but only one of the advantages of the microservice pattern.&lt;/p&gt;
+
+&lt;p&gt;If you are using a monolith pattern logically you can still use load balancing, the only downside would be that you would need multiple high throughput servers to serve your app. Multiplying the cost.&lt;/p&gt;
+
+&lt;h3 id=&quot;pay-for-what-youneed&quot;&gt;Pay For What You Need&lt;/h3&gt;
+
+&lt;p&gt;Before I start, let me say. This section is debatable. I am explaining this from my point of view and my previous experiences. Because when your entire service is determined by small services, it can be easy to cut costs. We can buy only the things that we need.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://cdn-images-1.medium.com/max/800/1*rTd5CdXZV626QTVDZuK_EA.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;For explanation purposes let’s say a 1 GB droplet can handle about 1k users. So to handle 5k users you probably would need to use the 8GB droplet for the price of $40 a month.&lt;/p&gt;
+
+&lt;p&gt;Instead, you can use 3 droplets. Two 1 GB droplets and one 4 GB droplet for $30 a month. We buy two 1 GB droplets so we can use one for the service and use the other one for load balancing. With this scheme, you saved $10 a month.&lt;/p&gt;
+
+&lt;p&gt;This is a very simple example. A better one would be when we have separate microservices that connect to each other, we can tune the prices to our exact use of computing power.&lt;/p&gt;
+
+&lt;p&gt;For example, the donuts API may have more load than the coffee API. We can then scale up the donuts API server to be able to handle those requests. Being able to specify upgrades by service can help reduce costs tremendously.&lt;/p&gt;
+
+&lt;h3 id=&quot;separate-your-interests&quot;&gt;Separate Your Interests&lt;/h3&gt;
+
+&lt;p&gt;Monoliths have this habit of merging all services together, related or not. This causes a problem when one of the services goes down, it will take the entire app down with it. If you value reliability, you wouldn’t want that.&lt;/p&gt;
+
+&lt;p&gt;Using the microservice architecture each service can be separated, making it independent of one another. This type of API development is called domain driven development or DDD. It is a very interesting way of designing systems small that can scale big. &lt;a href=&quot;https://www.confluent.io/blog/microservices-apache-kafka-domain-driven-design/#:~:text=Microservices%20have%20a%20symbiotic%20relationship,that%20makes%20the%20system%20work.&quot;&gt;You can read more about DDD here&lt;/a&gt;. Reading more into this topic might lead you to cool system design patterns like &lt;a href=&quot;https://microservices.io/patterns/data/cqrs.html&quot;&gt;CQRS&lt;/a&gt;, &lt;a href=&quot;https://microservices.io/patterns/data/database-per-service.html&quot;&gt;Database per service&lt;/a&gt;, and &lt;a href=&quot;https://microservices.io/patterns/data/api-composition.html&quot;&gt;API Composition&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://cdn-images-1.medium.com/max/800/1*kKsAICXGDY_KbwOpgxSaBQ.jpeg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;The picture above explains my point perfectly. Connections from the client would be made to a gateway/edge API. The edge API would then connect to the multiple microservices available for each specific request. With the corresponding databases behind each specific API.&lt;/p&gt;
+
+&lt;p&gt;Say, the user wants some books, of course, the data would be retrieved from the books API. After seeing the catalog of books, the user made up their mind and wishes to check out. The user is then connected to the check out API. Notice that all the services are independent of each other it does not coincide with one another other than the edge API. It adds reliability to the app.&lt;/p&gt;
+
+&lt;h3 id=&quot;scale-more&quot;&gt;Scale More!&lt;/h3&gt;
+
+&lt;p&gt;Why does this section have an exclamation mark? Because this is the main gist of using microservices. It is the best feature anyone could have asked for. Put reliability and scalability together and what do you have? A great user experience.&lt;/p&gt;
+
+&lt;p&gt;Not all companies might need the blessing of microservices but for those that do it really does make a huge difference. All the sections before this one support this. Separable domains, cost-effectiveness, and reliability.&lt;/p&gt;
+
+&lt;p&gt;But you do not need to scale everything. When you are building a team of services using microservices will help you in the long run, but when you are making an MVP or some other small apps you would not need to implement microservices at all. It might even slow you down!&lt;/p&gt;
+
+&lt;p&gt;Microservices is not the grand bullet for everything, even though it has both reliability and scalability to its name. It has good things to offer for select cases, not for everyone.&lt;/p&gt;
+
+&lt;h3 id=&quot;small-andcompact&quot;&gt;Small and Compact&lt;/h3&gt;
+
+&lt;p&gt;Microservices like the name entails are very small apps that communicate with each other. With specificity in mind, teams can deploy new services quickly without breaking another.&lt;/p&gt;
+
+&lt;p&gt;This coincides perfectly with agile teams that want to reach a certain target. Deployments are easy because it allows for easy and straightforward testing. You only need to test the things that you deploy, there is no need to test the other services along with it.&lt;/p&gt;
+
+&lt;p&gt;Almost all the articles I’ve read about microservices applaud the ease of deployments this architecture has to offer. Though that’s not all the benefits of being small and compact.&lt;/p&gt;
+
+&lt;p&gt;Maintainability wise, it will be much easier than monoliths. The functions are simple because the folders aren’t merged into one project. Honestly from my own experience handling a monolith, traversing the folders was very difficult. Filenames can sometimes be similar in a way that I confuse which service is which.&lt;/p&gt;
+
+&lt;p&gt;Sure, people can say that a confusing monolith project reeks of bad code management. When you have more than 100 features in a project it does tend to get a little messy. Add to the number of teams responsible for different features contributing to the &lt;strong&gt;same codebase&lt;/strong&gt; 🤯.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;I can only imagine the number of branches that repo has…&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&quot;more-autonomy-and-faster-development-speeds&quot;&gt;More Autonomy and Faster Development Speeds&lt;/h3&gt;
+
+&lt;p&gt;With microservice, this doesn’t have to be. Microservice brings more autonomy to the team. Working together between teams is not easy. We have our own schedules that we need to attend. But when we use the microservices concept, the pain of inter-team management becomes invisible.&lt;/p&gt;
+
+&lt;p&gt;All you need would be a coding standard, and you would be good to go. Though more autonomy, coupled with faster development could lead to trouble &lt;strong&gt;if you don’t have good documentation&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;Let me make this clear, working autonomously is great and all. But in the end, you still need to communicate. What better way to miscommunicate other than having no documentation. Believe me, I have experienced these kinds of things first hand. Microservices does not solve problems like these.&lt;/p&gt;
+
+&lt;p&gt;With more autonomy teams can be more business-oriented with their goals, timelines become much shorter and development can focus more on new features.&lt;/p&gt;
+
+&lt;h3 id=&quot;with-great-power-comes-great-documentation&quot;&gt;With Great Power Comes Great Documentation&lt;/h3&gt;
+
+&lt;p&gt;Elaborating from the previous section, a good analogy for microservices would be “With great power comes great responsibility”. I am not kidding, when you have tons of services you would &lt;strong&gt;wish&lt;/strong&gt; &lt;strong&gt;for good documentation&lt;/strong&gt;. For a good perspective here is an illustration of the Netflix microservice backend.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://cdn-images-1.medium.com/max/800/0*d9cZNb3AX_fOgC-y.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Now imagine, how much of that would you remember. The answer is none. That’s why documentation is important. Probably using Netflix as an example is a huge exaggeration — &lt;em&gt;but hey it gets the point across.&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;Now I know — &lt;em&gt;every application needs documentation&lt;/em&gt;. That’s true but it becomes double for microservices. There are benefits to good documentation though. The better documented the microservice is, the reusable probability of each service will be increased. This brings us to the next point.&lt;/p&gt;
+
+&lt;h3 id=&quot;reusability&quot;&gt;Reusability&lt;/h3&gt;
+
+&lt;p&gt;What I love about writing code is how much less of it I have to write. Get what I am saying? Reusable components, reusable APIs, reusable &lt;em&gt;everything&lt;/em&gt;! I would integrate every one of my apps into one large system, and if I can reuse some parts of it for another app I would do it without notice.&lt;/p&gt;
+
+&lt;p&gt;The part that I like about microservices is that it’s very portable, I mean one service can be accessed by many. That’s why I usually try to make microservices as general as I can make it — &lt;em&gt;doesn’t mean that I won’t make it specific when I need to&lt;/em&gt;. It just comes as a natural thing to do to reuse things you made.&lt;/p&gt;
+
+&lt;h3 id=&quot;conclusion&quot;&gt;Conclusion&lt;/h3&gt;
+
+&lt;p&gt;To summarize microservice architectures are usually used to help increase the reliability of a system. The benefits of using a microservice architecture are as follows:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Made to be reliable.&lt;/li&gt;
+  &lt;li&gt;Pay for what you need.&lt;/li&gt;
+  &lt;li&gt;Write separate applications for each domain.&lt;/li&gt;
+  &lt;li&gt;Have a nature to scale.&lt;/li&gt;
+  &lt;li&gt;Small and compact.&lt;/li&gt;
+  &lt;li&gt;Separated development for teams that wants to move fast.&lt;/li&gt;
+  &lt;li&gt;Reusability factor.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Though the microservice architecture does come with its faults. The disadvantages of using a microservice are as follows:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;With great power, comes great documentation.&lt;/li&gt;
+  &lt;li&gt;Small companies with few teams are not suitable for this architecture.&lt;/li&gt;
+  &lt;li&gt;Does not fit every business model (e.g monoliths are better for MVPs).&lt;/li&gt;
+  &lt;li&gt;Because it has a nature to scale, it can become bloated if not checked. We can’t all be like Netflix.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;This was my perspective regarding microservices. I hope it was clear enough of an explanation.&lt;/p&gt;
+</description>
+        <pubDate>Thu, 31 Dec 2020 23:51:07 +0700</pubDate>
+        <link>https://agustinustheo.github.io//tech/2020/12/31/the-microservice-architecture-perspective.html</link>
+        <guid isPermaLink="true">https://agustinustheo.github.io//tech/2020/12/31/the-microservice-architecture-perspective.html</guid>
+      </item>
+    
+      <item>
+        <title>Automating Flutter Web Deployments to Netlify Using GitHub Actions</title>
+        <description>&lt;p&gt;Lately, there has been a lot of fuss over Flutter. Some people call it the future, while some say it’s overrated. But I think it’s a good framework to learn nonetheless. The sheer amount of things that can be done with Flutter is unbelievable, including Android, iOS, desktop, and web programming.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://miro.medium.com/max/700/0*rjDmgSKL-lNurUpp&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Here in this tutorial, I’m going to share how to implement your Flutter web deployments using GitHub Actions. Also, we’re going to use Netlify. Why Netlify? Because, honestly, Netlify is very easy to use. Now, without further ado, let’s get to it.&lt;/p&gt;
+
+&lt;h3 id=&quot;creating-your-netlifysite&quot;&gt;Creating Your Netlify Site&lt;/h3&gt;
+
+&lt;p&gt;This section will discuss how you can create an empty Netlify site using the Netlify CLI. We’ll be using npm to install it for us. In my case, I use Ubuntu 18.04 as the host OS for the npm installation.&lt;/p&gt;
+
+&lt;h4 id=&quot;1-install-the-netlifycli&quot;&gt;1. Install the Netlify CLI&lt;/h4&gt;
+
+&lt;p&gt;To install the Netlify CLI, you just need to run:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;npm install netlify-cli -g
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;After the installation is complete, check if it’s installed correctly by running this command:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;netlify
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h4 id=&quot;2-log-in-to-netlify-from-thecli&quot;&gt;2. Log in to Netlify from the CLI&lt;/h4&gt;
+
+&lt;p&gt;Before you can start using the CLI, Netlify needs you to authenticate yourself.&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;netlify login
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Then a browser window will open:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://miro.medium.com/max/700/0*4FnW4DUyG4w5_kPC.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h4 id=&quot;3-creating-a-blanksite&quot;&gt;3. Creating a blank site&lt;/h4&gt;
+
+&lt;p&gt;After finishing your login, create a blank site using this command:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;netlify sites:create --name _&amp;lt;site name&amp;gt;_
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h4 id=&quot;4-retrieving-your-site-id-and-personal-accesstoken&quot;&gt;4. Retrieving your Site ID and personal access token&lt;/h4&gt;
+
+&lt;p&gt;To run continuous development remotely, you need both your site ID and your personal access token to help you.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://miro.medium.com/max/700/1*PxWjk8axlVeVwmUt33_gQw.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Retrieve your site ID by:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Going into the site settings.&lt;/li&gt;
+  &lt;li&gt;Copy the API ID value.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;The next step would be to retrieve the personal access token.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://miro.medium.com/max/328/1*tbk9PgZpJudHMFp6kUvdvg.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Go to the user settings.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://miro.medium.com/max/700/1*AKe8XmKjoeIzeCfples1MA.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;To get an access token, you have to make a new one:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Go to the Applications tab.&lt;/li&gt;
+  &lt;li&gt;Click “New access token.”&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Copy and save the access token shown on the next screen, and save it because you’ll need it later.&lt;/p&gt;
+
+&lt;h3 id=&quot;set-repository-secrets&quot;&gt;Set Repository Secrets&lt;/h3&gt;
+
+&lt;p&gt;After we’ve retrieved the access tokens and site ID, we’ll save them inside the repository secret.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Note:&lt;/strong&gt; Why do we need to use repository secrets? To prevent sensitive IDs or tokens from being pushed to the repository.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://miro.medium.com/max/700/1*ZmJUTolPTUB9jV4wEESG1g.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;To create a secret:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Go to the repository settings.&lt;/li&gt;
+  &lt;li&gt;Click Secrets on the left-side tab.&lt;/li&gt;
+  &lt;li&gt;Click “New repository secret.”&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://miro.medium.com/max/700/1*q7bhT-rvvr43-Ica5V5qeg.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;On the “New secret” page input the secret name and value. When finished, click the “Add secret” button.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://miro.medium.com/max/700/1*wsVX08jtCaYK8_qixHKKiw.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;In its entirety, we’ve added about three secrets: the GitHub personal access token, the Netlify personal access token, and the Netlify site ID.&lt;/p&gt;
+
+&lt;h3 id=&quot;retrieving-the-github-accesstoken&quot;&gt;Retrieving the GitHub Access Token&lt;/h3&gt;
+
+&lt;p&gt;Because we’re going to automate deployments using GitHub Actions, a personal access token would be required. You’d need to open your &lt;a href=&quot;https://github.com/settings/tokens&quot;&gt;GitHub Developer Settings here&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://miro.medium.com/max/700/1*FIAEH_LGk_2ExSWE0hKyAw.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;After opening your developer settings page:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Open the personal access tokens page.&lt;/li&gt;
+  &lt;li&gt;Generate a new token for GitHub Actions.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://miro.medium.com/max/700/1*2TbMqTdUDUbTJ7pwaz2p8A.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;The next steps would be:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Input a name for your token.&lt;/li&gt;
+  &lt;li&gt;Check the workflow to give access to GitHub Actions.&lt;/li&gt;
+  &lt;li&gt;Scroll to the bottom of the page.&lt;/li&gt;
+  &lt;li&gt;Click the “Generate token” button.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://miro.medium.com/max/700/1*iL5anhz6IvIigtRGPfiF7A.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Copy the access token and save it somewhere because it’ll be used later on.&lt;/p&gt;
+
+&lt;h3 id=&quot;creating-the-cicdworkflow&quot;&gt;Creating the CI/CD Workflow&lt;/h3&gt;
+
+&lt;p&gt;CI/CD using GitHub Actions is fairly simple. It requires us to make a YAML file. This YAML file is called a &lt;em&gt;workflow&lt;/em&gt; in GitHub Actions because it defines the steps needed to form a CI/CD.&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;name: Flutter-CI
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+  workflow_dispatch:
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;To start our workflow, we must enable builds to start after push/pull requests to the master branch, assuming all deployments would be from the master.&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: subosito/flutter-action@v1
+      with:
+        channel: beta
+    - run: flutter config --enable-web
+    - run: flutter build web
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;For the Flutter building process, I used an action made by subosito. You can check the &lt;a href=&quot;https://github.com/marketplace/actions/flutter-action&quot;&gt;Flutter Actions detail here&lt;/a&gt;. For Flutter web, we first have to initialize the configurations to enable web builds. Thus, we ran:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;flutter config --enable-web
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Then if you want to add tests to the workflow, you can by adding the command:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;flutter test
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Finally, build the app using:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;flutter build web
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;The results of the build will be in the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;build/web&lt;/code&gt; folder.&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;    - name: Deploy to Netlify
+      uses: nwtgck/actions-netlify@v1.1
+      with:
+        publish-dir: './build/web'
+        production-branch: master
+        github-token: $
+        deploy-message: &quot;Deploy from GitHub Actions&quot;
+        enable-pull-request-comment: false
+        enable-commit-comment: true
+        overwrites-pull-request-comment: true
+      env:
+        NETLIFY_AUTH_TOKEN: $
+        NETLIFY_SITE_ID: $
+      timeout-minutes: 1
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;After a successful build, deploy the files to Netlify manually. Here’s a snippet I used by nwtgck. I changed a few variables to be able to publish Flutter apps, but you can check &lt;a href=&quot;https://github.com/marketplace/actions/netlify-actions&quot;&gt;Netlify Actions here&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;In this last workflow, you’ll access the secrets we previously stored on our repository settings. The entire workflow can be copied from this gist below:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;name: CI
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: subosito/flutter-action@v1
+      with:
+        channel: beta
+    - run: flutter config --enable-web
+    - run: flutter build web
+
+    - name: Deploy to Netlify
+      uses: nwtgck/actions-netlify@v1.1
+      with:
+        publish-dir: './build/web'
+        production-branch: master
+        github-token: $
+        deploy-message: &quot;Deploy from GitHub Actions&quot;
+        enable-pull-request-comment: false
+        enable-commit-comment: true
+        overwrites-pull-request-comment: true
+      env:
+        NETLIFY_AUTH_TOKEN: $
+        NETLIFY_SITE_ID: $
+      timeout-minutes: 1
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Your CI/CD workflow should be finished. Save the workflow inside &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;.github/workflows&lt;/code&gt;, and try running it yourself! You can check the dummy site I deployed &lt;a href=&quot;https://miniature-flutter-milkstore.netlify.app/#/&quot;&gt;here&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h3 id=&quot;summary&quot;&gt;Summary&lt;/h3&gt;
+
+&lt;p&gt;We’ve successfully created a CI/CD pipeline for Flutter web using Github Actions. To summarize our steps:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Create a blank Netlify site.&lt;/li&gt;
+  &lt;li&gt;Retrieve the personal access token from Netlify and the site ID.&lt;/li&gt;
+  &lt;li&gt;Retrieve the personal access token from GitHub.&lt;/li&gt;
+  &lt;li&gt;Set the secrets inside the repository settings.&lt;/li&gt;
+  &lt;li&gt;Create a GitHub Action YAML file inside &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;.github/workflows&lt;/code&gt;.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Voila! We’ve finished our tutorial. Now you have an open playbook to deploy your future Flutter web apps using GitHub Actions.&lt;/p&gt;
+</description>
+        <pubDate>Mon, 28 Dec 2020 23:18:18 +0700</pubDate>
+        <link>https://agustinustheo.github.io//tech/2020/12/28/automating-flutter-web-deployments-to-netlify-using-github-actions.html</link>
+        <guid isPermaLink="true">https://agustinustheo.github.io//tech/2020/12/28/automating-flutter-web-deployments-to-netlify-using-github-actions.html</guid>
+      </item>
+    
+      <item>
         <title>Automate Your Linux Deployment Using Azure DevOps</title>
         <description>&lt;p&gt;Feel like you have been logging into your Linux servers too much lately? Good, this might be the right article for you. In teams, either large or small manual deployments can be tedious. But they are also predictable. Deployment steps don’t really change that often unless you have a breaking change or you are implementing a major feature.&lt;/p&gt;
 
@@ -2358,31 +3325,6 @@ git+https://github.com/abenassi/Google-Search-API
         <pubDate>Fri, 22 Feb 2019 19:35:23 +0700</pubDate>
         <link>https://agustinustheo.github.io//tech/2019/02/22/filtering-fake-news-using-python-has-never-been-easier.html</link>
         <guid isPermaLink="true">https://agustinustheo.github.io//tech/2019/02/22/filtering-fake-news-using-python-has-never-been-easier.html</guid>
-      </item>
-    
-      <item>
-        <title>Progressive Web Apps, Artificial Intelligence, the next App Boom</title>
-        <description>&lt;p&gt;The app boom started in July 2008, when Apple introduced the App Store. In previous years while developers were making apps, there were still people that download these apps.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;https://cdn-images-1.medium.com/max/1200/1*cMh5Oh6F9UQIah1LGZUbUQ.jpeg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;But that too has changed since the number of average smartphone users that download apps have plummeted, according to an article by &lt;a href=&quot;https://www.recode.net/2016/6/8/11883518/app-boom-over-snapchat-uber&quot;&gt;Recode&lt;/a&gt; the growth is not like what it used to be. An example of less growth can be seen here.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;https://cdn-images-1.medium.com/max/600/1*i2dRvC5P0bwnKD6k4OA74Q.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;This graph represents the total number of downloads each major app has had in 2015 and 2016. This research has proved that the number of people that are downloading mobile apps is declining. Taking that into account, we must reconsider an alternative to mobile apps. Recently in the web app world, there has been a contender that might be able to end the 2008 App Boom once and for all, Progressive Web Apps. According to a post from &lt;a href=&quot;https://hackernoon.com/progressive-web-apps-the-future-of-mobile-web-app-development-f29257b0dea2&quot;&gt;Hackernoon&lt;/a&gt;, a Progressive Web App is an app that is able to look and react like a native mobile app, this is achieved with APIs on modern browsers that make native mobile app features such as a full-screen application or push notifications possible. On top of that these web apps are extremely lightweight, the installation process is also easy, and users don’t even need to update their PWAs because the app doesn’t have a middle man like an app store to manage application versions, the apps would just update as soon as users connect to the internet. With these advantages, PWAs are a great danger to mobile apps and their future.&lt;/p&gt;
-
-&lt;p&gt;But there is another player in this stage, artificial intelligence has taken a huge leap forward in terms of usability in recent years. With the help of deep learning, the possibilities for AI are boundless. Just a decade ago AI can only process words, now AI can do face recognition. A feature that was only available through science fiction, writing AI programs today are also easier because AI libraries are getting more frequent. Fun fact, currently there is an AI library that is written in Javascript, Tensorflow.js. On the 2018 TensorFlow Dev Summit, Google developers showed a demo of a Tensorflow.js app an emoji scavenger hunt app, users are prompt to find items in around them that corresponds to the emoji showed in the app.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;https://cdn-images-1.medium.com/max/800/1*GkmmhsO4gjw1MSHiW09Z1A.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;This evolves the way we think about web apps. According to an article from &lt;a href=&quot;https://www.forbes.com/sites/bernardmarr/2018/09/02/what-is-industry-4-0-heres-a-super-easy-explanation-for-anyone/#5dbee5df9788&quot;&gt;Forbes&lt;/a&gt;, we are currently in the midst of a new revolution, Industry 4.0 whereas previously computers were added to help humans complete simple tasks. Now we are developing technologies that are able to connect with each other and make decisions without human involvement. Imagine an entire industry running with only machines and a connection to the web.&lt;/p&gt;
-
-&lt;p&gt;Now you might be wondering, how does this correlate with the 2008 App Boom. This will affect even our daily lives. For example imagine computers ordering car parts for a company because the computer realized the current stock is not sufficient all of this without human involvement, this is a new step for all of us to keep relevant. With the complicated PWA APIs, and the development of AI a new app boom is imminent, but not an app being used by humans. It will be developed for the purpose of computers communicating with each other. In my opinion, the flow of future apps will be as follows: AI will be used for processing any kind of input the computer receives, and with sophisticated APIs, it will send commands to other computers to complete its’ tasks. With AI libraries that are compatible with modern frameworks making this possible.&lt;/p&gt;
-</description>
-        <pubDate>Thu, 13 Dec 2018 14:19:11 +0700</pubDate>
-        <link>https://agustinustheo.github.io//tech/2018/12/13/progressive-web-apps-artificial-intelligence-the-next-app-boom.html</link>
-        <guid isPermaLink="true">https://agustinustheo.github.io//tech/2018/12/13/progressive-web-apps-artificial-intelligence-the-next-app-boom.html</guid>
       </item>
     
   </channel>

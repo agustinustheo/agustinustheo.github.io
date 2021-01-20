@@ -1,4 +1,935 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.1.1">Jekyll</generator><link href="https://agustinustheo.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://agustinustheo.github.io/" rel="alternate" type="text/html" /><updated>2020-12-21T04:35:02+07:00</updated><id>https://agustinustheo.github.io/feed.xml</id><title type="html">Agustinus Theodorus</title><subtitle>I am primarily a web app developer. Most of my coding time is spent making new web apps, web APIs or bug fixing. My current hobby is writing, I usually spare time to write every month.</subtitle><author><name>Agustinus Theodorus</name></author><entry><title type="html">Automate Your Linux Deployment Using Azure DevOps</title><link href="https://agustinustheo.github.io/tech/2020/12/10/automate-your-linux-deployment-using-azure-devops.html" rel="alternate" type="text/html" title="Automate Your Linux Deployment Using Azure DevOps" /><published>2020-12-10T19:49:28+07:00</published><updated>2020-12-10T19:49:28+07:00</updated><id>https://agustinustheo.github.io/tech/2020/12/10/automate-your-linux-deployment-using-azure-devops</id><content type="html" xml:base="https://agustinustheo.github.io/tech/2020/12/10/automate-your-linux-deployment-using-azure-devops.html">&lt;p&gt;Feel like you have been logging into your Linux servers too much lately? Good, this might be the right article for you. In teams, either large or small manual deployments can be tedious. But they are also predictable. Deployment steps don’t really change that often unless you have a breaking change or you are implementing a major feature.&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.1.1">Jekyll</generator><link href="https://agustinustheo.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://agustinustheo.github.io/" rel="alternate" type="text/html" /><updated>2021-01-21T01:27:42+07:00</updated><id>https://agustinustheo.github.io/feed.xml</id><title type="html">Agustinus Theodorus</title><subtitle>I am primarily a web app developer. Most of my coding time is spent making new web apps, web APIs or bug fixing. My current hobby is writing, I usually spare time to write every month.</subtitle><author><name>Agustinus Theodorus</name></author><entry><title type="html">How to Deploy Flutter Web to Netlify Using CI/CD and Azure Pipelines</title><link href="https://agustinustheo.github.io/tech/2021/01/20/how-to-deploy-flutter-web-to-netlify-using-ci-cd-and-azure-pipelines.html" rel="alternate" type="text/html" title="How to Deploy Flutter Web to Netlify Using CI/CD and Azure Pipelines" /><published>2021-01-20T21:44:42+07:00</published><updated>2021-01-20T21:44:42+07:00</updated><id>https://agustinustheo.github.io/tech/2021/01/20/how-to-deploy-flutter-web-to-netlify-using-ci-cd-and-azure-pipelines</id><content type="html" xml:base="https://agustinustheo.github.io/tech/2021/01/20/how-to-deploy-flutter-web-to-netlify-using-ci-cd-and-azure-pipelines.html">&lt;p&gt;Developing web apps has become easier over the years. With Flutter it became very easy and fun. But to be honest, deploying it is sometimes a pain. Most services are not ready for Flutter projects being hosted on the web. Sure, &lt;strong&gt;&lt;em&gt;some are&lt;/em&gt;&lt;/strong&gt; but it needs a bit of tinkering.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://cdn-images-1.medium.com/max/800/0*Zuxm0Houm1FyBdTE&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;I don’t mind tinkering a bit, I mean… Why not?&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;Here in this tutorial, I am going to share with you how to implement CI/CD on your Flutter web deployments using Azure DevOps Pipelines. And best of all, we are going to use Netlify! Why do I sound excited? Because honestly, Netlify is very easy to use. Now, without further ado let’s get to it.&lt;/p&gt;
+
+&lt;h3 id=&quot;installing-dependencies&quot;&gt;Installing Dependencies&lt;/h3&gt;
+
+&lt;p&gt;Before we start, we need to install the required dependencies beforehand.&lt;/p&gt;
+
+&lt;h4 id=&quot;1-installing-the-flutterplugin&quot;&gt;1. Installing the Flutter plugin&lt;/h4&gt;
+
+&lt;p&gt;Well, you can use the &lt;a href=&quot;https://marketplace.visualstudio.com/items?itemName=aloisdeniel.flutter&quot;&gt;Flutter plugin for DevOps&lt;/a&gt; a dev already made the tool for us. Thanks, &lt;a href=&quot;https://marketplace.visualstudio.com/publishers/aloisdeniel&quot;&gt;Aloïs&lt;/a&gt; for doing the heavy work! We can use this tool for our purpose.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://cdn-images-1.medium.com/max/800/1*ngPggahl55mBGRJ-FGlSRg.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;After clicking that button, you would be shown on this screen:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://cdn-images-1.medium.com/max/800/1*52i3t0Qhvy239I_MS3GPpA.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Now in what you have to do is:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Choose the &lt;strong&gt;organization&lt;/strong&gt; you want to install.&lt;/li&gt;
+  &lt;li&gt;Click install.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h4 id=&quot;2-installing-the-nelitfyplugin&quot;&gt;2. Installing the Nelitfy plugin&lt;/h4&gt;
+
+&lt;p&gt;Install the &lt;a href=&quot;https://marketplace.visualstudio.com/items?itemName=aliencube.netlify-cli-extensions&quot;&gt;Netlify plugin for DevOps&lt;/a&gt;. Thanks, &lt;a href=&quot;https://marketplace.visualstudio.com/publishers/aliencube&quot;&gt;Aliencube&lt;/a&gt; for doing the heavy work! We can use this tool for our purpose.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://cdn-images-1.medium.com/max/800/1*jv3I_5-xsOTw5rvU9OwA8A.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;After clicking that button, you would be shown on this screen:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://cdn-images-1.medium.com/max/800/1*MuPn6jiFUqW8KnVkxl4Xww.jpeg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Now in what you have to do is:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Choose the &lt;strong&gt;organization&lt;/strong&gt; you want to install.&lt;/li&gt;
+  &lt;li&gt;Click install.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3 id=&quot;creating-your-netlifysite&quot;&gt;Creating your Netlify site&lt;/h3&gt;
+
+&lt;p&gt;This section will discuss how you can create an empty Netlify site using Netlify CLI. We will be using npm to install it for us. In my case, I use Ubuntu 18.04 as the host OS for the npm installation.&lt;/p&gt;
+
+&lt;h4 id=&quot;1-install-netlifycli&quot;&gt;1. Install Netlify CLI&lt;/h4&gt;
+
+&lt;p&gt;To install Netlify CLI you just need to run:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;npm install netlify-cli -g
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;After the installation is complete, check if it’s installed correctly by running this command:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;netlify
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h4 id=&quot;2-log-in-to-netlify-from-thecli&quot;&gt;2. Log in to Netlify from the CLI&lt;/h4&gt;
+
+&lt;p&gt;Before you can start using the CLI, Netlify needs you to authenticate yourself.&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;netlify login
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Then a browser window will open:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://cdn-images-1.medium.com/max/800/0*4FnW4DUyG4w5_kPC.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h4 id=&quot;3-creating-a-blanksite&quot;&gt;3. Creating a blank site&lt;/h4&gt;
+
+&lt;p&gt;After finishing your login, create a blank site using this command:&lt;/p&gt;
+
+&lt;p&gt;netlify sites:create –name _&lt;site name=&quot;&quot;&gt;_&lt;/site&gt;&lt;/p&gt;
+
+&lt;h4 id=&quot;4-retrieving-your-site-id-and-personal-accesstoken&quot;&gt;4. Retrieving your Site ID and personal access token&lt;/h4&gt;
+
+&lt;p&gt;To run continuous development remotely you would need both your site ID and personal access token to help you&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://cdn-images-1.medium.com/max/800/1*PxWjk8axlVeVwmUt33_gQw.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Retrieve your Site ID by:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Going into the site settings.&lt;/li&gt;
+  &lt;li&gt;Copy the API ID value.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;The next step would be to retrieve the personal access token.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://cdn-images-1.medium.com/max/800/1*tbk9PgZpJudHMFp6kUvdvg.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Go to the User settings.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://cdn-images-1.medium.com/max/800/1*AKe8XmKjoeIzeCfples1MA.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;To get an access token, you would have to make a new one:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Go to the Applications tab.&lt;/li&gt;
+  &lt;li&gt;Click &lt;strong&gt;New access token&lt;/strong&gt;.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Copy and save the access token shown on the next screen, and save it because you will need it for later.&lt;/p&gt;
+
+&lt;h3 id=&quot;creating-the-cicdpipeline&quot;&gt;Creating the CI/CD Pipeline&lt;/h3&gt;
+
+&lt;p&gt;This part is my favorite because it uses Azure DevOps. I honestly love the pipeline building experience using the UI (e.g the classic editor). But how do you build Flutter projects using Azure DevOps you ask?&lt;/p&gt;
+
+&lt;h4 id=&quot;1-creating-the-cipipeline&quot;&gt;1. Creating the CI pipeline&lt;/h4&gt;
+
+&lt;p&gt;If you are using Azure DevOps there is no way we can attach a CI/CD pipeline from Netlify’s side as with Github, Gitlab, or Bitbucket. So, we have to get down and dirty and do it ourselves (well with a little help).&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://cdn-images-1.medium.com/max/800/1*tlnoTcTVMomfdREqv4-3gg.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;First, create your pipeline:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Click on &lt;strong&gt;Pipelines&lt;/strong&gt; on the left pane.&lt;/li&gt;
+  &lt;li&gt;Open the &lt;strong&gt;Pipelines&lt;/strong&gt; directory.&lt;/li&gt;
+  &lt;li&gt;Click &lt;strong&gt;New pipeline&lt;/strong&gt;.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Now the beautiful thing about Azure DevOps is they have a UI for all of this, so you don’t need to use YAML at all. Though you can generate YAML code from the UI. Using the classic editor, you don’t have two remember YAML syntaxes and can easily make deployment steps using the visuals.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://cdn-images-1.medium.com/max/800/1*QedkUDLpwccXAdxvYegBYg.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;You can always configure using YAML in other services, but let’s face it, using UI is so much better. To enable pipeline configurations using the UI, when you are creating your pipeline click the small &lt;strong&gt;use classic editor&lt;/strong&gt; link below:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://cdn-images-1.medium.com/max/800/1*kkHm8ht19fXaH29NTHqcyw.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;After selecting the classic editor, configure your project:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://cdn-images-1.medium.com/max/800/1*eKEEhy8lVmAWILNp5D8kcg.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;These configurations would be needed to state which project you will be using in the pipeline, start by:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Selecting Azure Repos Git, to select repositories from Azure DevOps.&lt;/li&gt;
+  &lt;li&gt;Selecting your team project.&lt;/li&gt;
+  &lt;li&gt;Selecting the repository you want to CI.&lt;/li&gt;
+  &lt;li&gt;Select the repository branch.&lt;/li&gt;
+  &lt;li&gt;Click continue.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://cdn-images-1.medium.com/max/800/1*Xy65VtOhVJU4j-Td-3Pk7w.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Select the &lt;strong&gt;Empty job&lt;/strong&gt; button to create a clean slate for our Flutter deployment configuration.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://cdn-images-1.medium.com/max/800/1*TS7XNzRgBE7XTmMSC879Jw.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;After &lt;strong&gt;Agent job 1&lt;/strong&gt; show up you need to:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Click the &lt;strong&gt;+&lt;/strong&gt; button to add new tasks in the pipeline.&lt;/li&gt;
+  &lt;li&gt;Search for &lt;strong&gt;Flutter Install&lt;/strong&gt;.&lt;/li&gt;
+  &lt;li&gt;Click &lt;strong&gt;Flutter Install&lt;/strong&gt;.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://cdn-images-1.medium.com/max/800/1*XGnxKbjSWXkEBuElDjgNAg.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;After adding Flutter install we can add the Flutter test task to enable testing in our pipeline before being built and deployed. But because I prepared a small app and I am focusing on deployments I wouldn’t be adding testing to the task list.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://cdn-images-1.medium.com/max/800/1*1wCLnwZr7P-flEIcxA3W8g.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Next, add two &lt;strong&gt;Flutter Command&lt;/strong&gt; tasks to the pipeline. FYI, tasks are forms of stages deliberately visualizing how our CI/CD pipeline connects.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Let’s face it, using UI is so much better.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://cdn-images-1.medium.com/max/800/1*EFSPGRwA00ZhLFDP72DNrQ.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;The first &lt;strong&gt;Flutter Command&lt;/strong&gt; task will be to enable web configurations (i.e allow builds for web projects).&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Click the &lt;strong&gt;Flutter Command&lt;/strong&gt; task.&lt;/li&gt;
+  &lt;li&gt;Change the display name to &lt;strong&gt;Flutter Enable Web&lt;/strong&gt; (optional).&lt;/li&gt;
+  &lt;li&gt;Add the Flutter arguments to enable web configurations:&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;config –enable-web&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://cdn-images-1.medium.com/max/800/1*oeQhNtLL0XWYoPA0Uzh51Q.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;To build the web project, we have to run it manually using the &lt;strong&gt;Flutter Command&lt;/strong&gt; task.&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Click the &lt;strong&gt;Flutter Command&lt;/strong&gt; task.&lt;/li&gt;
+  &lt;li&gt;Change the display name to &lt;strong&gt;Flutter Run Build Web&lt;/strong&gt; (optional).&lt;/li&gt;
+  &lt;li&gt;Add the Flutter arguments to build web projects:&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;build web&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://cdn-images-1.medium.com/max/800/1*xsFcjMbriYuUmwspfakwLw.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Add a new task to &lt;strong&gt;Copy files&lt;/strong&gt;:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Click the &lt;strong&gt;+&lt;/strong&gt; button to add a new task.&lt;/li&gt;
+  &lt;li&gt;Search for &lt;strong&gt;copy files&lt;/strong&gt;.&lt;/li&gt;
+  &lt;li&gt;Add the &lt;strong&gt;Copy files&lt;/strong&gt; task.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://cdn-images-1.medium.com/max/800/1*JcHH8-BvCC1_pmuI7oDiNQ.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;After we build the project, build files will need to be copied to the artifacts directory:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Click the &lt;strong&gt;Copy Files&lt;/strong&gt; task.&lt;/li&gt;
+  &lt;li&gt;Change the source folder to &lt;strong&gt;$(Build.SourcesDirectory)/build/web&lt;/strong&gt;.&lt;/li&gt;
+  &lt;li&gt;Change the target folder to &lt;strong&gt;$(Build.ArtifactStagingDirectory)&lt;/strong&gt;.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://cdn-images-1.medium.com/max/800/1*i2HONWrqH04lMo1WEatx0w.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Add a new task to &lt;strong&gt;Publish build artifacts&lt;/strong&gt;:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Click the &lt;strong&gt;+&lt;/strong&gt; button to add a new task.&lt;/li&gt;
+  &lt;li&gt;Search for &lt;strong&gt;publish build artifact&lt;/strong&gt;.&lt;/li&gt;
+  &lt;li&gt;Add the &lt;strong&gt;Publish build artifacts&lt;/strong&gt; task.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://cdn-images-1.medium.com/max/800/1*K1sbK9jzcue5qpJNITm3iw.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;After adding the &lt;strong&gt;Publish build artifacts&lt;/strong&gt; task you can change the name of the artifact after publishing in this case I changed it to &lt;strong&gt;ci-artifact&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://cdn-images-1.medium.com/max/800/1*WSvqzb2DlskuGHlrnIE8qw.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;When all is done, save the CI pipeline.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;TL;DR&lt;/strong&gt; &lt;strong&gt;If you want to use YAML you can copy and paste this YAML file here:&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;undefined
+undefined&lt;/p&gt;
+
+&lt;h4 id=&quot;2-creating-the-cdpipeline&quot;&gt;2. Creating the CD pipeline&lt;/h4&gt;
+
+&lt;p&gt;The continuous deployment section will be used to push our builds directly to Netlify. This part is similar to most JAMStack apps such as React, Vue, Next, and Flutter Web. &lt;a href=&quot;https://codeburst.io/deploying-a-site-to-netlify-with-azure-devops-2743abb61db0&quot;&gt;An article by Clyde D’Souza&lt;/a&gt; influenced this particular section. But of course, I modified it slightly because the project we’re using is a Flutter project.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://cdn-images-1.medium.com/max/800/1*OygcnF5mrnsRGgLFKBMisg.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Open the releases pipeline, click on the Releases tab on the left side of the screen:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Click the &lt;strong&gt;Pipelines&lt;/strong&gt; on the left side of the tab.&lt;/li&gt;
+  &lt;li&gt;Open &lt;strong&gt;Releases&lt;/strong&gt;.&lt;/li&gt;
+  &lt;li&gt;Click &lt;strong&gt;New&lt;/strong&gt;.&lt;/li&gt;
+  &lt;li&gt;Click &lt;strong&gt;New release pipeline&lt;/strong&gt;.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://cdn-images-1.medium.com/max/800/1*9jXOfo-ozzfogunzdGCO_A.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Create an empty job.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://cdn-images-1.medium.com/max/800/1*H8SF23SAP0kioaI358_YTA.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Connect your CD pipeline with your CI pipeline:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Add an artifact.&lt;/li&gt;
+  &lt;li&gt;Select your project.&lt;/li&gt;
+  &lt;li&gt;Choose your CI pipeline&lt;/li&gt;
+  &lt;li&gt;Add the pipeline.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://cdn-images-1.medium.com/max/800/1*4TAHp-48BRxcxNa7805bPQ.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Enable the continuous deployment trigger to start after a successful build:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Click the lightning logo to open the trigger page.&lt;/li&gt;
+  &lt;li&gt;Click the &lt;strong&gt;Enabled&lt;/strong&gt; button.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://cdn-images-1.medium.com/max/800/1*ZnM9xtSoIvqoer3DITJUmw.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Add a new task to the new CD pipeline:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Open your &lt;strong&gt;Tasks&lt;/strong&gt; tab.&lt;/li&gt;
+  &lt;li&gt;Click the &lt;strong&gt;+&lt;/strong&gt; button.&lt;/li&gt;
+  &lt;li&gt;Search for &lt;strong&gt;Extract files&lt;/strong&gt;.&lt;/li&gt;
+  &lt;li&gt;Add the task to the pipeline.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://cdn-images-1.medium.com/max/800/1*Yuz4WMvTXt9tQm_4pj3MZQ.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Extract the artifacts according to the build Id.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://cdn-images-1.medium.com/max/800/1*w341jpMUhSmQmu0DVNk3SA.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Add a new task to the new CD pipeline:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Click the &lt;strong&gt;+&lt;/strong&gt; button.&lt;/li&gt;
+  &lt;li&gt;Search for &lt;strong&gt;Netlify&lt;/strong&gt;.&lt;/li&gt;
+  &lt;li&gt;Add the &lt;strong&gt;Install Netlify CLI&lt;/strong&gt; task to the pipeline.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://cdn-images-1.medium.com/max/800/1*Z9Vq4cGKp6rd1U0YeKSbZQ.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Add a new task to the new CD pipeline:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Click the &lt;strong&gt;+&lt;/strong&gt; button.&lt;/li&gt;
+  &lt;li&gt;Search for &lt;strong&gt;Netlify&lt;/strong&gt;.&lt;/li&gt;
+  &lt;li&gt;Add the &lt;strong&gt;Deploy Website&lt;/strong&gt; task to the pipeline.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;To connect our CD pipeline to our Netlify site, we need to have our access tokens and our site ID. We utilize pipeline variables to make it more accessible and provide secrecy to the token.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://cdn-images-1.medium.com/max/800/1*tEpST9H8SwhfhWj8z-NsyQ.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Click the &lt;strong&gt;+ Add&lt;/strong&gt; button twice.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://cdn-images-1.medium.com/max/800/1*HKk674mSac5xSASz-rfr2A.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;You will be shown with 4 input boxes. Put the name of the variable inside the left boxes and the values in the right. For convenience name the access token variable PAT, and name the other variable SiteID respectively.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://cdn-images-1.medium.com/max/800/1*6Qamra986ORQOxI7nLyg8w.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Change the deployment configuration:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Click &lt;strong&gt;Deploy to Netlify&lt;/strong&gt;.&lt;/li&gt;
+  &lt;li&gt;Insert your access token.&lt;/li&gt;
+  &lt;li&gt;Insert the Site ID.&lt;/li&gt;
+  &lt;li&gt;Select the build source directory.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Your CD pipeline should be finished, save the pipeline and try running it yourself! You can check the dummy site I deployed &lt;a href=&quot;https://miniature-flutter-milkstore.netlify.app/#/&quot;&gt;here&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h3 id=&quot;summary&quot;&gt;Summary&lt;/h3&gt;
+
+&lt;p&gt;In this tutorial, you have learned how to Flutter web deployments using CI/CD and Azure DevOps. We then deployed the site on Netlify.&lt;/p&gt;
+
+&lt;p&gt;To recap what we have done:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Installed the Flutter and Netlify dependencies.&lt;/li&gt;
+  &lt;li&gt;Created a blank site on Netlify.&lt;/li&gt;
+  &lt;li&gt;Retrieved the authorization token and site ID from Netlify.&lt;/li&gt;
+  &lt;li&gt;Prepared the CI/CD Pipelines.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;You now have an open playbook to use when you want to automate deployments. In the next tutorial, we will be looking into how we can utilize &lt;a href=&quot;https://link.medium.com/mI4Cq5Y9Acb&quot;&gt;Github Actions to make a CI/CD pipeline for Flutter Web and Netlify.&lt;/a&gt;&lt;/p&gt;</content><author><name>Agustinus Theodorus</name></author><category term="tech" /><summary type="html">Developing web apps has become easier over the years. With Flutter it became very easy and fun. But to be honest, deploying it is sometimes a pain. Most services are not ready for Flutter projects being hosted on the web. Sure, some are but it needs a bit of tinkering.</summary></entry><entry><title type="html">Setting Up A Multinode RabbitMQ Cluster On Linux</title><link href="https://agustinustheo.github.io/tech/2021/01/20/setting-up-multinode-rabbitmq-cluster-on-linux.html" rel="alternate" type="text/html" title="Setting Up A Multinode RabbitMQ Cluster On Linux" /><published>2021-01-20T00:51:10+07:00</published><updated>2021-01-20T00:51:10+07:00</updated><id>https://agustinustheo.github.io/tech/2021/01/20/setting-up-multinode-rabbitmq-cluster-on-linux</id><content type="html" xml:base="https://agustinustheo.github.io/tech/2021/01/20/setting-up-multinode-rabbitmq-cluster-on-linux.html">&lt;p&gt;Installing RabbitMq on multiple remote servers can be a hassle. To connect multiple instances into one cluster we must first install RabbitMq on each remote server. These next two steps will walk through how we can install RabbitMq instances.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://cdn-images-1.medium.com/max/800/0*noAgkXTihXU2PYuu&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;In this tutorial, we will be installing RabbitMq using a Centos 8 Linux distro. The RabbitMq version used in this tutorial is 3.8.9.&lt;/strong&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;what-is-clustering-for&quot;&gt;What is clustering for?&lt;/h3&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://cdn-images-1.medium.com/max/800/0*hiLQ86ofVEj3P8Ke&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Well, clustering is used to combine multiple instances of RabbitMq into one giant central message queue. Clustering can be done on remote instances of RabbitMq on different servers. The purpose of the cluster is to handle massive amounts of message queues from apps, balancing the load on multiple servers rather than on a single server.&lt;/p&gt;
+
+&lt;h3 id=&quot;add-the-required-dependencies&quot;&gt;Add the required dependencies&lt;/h3&gt;
+
+&lt;h4 id=&quot;install-the-required-repositories&quot;&gt;Install the required repositories&lt;/h4&gt;
+
+&lt;p&gt;Add the RabbitMq repository in the repo configurations file. Open the config file:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sudo vi /etc/yum.repos.d/rabbitmq-server.repo
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Add this to the lines below:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;[rabbitmq-server]  
+name=rabbitmq-server  
+baseurl=[https://packagecloud.io/rabbitmq/rabbitmq-server/el/7/$basearch](https://packagecloud.io/rabbitmq/rabbitmq-server/el/7/$basearch)  
+repo_gpgcheck=1  
+gpgcheck=0  
+enabled=1  
+gpgkey=[https://packagecloud.io/rabbitmq/rabbitmq-server/gpgkey](https://packagecloud.io/rabbitmq/rabbitmq-server/gpgkey)  
+sslverify=1  
+sslcacert=/etc/pki/tls/certs/ca-bundle.crt  
+metadata_expire=300
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h4 id=&quot;add-hostname-to-the-hostsfile&quot;&gt;Add Hostname to the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;hosts&lt;/code&gt; file&lt;/h4&gt;
+
+&lt;p&gt;RabbitMq is built on top of Erlang. So it would make sense for us to install it beforehand. &lt;strong&gt;This part is very crucial as if you do not ad the hostname to&lt;/strong&gt; &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/etc/hosts&lt;/code&gt; &lt;strong&gt;then&lt;/strong&gt; &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;rabbitmqctl status&lt;/code&gt; &lt;strong&gt;will not work.&lt;/strong&gt;&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;echo “127.0.0.1 $(hostname -s)” | sudo tee -a /etc/hosts
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;setting-up-rabbitmqserver&quot;&gt;Setting Up RabbitMq Server&lt;/h3&gt;
+
+&lt;h4 id=&quot;install-rabbitmqserver&quot;&gt;Install RabbitMq Server&lt;/h4&gt;
+
+&lt;p&gt;After completing the previous configuration setup steps, install RabbitMq by using this command:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sudo dnf install -y rabbitmq-server
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;After installation is completed, check if the installation is correct by running:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;rpm -qi rabbitmq-server
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h4 id=&quot;open-ports&quot;&gt;Open Ports&lt;/h4&gt;
+
+&lt;p&gt;Centos has a pre-installed firewall called &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;firewalld&lt;/code&gt;. It blocks all ports from connecting unless asked to. So we must whitelist the TCP ports that are going to be used by RabbitMq.&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sudo firewall-cmd --zone=public --permanent --add-port={5672,15672}/tcp  
+sudo firewall-cmd --reload
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h4 id=&quot;start-the-rabbitmqservice&quot;&gt;Start the RabbitMq service&lt;/h4&gt;
+
+&lt;p&gt;The RabbitMq service doesn’t start on its own when you install it. You have to start it manually, then enable it to run on server startup. To start the RabbitMq service (the service might take a minute or two to start):&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sudo systemctl start rabbitmq-server.service
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;To enable the service run:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sudo systemctl enable rabbitmq-server.service
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;To check if the service is still running:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sudo rabbitmqctl status
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h4 id=&quot;enable-rabbitmq-management&quot;&gt;Enable RabbitMq Management&lt;/h4&gt;
+
+&lt;p&gt;If you want to enable the RabbitMq admin dashboard, run:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sudo rabbitmq-plugins enable rabbitmq_management
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Then try to open the dashboard from the browser:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;http://*your-server-ip*:15672
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;setting-up-rabbitmqcluster&quot;&gt;Setting Up RabbitMq Cluster&lt;/h3&gt;
+
+&lt;p&gt;After setting up RabbitMq on multiple servers (minimum of 2 servers) we now can continue to set up instances for the master and slave nodes. Choose one server as the master node as the cluster host, then use the other nodes as a slave cluster.&lt;/p&gt;
+
+&lt;h4 id=&quot;setting-up-the-masternode&quot;&gt;Setting Up The Master Node&lt;/h4&gt;
+
+&lt;p&gt;Whitelist the TCP port 4369 for &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;epmd&lt;/code&gt;, a helper discovery daemon used by RabbitMQ nodes and CLI tools, and port 25672 for instance finding.&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sudo firewall-cmd —-zone=public —-permanent —-add-port={4369,25672}/tcp  
+sudo firewall-cmd —-reload
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Add the hosts for each cluster, in the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/etc/hosts&lt;/code&gt; file&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sudo vi /etc/hosts
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;In the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;hosts&lt;/code&gt; file add the IP and hostname for each instance. The configuration would be as follows:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;node 1 IP node 1 hostname  
+node 2 IP node 2 hostname  
+node 3 IP node 3 hostname
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;The order doesn’t have to be master first, but it does need to have all cluster IPs and hostnames for it to work. An example configuration is as follows:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;10.240.200.111 rabbitmq-1  
+10.240.200.112 rabbitmq-2  
+10.240.200.113 rabbitmq-3
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Get the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;.erlang.cookie&lt;/code&gt; from the master node&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sudo cat /var/lib/rabbitmq/.erlang.cookie
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Save the token output in your notepad.&lt;/p&gt;
+
+&lt;h4 id=&quot;setting-up-the-slavenodes&quot;&gt;Setting Up The Slave Nodes&lt;/h4&gt;
+
+&lt;p&gt;Whitelist the TCP port 4369 for &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;epmd&lt;/code&gt; a helper discovery daemon used by RabbitMQ nodes and CLI tools, and port 25672 for instance finding.&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sudo firewall-cmd —-zone=public —-permanent —-add-port={4369,25672}/tcp  
+sudo firewall-cmd —-reload
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Add the hosts for each cluster, in the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/etc/hosts&lt;/code&gt; file&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sudo vi /etc/hosts
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;In the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;hosts&lt;/code&gt; file add the IP and hostname for each instance. The configuration would be as follows:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;node 1 IP node 1 hostname  
+node 2 IP node 2 hostname  
+node 3 IP node 3 hostname
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;The order doesn’t have to be master first, but it does need to have all cluster IPs and hostnames for it to work. An example configuration is as follows:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;10.240.200.111 rabbitmq-1  
+10.240.200.112 rabbitmq-2  
+10.240.200.113 rabbitmq-3
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Stop the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;rabbitmq-server&lt;/code&gt; instance and replace the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;.erlang.cookie&lt;/code&gt; inside the slave node with the masters.&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sudo su  
+systemctl stop rabbitmq-server  
+echo -n “*erlang cookie from master node*” &amp;gt; /var/lib/rabbitmq/.erlang.cookie  
+systemctl start rabbitmq-server
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;Repeat this setup on all the nodes!&lt;/strong&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;join-the-slave-nodes-with-the-masternode&quot;&gt;Join The Slave Nodes With The Master Node&lt;/h3&gt;
+
+&lt;p&gt;Stop the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;rabbitmq-server&lt;/code&gt; instance, reset the node and join it with the master node.&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sudo rabbitmqctl stop_app  
+sudo rabbitmqctl reset  
+sudo rabbitmqctl join_cluster rabbit@*master node hostname*  
+sudo rabbitmqctl start_app
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;reset-the-masternode&quot;&gt;Reset The Master Node&lt;/h3&gt;
+
+&lt;p&gt;Reset the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;rabbitmq-server&lt;/code&gt; in the master node.&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sudo rabbitmqctl stop_app  
+sudo rabbitmqctl reset  
+sudo rabbitmqctl start_app
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;check-the-clusterstatus&quot;&gt;Check The Cluster Status&lt;/h3&gt;
+
+&lt;p&gt;To check the cluster status, run this command:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sudo rabbitmqctl cluster_status
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;conclusion&quot;&gt;Conclusion&lt;/h3&gt;
+
+&lt;p&gt;In the end, when we have finished installation, login to the RabbitMq management dashboard for one of the nodes and it would have more than one cluster like so:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://cdn-images-1.medium.com/max/800/0*Vx0rb7MN4gugsctF&quot; alt=&quot;&quot; /&gt;
+undefined&lt;/p&gt;
+
+&lt;p&gt;Of course, there are advantages in using manual installs for RabbitMq. The pros would be:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;You can save space on each server by only installing RabbitMq and nothing else.&lt;/li&gt;
+  &lt;li&gt;Particularly on VMs, you can use Ansible to speed up the installation process by doing the repeatable tasks from a single command line.&lt;/li&gt;
+  &lt;li&gt;You understand thoroughly the process of building a RabbitMq instance from the ground up.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Then the cons would be:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Managing the firewalls for each server can be complicated.&lt;/li&gt;
+  &lt;li&gt;It is faster for us to use Docker during container set up for each server.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;But if you want to read more on this topic, and read some of the references I had when making this tutorial you can check out these links below:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;&lt;a href=&quot;https://www.rabbitmq.com/clustering.html&quot;&gt;Official RabbitMQ Clustering Guide&lt;/a&gt;.&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://www.osradar.com/how-to-install-rabbitmq-on-rhel-8-centos-8/&quot;&gt;How to Install RabbitMQ on RHEL 8 / CentOS 8 — Linux Windows and android Tutorials (osradar.com)&lt;/a&gt;.&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://gist.github.com/pobsuwan/22aa4a9e0a217d22e12800a432933881&quot;&gt;How to config rabbitmq server cluster [3 nodes] (github.com)&lt;/a&gt;.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Now we have an open playbook for you to use the next time you want to setup RabbitMq on your systems manually.&lt;/p&gt;</content><author><name>Agustinus Theodorus</name></author><category term="tech" /><summary type="html">Installing RabbitMq on multiple remote servers can be a hassle. To connect multiple instances into one cluster we must first install RabbitMq on each remote server. These next two steps will walk through how we can install RabbitMq instances.</summary></entry><entry><title type="html">The Microservice Architecture Perspective</title><link href="https://agustinustheo.github.io/tech/2020/12/31/the-microservice-architecture-perspective.html" rel="alternate" type="text/html" title="The Microservice Architecture Perspective" /><published>2020-12-31T23:51:07+07:00</published><updated>2020-12-31T23:51:07+07:00</updated><id>https://agustinustheo.github.io/tech/2020/12/31/the-microservice-architecture-perspective</id><content type="html" xml:base="https://agustinustheo.github.io/tech/2020/12/31/the-microservice-architecture-perspective.html">&lt;p&gt;Making software that serves more than a couple of thousand users can be hard. The difficulty is not in making the app itself but in how we make the app reliable. Microservices is a solution to messy problems like these. Instead of relying on one large server, we use a bunch of small ones to solve our problem. To elaborate on this subject further here are a few perspectives I have on the microservices architecture.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://cdn-images-1.medium.com/max/800/0*VzeqoAS5yZrIpeZQ&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;one-down-many-more-togo&quot;&gt;One Down, Many More To Go&lt;/h3&gt;
+
+&lt;p&gt;In my honest opinion, one of the reasons I go with a microservice is the reliability factor. With multiple servers, this can be the case. We add reliability to the service by adding more of them. This technique is called &lt;a href=&quot;https://www.citrix.com/en-id/glossary/load-balancing.html#:~:text=Load%20balancing%20is%20defined%20as,server%20capable%20of%20fulfilling%20them.&quot;&gt;load balancing.&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://cdn-images-1.medium.com/max/800/0*trVIG9l2V7inAkov.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Instead of burdening all the traffic to one server, you can balance it to multiple servers. So it can be nearly impossible to down the service. The best part of this is that you don’t need to have expensive high throughput servers to make this happen. For example, you can host your server on a few &lt;a href=&quot;https://www.digitalocean.com/products/droplets/&quot;&gt;digital ocean droplets&lt;/a&gt;, instead of one large one.&lt;/p&gt;
+
+&lt;p&gt;Though load balancing alone cannot determine a microservice, there are other characteristics that would need to be fulfilled. This is but only one of the advantages of the microservice pattern.&lt;/p&gt;
+
+&lt;p&gt;If you are using a monolith pattern logically you can still use load balancing, the only downside would be that you would need multiple high throughput servers to serve your app. Multiplying the cost.&lt;/p&gt;
+
+&lt;h3 id=&quot;pay-for-what-youneed&quot;&gt;Pay For What You Need&lt;/h3&gt;
+
+&lt;p&gt;Before I start, let me say. This section is debatable. I am explaining this from my point of view and my previous experiences. Because when your entire service is determined by small services, it can be easy to cut costs. We can buy only the things that we need.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://cdn-images-1.medium.com/max/800/1*rTd5CdXZV626QTVDZuK_EA.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;For explanation purposes let’s say a 1 GB droplet can handle about 1k users. So to handle 5k users you probably would need to use the 8GB droplet for the price of $40 a month.&lt;/p&gt;
+
+&lt;p&gt;Instead, you can use 3 droplets. Two 1 GB droplets and one 4 GB droplet for $30 a month. We buy two 1 GB droplets so we can use one for the service and use the other one for load balancing. With this scheme, you saved $10 a month.&lt;/p&gt;
+
+&lt;p&gt;This is a very simple example. A better one would be when we have separate microservices that connect to each other, we can tune the prices to our exact use of computing power.&lt;/p&gt;
+
+&lt;p&gt;For example, the donuts API may have more load than the coffee API. We can then scale up the donuts API server to be able to handle those requests. Being able to specify upgrades by service can help reduce costs tremendously.&lt;/p&gt;
+
+&lt;h3 id=&quot;separate-your-interests&quot;&gt;Separate Your Interests&lt;/h3&gt;
+
+&lt;p&gt;Monoliths have this habit of merging all services together, related or not. This causes a problem when one of the services goes down, it will take the entire app down with it. If you value reliability, you wouldn’t want that.&lt;/p&gt;
+
+&lt;p&gt;Using the microservice architecture each service can be separated, making it independent of one another. This type of API development is called domain driven development or DDD. It is a very interesting way of designing systems small that can scale big. &lt;a href=&quot;https://www.confluent.io/blog/microservices-apache-kafka-domain-driven-design/#:~:text=Microservices%20have%20a%20symbiotic%20relationship,that%20makes%20the%20system%20work.&quot;&gt;You can read more about DDD here&lt;/a&gt;. Reading more into this topic might lead you to cool system design patterns like &lt;a href=&quot;https://microservices.io/patterns/data/cqrs.html&quot;&gt;CQRS&lt;/a&gt;, &lt;a href=&quot;https://microservices.io/patterns/data/database-per-service.html&quot;&gt;Database per service&lt;/a&gt;, and &lt;a href=&quot;https://microservices.io/patterns/data/api-composition.html&quot;&gt;API Composition&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://cdn-images-1.medium.com/max/800/1*kKsAICXGDY_KbwOpgxSaBQ.jpeg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;The picture above explains my point perfectly. Connections from the client would be made to a gateway/edge API. The edge API would then connect to the multiple microservices available for each specific request. With the corresponding databases behind each specific API.&lt;/p&gt;
+
+&lt;p&gt;Say, the user wants some books, of course, the data would be retrieved from the books API. After seeing the catalog of books, the user made up their mind and wishes to check out. The user is then connected to the check out API. Notice that all the services are independent of each other it does not coincide with one another other than the edge API. It adds reliability to the app.&lt;/p&gt;
+
+&lt;h3 id=&quot;scale-more&quot;&gt;Scale More!&lt;/h3&gt;
+
+&lt;p&gt;Why does this section have an exclamation mark? Because this is the main gist of using microservices. It is the best feature anyone could have asked for. Put reliability and scalability together and what do you have? A great user experience.&lt;/p&gt;
+
+&lt;p&gt;Not all companies might need the blessing of microservices but for those that do it really does make a huge difference. All the sections before this one support this. Separable domains, cost-effectiveness, and reliability.&lt;/p&gt;
+
+&lt;p&gt;But you do not need to scale everything. When you are building a team of services using microservices will help you in the long run, but when you are making an MVP or some other small apps you would not need to implement microservices at all. It might even slow you down!&lt;/p&gt;
+
+&lt;p&gt;Microservices is not the grand bullet for everything, even though it has both reliability and scalability to its name. It has good things to offer for select cases, not for everyone.&lt;/p&gt;
+
+&lt;h3 id=&quot;small-andcompact&quot;&gt;Small and Compact&lt;/h3&gt;
+
+&lt;p&gt;Microservices like the name entails are very small apps that communicate with each other. With specificity in mind, teams can deploy new services quickly without breaking another.&lt;/p&gt;
+
+&lt;p&gt;This coincides perfectly with agile teams that want to reach a certain target. Deployments are easy because it allows for easy and straightforward testing. You only need to test the things that you deploy, there is no need to test the other services along with it.&lt;/p&gt;
+
+&lt;p&gt;Almost all the articles I’ve read about microservices applaud the ease of deployments this architecture has to offer. Though that’s not all the benefits of being small and compact.&lt;/p&gt;
+
+&lt;p&gt;Maintainability wise, it will be much easier than monoliths. The functions are simple because the folders aren’t merged into one project. Honestly from my own experience handling a monolith, traversing the folders was very difficult. Filenames can sometimes be similar in a way that I confuse which service is which.&lt;/p&gt;
+
+&lt;p&gt;Sure, people can say that a confusing monolith project reeks of bad code management. When you have more than 100 features in a project it does tend to get a little messy. Add to the number of teams responsible for different features contributing to the &lt;strong&gt;same codebase&lt;/strong&gt; 🤯.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;I can only imagine the number of branches that repo has…&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&quot;more-autonomy-and-faster-development-speeds&quot;&gt;More Autonomy and Faster Development Speeds&lt;/h3&gt;
+
+&lt;p&gt;With microservice, this doesn’t have to be. Microservice brings more autonomy to the team. Working together between teams is not easy. We have our own schedules that we need to attend. But when we use the microservices concept, the pain of inter-team management becomes invisible.&lt;/p&gt;
+
+&lt;p&gt;All you need would be a coding standard, and you would be good to go. Though more autonomy, coupled with faster development could lead to trouble &lt;strong&gt;if you don’t have good documentation&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;Let me make this clear, working autonomously is great and all. But in the end, you still need to communicate. What better way to miscommunicate other than having no documentation. Believe me, I have experienced these kinds of things first hand. Microservices does not solve problems like these.&lt;/p&gt;
+
+&lt;p&gt;With more autonomy teams can be more business-oriented with their goals, timelines become much shorter and development can focus more on new features.&lt;/p&gt;
+
+&lt;h3 id=&quot;with-great-power-comes-great-documentation&quot;&gt;With Great Power Comes Great Documentation&lt;/h3&gt;
+
+&lt;p&gt;Elaborating from the previous section, a good analogy for microservices would be “With great power comes great responsibility”. I am not kidding, when you have tons of services you would &lt;strong&gt;wish&lt;/strong&gt; &lt;strong&gt;for good documentation&lt;/strong&gt;. For a good perspective here is an illustration of the Netflix microservice backend.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://cdn-images-1.medium.com/max/800/0*d9cZNb3AX_fOgC-y.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Now imagine, how much of that would you remember. The answer is none. That’s why documentation is important. Probably using Netflix as an example is a huge exaggeration — &lt;em&gt;but hey it gets the point across.&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;Now I know — &lt;em&gt;every application needs documentation&lt;/em&gt;. That’s true but it becomes double for microservices. There are benefits to good documentation though. The better documented the microservice is, the reusable probability of each service will be increased. This brings us to the next point.&lt;/p&gt;
+
+&lt;h3 id=&quot;reusability&quot;&gt;Reusability&lt;/h3&gt;
+
+&lt;p&gt;What I love about writing code is how much less of it I have to write. Get what I am saying? Reusable components, reusable APIs, reusable &lt;em&gt;everything&lt;/em&gt;! I would integrate every one of my apps into one large system, and if I can reuse some parts of it for another app I would do it without notice.&lt;/p&gt;
+
+&lt;p&gt;The part that I like about microservices is that it’s very portable, I mean one service can be accessed by many. That’s why I usually try to make microservices as general as I can make it — &lt;em&gt;doesn’t mean that I won’t make it specific when I need to&lt;/em&gt;. It just comes as a natural thing to do to reuse things you made.&lt;/p&gt;
+
+&lt;h3 id=&quot;conclusion&quot;&gt;Conclusion&lt;/h3&gt;
+
+&lt;p&gt;To summarize microservice architectures are usually used to help increase the reliability of a system. The benefits of using a microservice architecture are as follows:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Made to be reliable.&lt;/li&gt;
+  &lt;li&gt;Pay for what you need.&lt;/li&gt;
+  &lt;li&gt;Write separate applications for each domain.&lt;/li&gt;
+  &lt;li&gt;Have a nature to scale.&lt;/li&gt;
+  &lt;li&gt;Small and compact.&lt;/li&gt;
+  &lt;li&gt;Separated development for teams that wants to move fast.&lt;/li&gt;
+  &lt;li&gt;Reusability factor.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Though the microservice architecture does come with its faults. The disadvantages of using a microservice are as follows:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;With great power, comes great documentation.&lt;/li&gt;
+  &lt;li&gt;Small companies with few teams are not suitable for this architecture.&lt;/li&gt;
+  &lt;li&gt;Does not fit every business model (e.g monoliths are better for MVPs).&lt;/li&gt;
+  &lt;li&gt;Because it has a nature to scale, it can become bloated if not checked. We can’t all be like Netflix.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;This was my perspective regarding microservices. I hope it was clear enough of an explanation.&lt;/p&gt;</content><author><name>Agustinus Theodorus</name></author><category term="tech" /><summary type="html">Making software that serves more than a couple of thousand users can be hard. The difficulty is not in making the app itself but in how we make the app reliable. Microservices is a solution to messy problems like these. Instead of relying on one large server, we use a bunch of small ones to solve our problem. To elaborate on this subject further here are a few perspectives I have on the microservices architecture.</summary></entry><entry><title type="html">Automating Flutter Web Deployments to Netlify Using GitHub Actions</title><link href="https://agustinustheo.github.io/tech/2020/12/28/automating-flutter-web-deployments-to-netlify-using-github-actions.html" rel="alternate" type="text/html" title="Automating Flutter Web Deployments to Netlify Using GitHub Actions" /><published>2020-12-28T23:18:18+07:00</published><updated>2020-12-28T23:18:18+07:00</updated><id>https://agustinustheo.github.io/tech/2020/12/28/automating-flutter-web-deployments-to-netlify-using-github-actions</id><content type="html" xml:base="https://agustinustheo.github.io/tech/2020/12/28/automating-flutter-web-deployments-to-netlify-using-github-actions.html">&lt;p&gt;Lately, there has been a lot of fuss over Flutter. Some people call it the future, while some say it’s overrated. But I think it’s a good framework to learn nonetheless. The sheer amount of things that can be done with Flutter is unbelievable, including Android, iOS, desktop, and web programming.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://miro.medium.com/max/700/0*rjDmgSKL-lNurUpp&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Here in this tutorial, I’m going to share how to implement your Flutter web deployments using GitHub Actions. Also, we’re going to use Netlify. Why Netlify? Because, honestly, Netlify is very easy to use. Now, without further ado, let’s get to it.&lt;/p&gt;
+
+&lt;h3 id=&quot;creating-your-netlifysite&quot;&gt;Creating Your Netlify Site&lt;/h3&gt;
+
+&lt;p&gt;This section will discuss how you can create an empty Netlify site using the Netlify CLI. We’ll be using npm to install it for us. In my case, I use Ubuntu 18.04 as the host OS for the npm installation.&lt;/p&gt;
+
+&lt;h4 id=&quot;1-install-the-netlifycli&quot;&gt;1. Install the Netlify CLI&lt;/h4&gt;
+
+&lt;p&gt;To install the Netlify CLI, you just need to run:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;npm install netlify-cli -g
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;After the installation is complete, check if it’s installed correctly by running this command:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;netlify
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h4 id=&quot;2-log-in-to-netlify-from-thecli&quot;&gt;2. Log in to Netlify from the CLI&lt;/h4&gt;
+
+&lt;p&gt;Before you can start using the CLI, Netlify needs you to authenticate yourself.&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;netlify login
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Then a browser window will open:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://miro.medium.com/max/700/0*4FnW4DUyG4w5_kPC.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h4 id=&quot;3-creating-a-blanksite&quot;&gt;3. Creating a blank site&lt;/h4&gt;
+
+&lt;p&gt;After finishing your login, create a blank site using this command:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;netlify sites:create --name _&amp;lt;site name&amp;gt;_
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h4 id=&quot;4-retrieving-your-site-id-and-personal-accesstoken&quot;&gt;4. Retrieving your Site ID and personal access token&lt;/h4&gt;
+
+&lt;p&gt;To run continuous development remotely, you need both your site ID and your personal access token to help you.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://miro.medium.com/max/700/1*PxWjk8axlVeVwmUt33_gQw.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Retrieve your site ID by:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Going into the site settings.&lt;/li&gt;
+  &lt;li&gt;Copy the API ID value.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;The next step would be to retrieve the personal access token.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://miro.medium.com/max/328/1*tbk9PgZpJudHMFp6kUvdvg.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Go to the user settings.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://miro.medium.com/max/700/1*AKe8XmKjoeIzeCfples1MA.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;To get an access token, you have to make a new one:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Go to the Applications tab.&lt;/li&gt;
+  &lt;li&gt;Click “New access token.”&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Copy and save the access token shown on the next screen, and save it because you’ll need it later.&lt;/p&gt;
+
+&lt;h3 id=&quot;set-repository-secrets&quot;&gt;Set Repository Secrets&lt;/h3&gt;
+
+&lt;p&gt;After we’ve retrieved the access tokens and site ID, we’ll save them inside the repository secret.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Note:&lt;/strong&gt; Why do we need to use repository secrets? To prevent sensitive IDs or tokens from being pushed to the repository.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://miro.medium.com/max/700/1*ZmJUTolPTUB9jV4wEESG1g.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;To create a secret:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Go to the repository settings.&lt;/li&gt;
+  &lt;li&gt;Click Secrets on the left-side tab.&lt;/li&gt;
+  &lt;li&gt;Click “New repository secret.”&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://miro.medium.com/max/700/1*q7bhT-rvvr43-Ica5V5qeg.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;On the “New secret” page input the secret name and value. When finished, click the “Add secret” button.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://miro.medium.com/max/700/1*wsVX08jtCaYK8_qixHKKiw.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;In its entirety, we’ve added about three secrets: the GitHub personal access token, the Netlify personal access token, and the Netlify site ID.&lt;/p&gt;
+
+&lt;h3 id=&quot;retrieving-the-github-accesstoken&quot;&gt;Retrieving the GitHub Access Token&lt;/h3&gt;
+
+&lt;p&gt;Because we’re going to automate deployments using GitHub Actions, a personal access token would be required. You’d need to open your &lt;a href=&quot;https://github.com/settings/tokens&quot;&gt;GitHub Developer Settings here&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://miro.medium.com/max/700/1*FIAEH_LGk_2ExSWE0hKyAw.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;After opening your developer settings page:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Open the personal access tokens page.&lt;/li&gt;
+  &lt;li&gt;Generate a new token for GitHub Actions.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://miro.medium.com/max/700/1*2TbMqTdUDUbTJ7pwaz2p8A.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;The next steps would be:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Input a name for your token.&lt;/li&gt;
+  &lt;li&gt;Check the workflow to give access to GitHub Actions.&lt;/li&gt;
+  &lt;li&gt;Scroll to the bottom of the page.&lt;/li&gt;
+  &lt;li&gt;Click the “Generate token” button.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://miro.medium.com/max/700/1*iL5anhz6IvIigtRGPfiF7A.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Copy the access token and save it somewhere because it’ll be used later on.&lt;/p&gt;
+
+&lt;h3 id=&quot;creating-the-cicdworkflow&quot;&gt;Creating the CI/CD Workflow&lt;/h3&gt;
+
+&lt;p&gt;CI/CD using GitHub Actions is fairly simple. It requires us to make a YAML file. This YAML file is called a &lt;em&gt;workflow&lt;/em&gt; in GitHub Actions because it defines the steps needed to form a CI/CD.&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;name: Flutter-CI
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+  workflow_dispatch:
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;To start our workflow, we must enable builds to start after push/pull requests to the master branch, assuming all deployments would be from the master.&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: subosito/flutter-action@v1
+      with:
+        channel: beta
+    - run: flutter config --enable-web
+    - run: flutter build web
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;For the Flutter building process, I used an action made by subosito. You can check the &lt;a href=&quot;https://github.com/marketplace/actions/flutter-action&quot;&gt;Flutter Actions detail here&lt;/a&gt;. For Flutter web, we first have to initialize the configurations to enable web builds. Thus, we ran:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;flutter config --enable-web
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Then if you want to add tests to the workflow, you can by adding the command:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;flutter test
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Finally, build the app using:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;flutter build web
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;The results of the build will be in the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;build/web&lt;/code&gt; folder.&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;    - name: Deploy to Netlify
+      uses: nwtgck/actions-netlify@v1.1
+      with:
+        publish-dir: './build/web'
+        production-branch: master
+        github-token: $
+        deploy-message: &quot;Deploy from GitHub Actions&quot;
+        enable-pull-request-comment: false
+        enable-commit-comment: true
+        overwrites-pull-request-comment: true
+      env:
+        NETLIFY_AUTH_TOKEN: $
+        NETLIFY_SITE_ID: $
+      timeout-minutes: 1
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;After a successful build, deploy the files to Netlify manually. Here’s a snippet I used by nwtgck. I changed a few variables to be able to publish Flutter apps, but you can check &lt;a href=&quot;https://github.com/marketplace/actions/netlify-actions&quot;&gt;Netlify Actions here&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;In this last workflow, you’ll access the secrets we previously stored on our repository settings. The entire workflow can be copied from this gist below:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;name: CI
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: subosito/flutter-action@v1
+      with:
+        channel: beta
+    - run: flutter config --enable-web
+    - run: flutter build web
+
+    - name: Deploy to Netlify
+      uses: nwtgck/actions-netlify@v1.1
+      with:
+        publish-dir: './build/web'
+        production-branch: master
+        github-token: $
+        deploy-message: &quot;Deploy from GitHub Actions&quot;
+        enable-pull-request-comment: false
+        enable-commit-comment: true
+        overwrites-pull-request-comment: true
+      env:
+        NETLIFY_AUTH_TOKEN: $
+        NETLIFY_SITE_ID: $
+      timeout-minutes: 1
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Your CI/CD workflow should be finished. Save the workflow inside &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;.github/workflows&lt;/code&gt;, and try running it yourself! You can check the dummy site I deployed &lt;a href=&quot;https://miniature-flutter-milkstore.netlify.app/#/&quot;&gt;here&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h3 id=&quot;summary&quot;&gt;Summary&lt;/h3&gt;
+
+&lt;p&gt;We’ve successfully created a CI/CD pipeline for Flutter web using Github Actions. To summarize our steps:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Create a blank Netlify site.&lt;/li&gt;
+  &lt;li&gt;Retrieve the personal access token from Netlify and the site ID.&lt;/li&gt;
+  &lt;li&gt;Retrieve the personal access token from GitHub.&lt;/li&gt;
+  &lt;li&gt;Set the secrets inside the repository settings.&lt;/li&gt;
+  &lt;li&gt;Create a GitHub Action YAML file inside &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;.github/workflows&lt;/code&gt;.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Voila! We’ve finished our tutorial. Now you have an open playbook to deploy your future Flutter web apps using GitHub Actions.&lt;/p&gt;</content><author><name>Agustinus Theodorus</name></author><category term="tech" /><summary type="html">Lately, there has been a lot of fuss over Flutter. Some people call it the future, while some say it’s overrated. But I think it’s a good framework to learn nonetheless. The sheer amount of things that can be done with Flutter is unbelievable, including Android, iOS, desktop, and web programming.</summary></entry><entry><title type="html">Automate Your Linux Deployment Using Azure DevOps</title><link href="https://agustinustheo.github.io/tech/2020/12/10/automate-your-linux-deployment-using-azure-devops.html" rel="alternate" type="text/html" title="Automate Your Linux Deployment Using Azure DevOps" /><published>2020-12-10T19:49:28+07:00</published><updated>2020-12-10T19:49:28+07:00</updated><id>https://agustinustheo.github.io/tech/2020/12/10/automate-your-linux-deployment-using-azure-devops</id><content type="html" xml:base="https://agustinustheo.github.io/tech/2020/12/10/automate-your-linux-deployment-using-azure-devops.html">&lt;p&gt;Feel like you have been logging into your Linux servers too much lately? Good, this might be the right article for you. In teams, either large or small manual deployments can be tedious. But they are also predictable. Deployment steps don’t really change that often unless you have a breaking change or you are implementing a major feature.&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&quot;https://cdn-images-1.medium.com/max/800/0*zCSfGwYvrx7hc3DY&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
@@ -1233,336 +2164,4 @@ if __name__ == &quot;__main__&quot;:
 
 &lt;p&gt;&lt;strong&gt;TL;DR&lt;/strong&gt; Write clean code, try to implement the Don’t Repeat Yourself (DRY) mindset to your code. Write purposeful functions that are easy to read. Learn design patterns, find a pattern that you personally like. Also if possible try to automate your tasks. Finally, never be a lazy documentation writer. It can save you more time than you think.&lt;/p&gt;
 
-&lt;p&gt;In the end, we all have our own variety of lessons learned. These 4 are just mine. I am writing this not to persuade you rather share with you my personal opinions. Anyway, I hope you have a nice day!&lt;/p&gt;</content><author><name>Agustinus Theodorus</name></author><category term="tech" /><summary type="html">I am almost 3 years into software engineering. Honestly, I don’t think I am that good at it yet (I don’t know if I’ll ever be). But there are times when I wished that I knew somethings sooner than later. I thought it would be fun for me to reflect on those subjects and try to convey them to you as best as I can in this article. So here are the 4 key habits I learned as a software engineer.</summary></entry><entry><title type="html">4 Things I Learned About The Software Engineering Culture</title><link href="https://agustinustheo.github.io/tech/2020/09/11/4-things-i-learned-about-the-software-engineering-culture.html" rel="alternate" type="text/html" title="4 Things I Learned About The Software Engineering Culture" /><published>2020-09-11T18:20:37+07:00</published><updated>2020-09-11T18:20:37+07:00</updated><id>https://agustinustheo.github.io/tech/2020/09/11/4-things-i-learned-about-the-software-engineering-culture</id><content type="html" xml:base="https://agustinustheo.github.io/tech/2020/09/11/4-things-i-learned-about-the-software-engineering-culture.html">&lt;p&gt;When I started my first job as a software engineer I would have never realized how narrow my world view regarding tech was. In my mind, the world of software is as large a pool when it is an ocean.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;https://cdn-images-1.medium.com/max/800/0*hqcdsOSzhIQ3LQXk&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;1-everyone-startsconfused&quot;&gt;1. Everyone Starts Confused&lt;/h3&gt;
-
-&lt;p&gt;It is commonly said that most software engineers don’t know what exactly their profession would be in the tech world. It becomes more complicated today as more branches of software engineering emerge. The fast emergence of AI has opened many branches of software engineering roles such as Data Scientist, Machine Learning Engineer, and Deep Learning Engineer. Each role is different and needs exceptional skills in their own right.&lt;/p&gt;
-
-&lt;p&gt;This coincides with previously available roles like Database Administrators, System Administrators, Networking Engineer. Heck, even Software Engineers have sub-roles like Frontend Engineer and Backend Engineers now because of how complicated software is nowadays. I don’t think I have even touched on the security roles yet.&lt;/p&gt;
-
-&lt;p&gt;I honestly entered the tech world thinking I would end up as a Frontend Engineer. Today I am mainly focusing on backend services, system administration, and machine learning. If you’ve ever &lt;em&gt;touched&lt;/em&gt; any one of these skills you would understand how different these 4 roles are.&lt;/p&gt;
-
-&lt;p&gt;I ended up learning everything I can. Though I am currently focusing more on machine learning than any other field. I find making computers do menial and repetitive jobs amusing.&lt;/p&gt;
-
-&lt;h3 id=&quot;2-your-not-in-a-poolyour-in-anocean&quot;&gt;2. Your Not In A Pool — Your In An Ocean&lt;/h3&gt;
-
-&lt;p&gt;As you might have already noticed, there are many flavors to software engineering. Some roles might be more enticing than others. But it doesn’t make those other roles less important.&lt;/p&gt;
-
-&lt;p&gt;Every role in the software department needs to work together. Either you’re the networking engineer to the backend engineer. As you progress forward you would respect your colleagues for their contribution. Because in the end, they know things that you may not know, as well as you knowing things they do not know. Respect should be mutual.&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;Mentorship should not always be a relation between seniors to juniors, rather peers from different backgrounds.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;In my opinion, you should always take every opportunity for a sharing session with your peers. You would never know what you would get out of it.&lt;/p&gt;
-
-&lt;h3 id=&quot;3-software-engineering-is-a-sharingculture&quot;&gt;3. Software Engineering Is A Sharing Culture&lt;/h3&gt;
-
-&lt;p&gt;Ever heard of the term open-source? Open-source software is software projects that allow for contributions from anyone. Contributions to an open-source project come in many forms. If you are a highly skilled engineer that has an interest in the project, you may contribute your time to help develop the project altogether. Otherwise, you can usually support the project maintainers by donating money to them directly.&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;In this culture sharing is the norm. We contribute to the field and everyone in it while being open and transparent about it.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;Even though software engineering has an open culture it doesn’t mean plagiarism would be left unchecked, don’t ever steal someone else’s source code and claim it as your own.&lt;/p&gt;
-
-&lt;p&gt;Originality is always appreciated!&lt;/p&gt;
-
-&lt;h3 id=&quot;4-mentorship-is-essential&quot;&gt;4. Mentorship Is Essential&lt;/h3&gt;
-
-&lt;p&gt;My first years as a software engineer began with mentorship. I entered a trainee program to make apps that solve real-world problems while learning.&lt;/p&gt;
-
-&lt;p&gt;It was one of the most formative years of my life. I have always wondered how my life would be like after my trainee years have passed. It has been 2 years since then, I can say it helped me through a lot.&lt;/p&gt;
-
-&lt;p&gt;Just as in any field, mentorship gives you a boost in learning. It helps you skim through the less important skills and gives you an insight into what skills you need to improve to reach your end goal.&lt;/p&gt;
-
-&lt;p&gt;It is completely forgivable if you don’t know what role you would be focusing on specifically. Precisely why every new software engineer should go through some sort of mentorship with more senior software engineers, to help them go learn faster.&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;For example, a backend engineer does not necessarily need to learn artificial intelligence. Though it might be a useful skill, there are more important things at hand.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;h3 id=&quot;5-sharing-helps-you-learntoo&quot;&gt;5. Sharing Helps You Learn Too&lt;/h3&gt;
-
-&lt;p&gt;Some people might not know this, but sharing helps you learn. When you are sharing what you know with other people, you get the chance to review your knowledge and probably patch holes in your knowledge that previously was unbeknownst to you.&lt;/p&gt;
-
-&lt;p&gt;Sharing also gives you the opportunity of being questioned by inquiring minds. As the saying goes, &lt;em&gt;“Two heads are better than one”&lt;/em&gt;.&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;If you encounter a question that you have never thought about, you gain a plus there. A new insight.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;When given the responsibility of sharing your knowledge, of course, you want to perform your best. You should be aware of the big responsibility of teaching. You wouldn’t want to disappoint. Given, it would improve your sense of responsibility to your own words.&lt;/p&gt;
-
-&lt;h3 id=&quot;conclusion&quot;&gt;Conclusion&lt;/h3&gt;
-
-&lt;p&gt;So you think you are ready for the tech world? Don’t ever be afraid to ask for help. It is completely normal to not know about somethings in this field. You don’t have to be the know-it-all.&lt;/p&gt;
-
-&lt;p&gt;Be humble! It may be one of the most important traits you would ever need. If you know something your desk neighbor doesn’t it wouldn’t hurt to share a bit. Being a mentor can get you further than you would ever expect.&lt;/p&gt;</content><author><name>Agustinus Theodorus</name></author><category term="tech" /><summary type="html">When I started my first job as a software engineer I would have never realized how narrow my world view regarding tech was. In my mind, the world of software is as large a pool when it is an ocean.</summary></entry><entry><title type="html">Thoughts About Being A Software Project Manager</title><link href="https://agustinustheo.github.io/tech/2020/06/27/thoughts-about-being-a-software-project-manager.html" rel="alternate" type="text/html" title="Thoughts About Being A Software Project Manager" /><published>2020-06-27T03:48:29+07:00</published><updated>2020-06-27T03:48:29+07:00</updated><id>https://agustinustheo.github.io/tech/2020/06/27/thoughts-about-being-a-software-project-manager</id><content type="html" xml:base="https://agustinustheo.github.io/tech/2020/06/27/thoughts-about-being-a-software-project-manager.html">&lt;p&gt;A few months ago I had an initiative that I have been wanting to realize. In the company that I have been working in, there seems to be a lack of documentation for teaching and no media for knowledge sharing between teams. I thought that there has to be one, for the better of us all.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;https://cdn-images-1.medium.com/max/800/0*hDkrdgngAzgKZn0T&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;background&quot;&gt;Background&lt;/h3&gt;
-
-&lt;h4 id=&quot;the-initiative&quot;&gt;The Initiative&lt;/h4&gt;
-
-&lt;p&gt;So I approached HR and proposed this project. To help people learn. Since I work on a university campus, I thought it might be a good idea to have the learning management system (or &lt;em&gt;LMS&lt;/em&gt; for short) be available to the students there as well.&lt;/p&gt;
-
-&lt;p&gt;Well, that was the initial plan. As all software engineer knows, when it came up to requirement gathering the requirements were not really exactly what I wanted. It was less of an LMS and more of an HR information system.&lt;/p&gt;
-
-&lt;p&gt;Well, I didn’t mind. The LMS part of the system is still there, and I think that’s good enough as a start.&lt;/p&gt;
-
-&lt;p&gt;So a month in, the requirements were accepted by the user. Resources have also been allocated for my project.&lt;/p&gt;
-
-&lt;p&gt;Initially, I had a team of 3 people. It was me and two other guys. They bailed after knowing the project was going to use a new tech-stack they have never used before.&lt;/p&gt;
-
-&lt;p&gt;&lt;em&gt;”Well…”&lt;/em&gt;, I thought, &lt;em&gt;“It’s back to square one”&lt;/em&gt;. Luckily for me a year prior I was one of the interviewers for some of the new trainees.&lt;/p&gt;
-
-&lt;h4 id=&quot;gathering-thecrew&quot;&gt;Gathering the crew&lt;/h4&gt;
-
-&lt;p&gt;It was surely a stroke of luck that my relationship with the trainees was on good terms.&lt;/p&gt;
-
-&lt;p&gt;I met one of them a year ago when I was active as an activist at my Uni, and I interviewed the other one. So, I figured they would like to have an opportunity.&lt;/p&gt;
-
-&lt;p&gt;When it came the time to ask. I breathed a sigh of relief after they said that they were interested.&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;A third person joined after he heard about the project from his friend, interestingly enough.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;I orchestrated the first meeting between the four of us. At the beginning of the meeting, I said that it will be an opportunity for them to learn new skills. Since I was going for a relatively modern tech-stack (for the year 2020). A Vue frontend and a .NET Core backend.&lt;/p&gt;
-
-&lt;p&gt;Just like that — &lt;em&gt;the project was on&lt;/em&gt;.&lt;/p&gt;
-
-&lt;h4 id=&quot;happily-ever-aftersortof&quot;&gt;Happily ever after — sort of…&lt;/h4&gt;
-
-&lt;p&gt;The three trainees’ main responsibilities would be code, my responsibilities were more — &lt;em&gt;many more&lt;/em&gt;.&lt;/p&gt;
-
-&lt;p&gt;Sure I tried to do project management by the book. I used a virtual board on Azure DevOps to list all the requirements, and I also arranged weekly meetings to calculate the project’s velocity.&lt;/p&gt;
-
-&lt;p&gt;I thought that would be enough — &lt;em&gt;boy was I wrong&lt;/em&gt;.&lt;/p&gt;
-
-&lt;p&gt;First of all, I may have relied on the trainees a little bit too much and I needed to back them up more than I thought. &lt;em&gt;I am not blaming them, it was my fault for not considering their skills thoroughly.&lt;/em&gt;&lt;/p&gt;
-
-&lt;p&gt;Second, I think my requirement gathering skills have a &lt;em&gt;lot&lt;/em&gt; of room to improve. I analyzed a few features wrong and came up with very conflicting results — &lt;em&gt;I had to clean this up in the end, it was my fault after all&lt;/em&gt;.&lt;/p&gt;
-
-&lt;p&gt;So here I am being a project manager, guiding the trainees, fixing all my requirements, talking to the &lt;em&gt;techies&lt;/em&gt; in my company making sure everything was safe, secure, and best practice. Boy… that was an experience.&lt;/p&gt;
-
-&lt;p&gt;I honestly felt bad for the people I led because they might be more confused than I am. Though I always try my best to help them solve their problems. I did promise them that they would learn something and I really meant it.&lt;/p&gt;
-
-&lt;h3 id=&quot;what-ivelearned&quot;&gt;What I’ve learned&lt;/h3&gt;
-
-&lt;h4 id=&quot;mistakes-made&quot;&gt;Mistakes made&lt;/h4&gt;
-
-&lt;p&gt;I have been a programmer for 3 years now and I think it’s about time I led my own team. I won’t lie that it was neither easy or relaxing. It was a stressful experience with many mistakes made along the way.&lt;/p&gt;
-
-&lt;p&gt;I was lucky that my team was made out of trainees eager to learn, thus they still continued on through my less than average project management skills.&lt;/p&gt;
-
-&lt;p&gt;It was a learner though.&lt;/p&gt;
-
-&lt;p&gt;After being a project manager I now can grasp what needs to be done by a project lead, or team lead. This is why those roles have less programming and require more time to &lt;em&gt;literally&lt;/em&gt; manage the ongoing project.&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;Good project management can be done if the person in charge is focused on doing so.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;I was a little to stretched thin at that moment. I needed to help trainees solve problems that they couldn’t while considering the project and safety of the entire codebase.&lt;/p&gt;
-
-&lt;p&gt;It was a real hassle.&lt;/p&gt;
-
-&lt;p&gt;I don’t want to say that I was busy, rather that I could not focus on what I should have done, managing the project.&lt;/p&gt;
-
-&lt;p&gt;System analyzing wise, I can confidently say that — I suck at it, still a long way to go.&lt;/p&gt;
-
-&lt;p&gt;I didn’t have a good design doc to look up, only a few notes on how it would be made. So I have to &lt;em&gt;read&lt;/em&gt; what I wanted to do, probably a user diagram would be helpful or an application flow diagram.&lt;/p&gt;
-
-&lt;p&gt;I know that this is software project 101 but I am honestly saying that I missed that. &lt;strong&gt;I really blew it&lt;/strong&gt;.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;https://miro.medium.com/max/500/0*YNrrfiMSoLTXJprW.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;Now look at this diagram, can you imagine the number of roles needed when we want to create this application? It is written on the diagram and it is as clear as day.&lt;/p&gt;
-
-&lt;p&gt;Now imagine having no diagram and trying to understand this system by writing. Better yet, try to translate this diagram into a paragraph. Good luck! I didn’t make this and it made me forget what I wanted to do indefinitely. A big lesson learned.&lt;/p&gt;
-
-&lt;p&gt;Feature-wise there should be a clear application flow to explain how the system works, how the users register, and so on.&lt;/p&gt;
-
-&lt;p&gt;Sadly I also didn’t make it. It contributed to the disarray of the trainees under my wing. It showed how a project with good intentions became a complicated one at best. &lt;em&gt;“If only”&lt;/em&gt;, I said to my self, &lt;em&gt;“I have done this”&lt;/em&gt;.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;https://miro.medium.com/max/600/0*FYeIWVNRO6-pQtHW.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;I used waterfall as the software development lifecycle because the requirements were constant and the user wasn’t much of a hassle.&lt;/p&gt;
-
-&lt;p&gt;This further amplified my mistakes because — &lt;em&gt;waterfall absolutely needs these kinds of diagrams.&lt;/em&gt;&lt;/p&gt;
-
-&lt;p&gt;The requirements were constant and might as well made diagrams from the beginning to help understand the system beforehand.&lt;/p&gt;
-
-&lt;p&gt;If I were to use agile however my huge mishap might be forgiven &lt;em&gt;a little bit&lt;/em&gt;. Because if you were to use agile even though an initial design doc is &lt;em&gt;very important&lt;/em&gt;, the requirements are fluid thus you might have no time to keep making a design doc and must continue on programming to finish the project before a deadline.&lt;/p&gt;
-
-&lt;p&gt;I am not saying that a design doc is not important, not by a long shot. I am just trying to imply that the requirements are fluid and you might be forgiven for making a design doc that is slightly different from the end product.&lt;/p&gt;
-
-&lt;h4 id=&quot;a-realization&quot;&gt;A Realization&lt;/h4&gt;
-
-&lt;p&gt;I realized why it is important that project management roles shouldn’t be too caught up in programming. There are a lot of things that need to be arranged by a project manager, like making a design doc and managing the team’s workload.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;&lt;em&gt;Deep respect to all project managers out there doing it well.&lt;/em&gt;&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;Of course, in the end, it is not all about the project rather the interactions with the people in the team are very important.&lt;/p&gt;
-
-&lt;p&gt;In regard to this aspect, I feel that I have done a good job. My relationship with the trainees I led has nothing but improved. We communicate more, we are able to joke together as friends. I am able to teach them and communicate my thoughts with them clearly.&lt;/p&gt;
-
-&lt;p&gt;In my opinion, I think socially I am already viable enough. Communication with higher-ups and other teams were also great.&lt;/p&gt;
-
-&lt;p&gt;In the end, the project is planned to have its phase 2 of development. I have other projects so I will not be continuing my role. Thus, the role of the project manager will fall to someone else.&lt;/p&gt;
-
-&lt;h3 id=&quot;conclusion&quot;&gt;Conclusion&lt;/h3&gt;
-
-&lt;p&gt;In conclusion, I really enjoyed the opportunity to lead my own project. It really helped me understand the flaws I have in leadership and gave me a path to further improve myself.&lt;/p&gt;
-
-&lt;p&gt;The company received the project well since they plan on having a phase 2 to further develop it, making it into something better.&lt;/p&gt;
-
-&lt;p&gt;Being the initiator is truly a dream come true. To all the people who believed. Thank you. Mistakes were made, but from them, we learn new things. On that note, here is a good quote to end it.&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;&lt;strong&gt;The master has failed more times than the beginner has tried&lt;/strong&gt; - Stephen McCranie&lt;/p&gt;
-&lt;/blockquote&gt;</content><author><name>Agustinus Theodorus</name></author><category term="tech" /><summary type="html">A few months ago I had an initiative that I have been wanting to realize. In the company that I have been working in, there seems to be a lack of documentation for teaching and no media for knowledge sharing between teams. I thought that there has to be one, for the better of us all.</summary></entry><entry><title type="html">The Master-Slave Database Concept For Beginners</title><link href="https://agustinustheo.github.io/tech/2020/05/28/the-master-slave-database-concept-for-beginners.html" rel="alternate" type="text/html" title="The Master-Slave Database Concept For Beginners" /><published>2020-05-28T23:01:16+07:00</published><updated>2020-05-28T23:01:16+07:00</updated><id>https://agustinustheo.github.io/tech/2020/05/28/the-master-slave-database-concept-for-beginners</id><content type="html" xml:base="https://agustinustheo.github.io/tech/2020/05/28/the-master-slave-database-concept-for-beginners.html">&lt;p&gt;The master-slave concept has been around for a while now. This is a fairly simple concept actually, all you need to understand is that there is one master and there are many slaves. Master-slave is a way to optimize the I/O in your application other than using caching. The master database serves as the keeper of information, so to speak. The true data is kept at the master database, thus writing only occurs there. Reading, on the other hand, is only done in the slave. What is this for? This architecture serves the purpose of safeguarding site reliability. If a site receives a lot of traffic and the only available database is one master, it will be overloaded with reading and writing requests. Making the entire system slow for everyone on the site.&lt;/p&gt;
-
-&lt;h3 id=&quot;visualization-of-an-implementation&quot;&gt;Visualization of an implementation&lt;/h3&gt;
-
-&lt;p&gt;&lt;img src=&quot;https://miro.medium.com/max/700/1*Uwa5km4MJpjH42AXtr6ftA.jpeg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;In the example diagram, I use Postgresql as my master. Postgres is a relational database. Relational databases are structured and easy to maintain. For the slave, I use MongoDB because MongoDB is a non-relational database or NoSQL. You can learn how to implement this architecture in &lt;a href=&quot;https://www.endpoint.com/blog/2011/06/12/mongodb-replication-from-postgres-using&quot;&gt;a blog post by Greg Sabino&lt;/a&gt;. Though slave databases don’t have to be NoSQL, there is &lt;a href=&quot;https://www.toptal.com/mysql/mysql-master-slave-replication-tutorial&quot;&gt;another example of using MySQL as both master and slave&lt;/a&gt;. Having one type of database for both master and slave can serve to be convenient because in the end maintaining the codebase will be a lot easier.&lt;/p&gt;
-
-&lt;p&gt;The process for handling the data transfer/synchronization from the master to slave databases is called &lt;strong&gt;replication&lt;/strong&gt;. To replicate data you can, for example, use a serverless function as a pipeline to distribute data to the slaves. Making your own solution to replicate databases can be tedious so I recommend a database replication tool. &lt;a href=&quot;https://www.g2.com/categories/data-replication&quot;&gt;Here is a list of database replication tools in 2020 by g2.com&lt;/a&gt;. You can also make an insert function to add data to both master and slave databases if you want to do realtime data management.&lt;/p&gt;
-
-&lt;h3 id=&quot;wait-what&quot;&gt;Wait, what?&lt;/h3&gt;
-
-&lt;p&gt;Why is the master-slave concept a thing? Well imagine it this way, you are trying to manage a large scale system and you end up with a server bottleneck. A few debug later you find out one of the causes is the read/write traffic to your database server. You stop and think. &lt;em&gt;“What now?”&lt;/em&gt; one of the solutions would be to apply master-slave. Sure this might not be the &lt;strong&gt;first&lt;/strong&gt; thing to come to your mind, other methods such as using a Redis cluster might be enough to sustain yourself for a few years, but this concept can be another great option.&lt;/p&gt;
-
-&lt;p&gt;Well, obviously the downside would be the insurmountable &lt;strong&gt;complexity&lt;/strong&gt; surrounding this setup. You would need a team of dedicated systems and database administrators to be able to pull this off on a large scale system infrastructure. Not saying that it’s impossible but just saying that some costs outweigh the benefits.&lt;/p&gt;
-
-&lt;h3 id=&quot;opinions&quot;&gt;Opinions&lt;/h3&gt;
-
-&lt;h4 id=&quot;costs&quot;&gt;Costs&lt;/h4&gt;
-
-&lt;p&gt;Compared to add more clusters to Postgres/SQL Server setup I would say the master-slave concept would be cheaper and could have similar or even better results than the former.&lt;/p&gt;
-
-&lt;p&gt;In the end, how much traffic would a relational database efficiently handle? Probably a lot, but not as much as about 3 MongoDB slave clusters. I’m not implying that 3 MongoDB clusters are more efficient than a single relational database but in the long run, I would say having NoSQL slave databases could be an advantage.&lt;/p&gt;
-
-&lt;h4 id=&quot;implementation-differences&quot;&gt;Implementation differences&lt;/h4&gt;
-
-&lt;p&gt;In a way, the master-slave concept can be interpreted as a method to cache data from the master to all the slave databases, so to add a simple Redis implementation to your system can &lt;strong&gt;technically&lt;/strong&gt; work as a master-slave system though this concept is not entirely about caching. The initial purpose is to help users get data from the database faster, &lt;strong&gt;any data&lt;/strong&gt;. To help you visualize how I would do master-slave, see the diagram below:&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;https://miro.medium.com/max/700/1*IV1Tuwvdj9-dCrJLgI8KLw.jpeg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;Implementing caching wouldn’t really help the database much either. Caching will only result in select data that will be available on your cache. If the data requested is not available then the reading process will happen in the master. Implementing caching is great to optimize your site, but the master-slave concept works better if we have a separate data source identical to the master that can be used to read. Here is how I imagine caching would be, this is not an example of how to do master-slave:&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;https://miro.medium.com/max/700/1*wqYwiB9-o7yMZ2gTmsCvwA.jpeg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;In the example above, the architecture is an example of how caching and master-slave is different. To do a master-slave &lt;strong&gt;WITH&lt;/strong&gt; caching I would probably do it like this:&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;https://miro.medium.com/max/700/1*1m6mZynfl0qy38VOZicMTA.jpeg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;h4 id=&quot;architecture-complexity&quot;&gt;Architecture Complexity&lt;/h4&gt;
-
-&lt;p&gt;Imagine this, you already have enough trouble having to code and keep your business afloat and now you burden yourself and your team with an additional load to constantly manage a master-slave system.&lt;/p&gt;
-
-&lt;p&gt;To be honest, many things can go wrong here. What do you do when you have a failed replication? How long does the synchronization between the master Postgres database and MongoDB should take? Wouldn’t Redis suffice? Why should you bother in the first place?&lt;/p&gt;
-
-&lt;p&gt;Look there are many reasons to choose this architecture also as many reasons not to. The fact of the matter is, this is an &lt;strong&gt;option&lt;/strong&gt; if you deem yourself ready and capable to handle a master-slave database system then go for it! It may just benefit your organization. I’m not evangelizing this concept I’m just trying to share this concept to programmers who do not know beforehand.&lt;/p&gt;
-
-&lt;p&gt;An easy way would be to use a distributed database like CosmosDB a NoSQL MongoDB alternative from Microsoft Azure. CosmosDB works by adding clusters to itself and it’s data to handle exceptional loads. Thus, when using this service on Azure you are charged on the RU (a type of data read/write meter used for CosmosDB) usage rather than the number of CosmosDB clusters active.&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;But let’s face it, sometimes an easy way out is &lt;strong&gt;just not fun!&lt;/strong&gt;&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;We need thrill in our lives, people! The thrill of making a master-slave system would be an experience you should not pass up if had the chance.&lt;/p&gt;
-
-&lt;h3 id=&quot;conclusion&quot;&gt;Conclusion&lt;/h3&gt;
-
-&lt;p&gt;To summarize master-slave database architectures are usually used to help stabilize the system. Because reading data can be done through the slave database while inserting data needs to be done to the master database. Synchronizing data from the master to slave is called data replication, and some techniques to get realtime data can involve inserting in both master and slave database to even realtime data replication depends on your needs. To help you understand more regarding master-slave database architecture here are some good resources for you to check out:&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;&lt;a href=&quot;https://mariadb.com/resources/blog/database-master-slave-replication-in-the-cloud/&quot;&gt;Database Master-Slave Replication in the Cloud — &lt;em&gt;MariaDB&lt;/em&gt;&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;https://stackoverflow.com/questions/3736969/master-master-vs-master-slave-database-architecture&quot;&gt;Master-master vs master-slave database architecture? — &lt;em&gt;Stackoverflow&lt;/em&gt;&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;https://intellipaat.com/community/6605/master-master-vs-master-slave-database-architecture&quot;&gt;Master-master vs master-slave database architecture? — &lt;em&gt;IntelliPaat&lt;/em&gt;&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;https://www.quora.com/What-are-Master-and-Slave-databases-and-how-does-pairing-them-make-web-apps-faster&quot;&gt;What are Master and Slave databases and how does pairing them make web apps faster? — &lt;em&gt;Quora&lt;/em&gt;&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;https://en.wikipedia.org/wiki/Master/slave_%28technology%29&quot;&gt;Master/slave (technology) — &lt;em&gt;Wikipedia&lt;/em&gt;&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;em&gt;A special thanks to&lt;/em&gt; &lt;a href=&quot;https://medium.com/u/abd0c33e19b2&quot;&gt;&lt;em&gt;Richard M Simarmata&lt;/em&gt;&lt;/a&gt; &lt;em&gt;for the valuable inputs.&lt;/em&gt;&lt;/p&gt;</content><author><name>Agustinus Theodorus</name></author><category term="tech" /><summary type="html">The master-slave concept has been around for a while now. This is a fairly simple concept actually, all you need to understand is that there is one master and there are many slaves. Master-slave is a way to optimize the I/O in your application other than using caching. The master database serves as the keeper of information, so to speak. The true data is kept at the master database, thus writing only occurs there. Reading, on the other hand, is only done in the slave. What is this for? This architecture serves the purpose of safeguarding site reliability. If a site receives a lot of traffic and the only available database is one master, it will be overloaded with reading and writing requests. Making the entire system slow for everyone on the site.</summary></entry><entry><title type="html">5 Awesome Open Source Software In 2020</title><link href="https://agustinustheo.github.io/tech/2020/04/21/5-awesome-open-source-software-in-2020.html" rel="alternate" type="text/html" title="5 Awesome Open Source Software In 2020" /><published>2020-04-21T23:01:44+07:00</published><updated>2020-04-21T23:01:44+07:00</updated><id>https://agustinustheo.github.io/tech/2020/04/21/5-awesome-open-source-software-in-2020</id><content type="html" xml:base="https://agustinustheo.github.io/tech/2020/04/21/5-awesome-open-source-software-in-2020.html">&lt;p&gt;Ever wondered why Chrome (or the New Edge) is such a cool browser? For those of you, non-techies Chrome is a browsing software based on Chromium an open-source browser maintained by Google. The number of people committed to the project could number in the thousands. It is typical of an open-source project to have thousands of contributors to the project. Thus the software from the open-source projects is free-to-use.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;https://cdn-images-1.medium.com/max/600/0*B9sTJBj81oc0FyN6&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;about-open-source&quot;&gt;About Open-Source&lt;/h3&gt;
-
-&lt;p&gt;Open-source software is free. Contributions to an open-source project come in many forms. If you are a highly skilled developer that has an interest in the project, you may contribute your time to help develop the project altogether. Otherwise, you can usually support the project maintainers by donating money to them directly. Though the practice of donations is not widely adopted by all project maintainers, because some developers do it as a pet project or as a hobby.&lt;/p&gt;
-
-&lt;p&gt;Open-source projects help define modern life. A famous example would be the OS Linux. Many companies today use Linux on their servers. Many developers also build distros on top of Linux adding new flavors to the Linux environment.&lt;/p&gt;
-
-&lt;h4 id=&quot;open-source-vs-freesoftware&quot;&gt;Open-source vs Free software&lt;/h4&gt;
-
-&lt;p&gt;&lt;img src=&quot;https://cdn-images-1.medium.com/max/800/0*MHCa1ygzZYFqIpmB.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;Now, I want to &lt;a href=&quot;https://www.datadriveninvestor.com/glossary/address/&quot;&gt;address&lt;/a&gt; an important difference around open-source software and free software. Free software does not need to share the codebase to the public. This is the first main difference, free software does not always equal open-source. After researching a bit for this article I found an interesting quote that could help enlighten the difference.&lt;/p&gt;
-
-&lt;p&gt;You see, the entire concept of open-source revolves around teamwork. The end goal is to develop the project further, resulting in better software for all.&lt;/p&gt;
-
-&lt;h3 id=&quot;5-awesome-open-source-software-in2020&quot;&gt;5 Awesome Open Source Software In 2020&lt;/h3&gt;
-
-&lt;p&gt;Now to the part you are waiting for. I want to share the 5 open-source tools I have been using in 2020.&lt;/p&gt;
-
-&lt;h4 id=&quot;1-libreoffice&quot;&gt;1. LibreOffice&lt;/h4&gt;
-
-&lt;p&gt;&lt;img src=&quot;https://cdn-images-1.medium.com/max/800/0*dQOZZOEbsApLHkpg.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;LibreOffice is an office suite similar to Microsoft Office. Its initial stable release was in 2011. Personally I use this app on my Linux PC because when I want to edit a .docx file I do not want to restart my dual boot PC to open Window. Although there is other free-to-use software like &lt;a href=&quot;https://www.google.com/docs/about/&quot;&gt;Google Docs&lt;/a&gt;, I still prefer to use LibreOffice at times because it doesn’t require an internet connection.&lt;/p&gt;
-
-&lt;p&gt;There are also other open-source competitors like &lt;a href=&quot;https://www.openoffice.org/&quot;&gt;Apache OpenOffice&lt;/a&gt;, recently debuted in September 2019, I have not had the chance to compare the two and I am still stuck with Libre. I’ll be sure to update you otherwise.&lt;/p&gt;
-
-&lt;p&gt;All-in-all I believe Libre is a good substitute for Microsoft Office and it is available on Windows, Linux, and macOS. If you are interested in trying LibreOffice you can download the installer from their &lt;a href=&quot;https://www.libreoffice.org/download/download/&quot;&gt;site&lt;/a&gt; and if you want to contribute, the original source code is available on &lt;a href=&quot;https://github.com/LibreOffice&quot;&gt;GitHub&lt;/a&gt;.&lt;/p&gt;
-
-&lt;h4 id=&quot;2-greenshot&quot;&gt;2. Greenshot&lt;/h4&gt;
-
-&lt;p&gt;&lt;img src=&quot;https://cdn-images-1.medium.com/max/800/0*lFv_tzUkc92gtbag.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;Greenshot is an open-source screenshot software. It has a built-in photo editor so after taking screenshots you can directly edit it. Honestly, Greenshot is my favorite open-source software out of all the others on this list. I work as a software developer and because I am required to document the apps I make I usually use Greenshot to highlight each button on MSPaint after taking a screenshot using Snipping Tool. This app has been a great help for me.&lt;/p&gt;
-
-&lt;p&gt;I am recommending this software, as the editor’s choice. Greenshot is free-to-use for Windows users but it is covered by a paywall on macOS. But Linux is not supported by Greenshot. The Greenshot installer is available at their &lt;a href=&quot;https://getgreenshot.org/downloads/&quot;&gt;site&lt;/a&gt;, and the source code is available on &lt;a href=&quot;https://github.com/greenshot&quot;&gt;GitHub&lt;/a&gt;.&lt;/p&gt;
-
-&lt;h4 id=&quot;3-open-broadcaster-software-obsstudio&quot;&gt;3. Open Broadcaster Software (OBS) Studio&lt;/h4&gt;
-
-&lt;p&gt;&lt;img src=&quot;https://cdn-images-1.medium.com/max/800/0*7fHic4LtwtzcJVru.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;Open Broadcaster Software (OBS) is one of the interesting ones. The application is usually used for screen recording and streaming. The software is excellent and it is FREE. Many people use OBS, at their site the OBS project already has some tough backers like Twitch, Facebook, NVIDIA, and Logitech.&lt;/p&gt;
-
-&lt;p&gt;Personally I really like the application because although it has many features it is by far the fastest screen recorder I have ever used. The recordings are seamless and the options on the audio recording are excellent. The software is written completely in C++ so if you are interested you should check out the original repo available on &lt;a href=&quot;https://github.com/obsproject/obs-studio&quot;&gt;GitHub&lt;/a&gt;. Oh and if you want to try this bad boy out for yourself, it is available for Windows, Linux, and macOS. Just download the installer from their &lt;a href=&quot;https://obsproject.com/download&quot;&gt;site&lt;/a&gt;.&lt;/p&gt;
-
-&lt;h4 id=&quot;4-openshot&quot;&gt;4. Openshot&lt;/h4&gt;
-
-&lt;p&gt;&lt;img src=&quot;https://cdn-images-1.medium.com/max/800/0*ins_ruDV4IwsBlXe.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;OpenShot is an open-source video editor. After looking up its features and UI, I can honestly say it is one of the most legit free video editing software out there. Best of all, NO WATERMARKS! I dread software watermarks on my videos. If you are a hardcore video editor maybe you won’t like this software as much as FinalCutPro or Adobe Premiere or Adobe After Effects, but just look at the features available in this free app.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;https://cdn-images-1.medium.com/max/800/1*PvWXzMfcr3vpsUueOdZm9g.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;The amount of work committed is impressive. It is worthy of a recommendation, take a look at their &lt;a href=&quot;https://www.openshot.org/&quot;&gt;site&lt;/a&gt;. The source code is available on &lt;a href=&quot;https://github.com/OpenShot/&quot;&gt;Github&lt;/a&gt;.&lt;/p&gt;
-
-&lt;h4 id=&quot;5-telegramx&quot;&gt;5. Telegram (X)&lt;/h4&gt;
-
-&lt;p&gt;&lt;img src=&quot;https://cdn-images-1.medium.com/max/800/0*5xRrxBQSoLdgRNa2.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;This one might be the most well-known project on the entire list. Telegram is a messaging app, the &lt;a href=&quot;https://www.datadriveninvestor.com/glossary/client/&quot;&gt;client&lt;/a&gt;-side apps are open-source. The original source code is available on &lt;a href=&quot;https://www.datadriveninvestor.com/glossary/github/&quot;&gt;GitHub&lt;/a&gt; on two separate accounts, Android would be &lt;a href=&quot;https://github.com/DrKLO/Telegram&quot;&gt;here&lt;/a&gt; and for iOS would be &lt;a href=&quot;https://github.com/TelegramMessenger/Telegram-iOS&quot;&gt;here&lt;/a&gt;. Telegram is a secure messaging platform. It receives income from its donators. Even though the app is not entirely open-source, because the backend service source code is not shared with the public. Probably for security reasons.&lt;/p&gt;
-
-&lt;p&gt;I recommend you try the X version A.K.A Telegram X because it seems better than the original one. The Telegram X experience is seamless and very efficient. You download it on the Google Play Store or on the Apple App Store.&lt;/p&gt;
-
-&lt;h4 id=&quot;mastodon-bonus&quot;&gt;Mastodon (Bonus)&lt;/h4&gt;
-
-&lt;p&gt;&lt;img src=&quot;https://cdn-images-1.medium.com/max/800/0*QK9u8eQFVhmoGMdW.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;Now, this one is a bonus. Because I thought Mastodon is an interesting subject, I thought I would mention it here. Mastodon is an open-source social media website. It is a microblogging site like Twitter. The reason Mastodon was created is in the hopes of creating an independent social media, not abiding by rules that can be changed by a separate entity.&lt;/p&gt;
-
-&lt;p&gt;The whole project motto is &lt;em&gt;“Giving social networking back to you”&lt;/em&gt;. Independent organizations can host their own instance. But users from different servers can still connect to each other. Details can be seen on their &lt;a href=&quot;https://joinmastodon.org/&quot;&gt;site&lt;/a&gt;. The original source code is available on &lt;a href=&quot;https://github.com/tootsuite/mastodon&quot;&gt;GitHub&lt;/a&gt;.&lt;/p&gt;</content><author><name>Agustinus Theodorus</name></author><category term="tech" /><summary type="html">Ever wondered why Chrome (or the New Edge) is such a cool browser? For those of you, non-techies Chrome is a browsing software based on Chromium an open-source browser maintained by Google. The number of people committed to the project could number in the thousands. It is typical of an open-source project to have thousands of contributors to the project. Thus the software from the open-source projects is free-to-use.</summary></entry></feed>
+&lt;p&gt;In the end, we all have our own variety of lessons learned. These 4 are just mine. I am writing this not to persuade you rather share with you my personal opinions. Anyway, I hope you have a nice day!&lt;/p&gt;</content><author><name>Agustinus Theodorus</name></author><category term="tech" /><summary type="html">I am almost 3 years into software engineering. Honestly, I don’t think I am that good at it yet (I don’t know if I’ll ever be). But there are times when I wished that I knew somethings sooner than later. I thought it would be fun for me to reflect on those subjects and try to convey them to you as best as I can in this article. So here are the 4 key habits I learned as a software engineer.</summary></entry></feed>

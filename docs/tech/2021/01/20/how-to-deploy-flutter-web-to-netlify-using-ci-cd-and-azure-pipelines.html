@@ -1,0 +1,976 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.21.0 by Michael Rose
+  Copyright 2013-2020 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>How to Deploy Flutter Web to Netlify Using CI/CD and Azure Pipelines - Agustinus Theodorus</title>
+<meta name="description" content="From Firebase to Netlify, a step-by-step guide to deploy Flutter web to Netlify using Azure Pipelines">
+
+
+  <meta name="author" content="Agustinus Theodorus">
+  
+  <meta property="article:author" content="Agustinus Theodorus">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Agustinus Theodorus">
+<meta property="og:title" content="How to Deploy Flutter Web to Netlify Using CI/CD and Azure Pipelines">
+<meta property="og:url" content="https://agustinustheo.github.io/tech/2021/01/20/how-to-deploy-flutter-web-to-netlify-using-ci-cd-and-azure-pipelines.html">
+
+
+  <meta property="og:description" content="From Firebase to Netlify, a step-by-step guide to deploy Flutter web to Netlify using Azure Pipelines">
+
+
+
+  <meta property="og:image" content="https://cdn-images-1.medium.com/max/800/0*Zuxm0Houm1FyBdTE">
+
+
+
+
+
+  <meta property="article:published_time" content="2021-01-20T21:44:42+07:00">
+
+
+
+
+
+
+<link rel="canonical" href="https://agustinustheo.github.io/tech/2021/01/20/how-to-deploy-flutter-web-to-netlify-using-ci-cd-and-azure-pipelines.html">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": "Agustinus Theodorus",
+      "url": "https://agustinustheo.github.io/"
+    
+  }
+</script>
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+<link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Agustinus Theodorus Feed">
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css">
+
+<!--[if IE]>
+  <style>
+    /* old IE unsupported flexbox fixes */
+    .greedy-nav .site-title {
+      padding-right: 3em;
+    }
+    .greedy-nav button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+    }
+  </style>
+<![endif]-->
+
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/img/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/assets/img/favicon-16x16.png">
+<link rel="manifest" href="/assets/img/site.webmanifest">
+<link rel="mask-icon" href="/assets/img/safari-pinned-tab.svg" color="#5bbad5">
+<link rel="shortcut icon" href="/assets/img/favicon.ico">
+<meta name="msapplication-TileColor" content="#da532c">
+<meta name="msapplication-config" content="/assets/img/browserconfig.xml">
+<meta name="theme-color" content="#ffffff">
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single">
+    <nav class="skip-links">
+  <h2 class="screen-reader-text">Skip links</h2>
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/">
+          Agustinus Theodorus
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/tech-articles">Articles</a>
+            </li><li class="masthead__menu-item">
+              <a href="/about">Profile</a>
+            </li></ul>
+        
+        <button class="search__toggle" type="button">
+          <span class="visually-hidden">Toggle search</span>
+          <svg class="icon" width="16" height="16" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15.99 16">
+            <path d="M15.5,13.12L13.19,10.8a1.69,1.69,0,0,0-1.28-.55l-0.06-.06A6.5,6.5,0,0,0,5.77,0,6.5,6.5,0,0,0,2.46,11.59a6.47,6.47,0,0,0,7.74.26l0.05,0.05a1.65,1.65,0,0,0,.5,1.24l2.38,2.38A1.68,1.68,0,0,0,15.5,13.12ZM6.4,2A4.41,4.41,0,1,1,2,6.4,4.43,4.43,0,0,1,6.4,2Z" transform="translate(-.01)"></path>
+          </svg>
+        </button>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person">
+
+  
+    <div class="author__avatar">
+      
+        <img src="/assets/img/bio-photo.jpg" alt="Agustinus Theodorus" itemprop="image">
+      
+    </div>
+  
+
+  <div class="author__content">
+    
+      <h3 class="author__name" itemprop="name">Agustinus Theodorus</h3>
+    
+    
+      <div class="author__bio" itemprop="description">
+        <p>I am primarily a web app developer. Most of my coding time is spent making new web apps, web APIs or bug fixing. My current hobby is writing, I usually spare time to write every month.</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+
+      
+        
+          
+            <li><a href="https://id.linkedin.com/in/agustinus-theodorus" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span class="label">LinkedIn</span></a></li>
+          
+        
+          
+            <li><a href="https://agustinustheoo.medium.com" rel="nofollow noopener noreferrer"><i class="fab fa-medium" aria-hidden="true"></i><span class="label">Medium</span></a></li>
+          
+        
+          
+            <li><a href="https://github.com/agustinustheo" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i><span class="label">GitHub</span></a></li>
+          
+        
+          
+            <li><a href="https://dev.to/agustinustheo" rel="nofollow noopener noreferrer"><i class="fab fa-dev" aria-hidden="true"></i><span class="label">Dev.to</span></a></li>
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="How to Deploy Flutter Web to Netlify Using CI/CD and Azure Pipelines">
+    <meta itemprop="description" content="Developing web apps has become easier over the years. With Flutter it became very easy and fun. But to be honest, deploying it is sometimes a pain. Most services are not ready for Flutter projects being hosted on the web. Sure, some are but it needs a bit of tinkering.">
+    <meta itemprop="datePublished" content="2021-01-20T21:44:42+07:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">How to Deploy Flutter Web to Netlify Using CI/CD and Azure Pipelines
+</h1>
+          
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          7 minute read
+        
+      </span>
+    
+  </p>
+
+
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <p>Developing web apps has become easier over the years. With Flutter it became very easy and fun. But to be honest, deploying it is sometimes a pain. Most services are not ready for Flutter projects being hosted on the web. Sure, <strong><em>some are</em></strong> but it needs a bit of tinkering.</p>
+
+<p><img src="https://cdn-images-1.medium.com/max/800/0*Zuxm0Houm1FyBdTE" alt="" /></p>
+
+<blockquote>
+  <p>I don’t mind tinkering a bit, I mean… Why not?</p>
+</blockquote>
+
+<p>Here in this tutorial, I am going to share with you how to implement CI/CD on your Flutter web deployments using Azure DevOps Pipelines. And best of all, we are going to use Netlify! Why do I sound excited? Because honestly, Netlify is very easy to use. Now, without further ado let’s get to it.</p>
+
+<h3 id="installing-dependencies">Installing Dependencies</h3>
+
+<p>Before we start, we need to install the required dependencies beforehand.</p>
+
+<h4 id="1-installing-the-flutterplugin">1. Installing the Flutter plugin</h4>
+
+<p>Well, you can use the <a href="https://marketplace.visualstudio.com/items?itemName=aloisdeniel.flutter">Flutter plugin for DevOps</a> a dev already made the tool for us. Thanks, <a href="https://marketplace.visualstudio.com/publishers/aloisdeniel">Aloïs</a> for doing the heavy work! We can use this tool for our purpose.</p>
+
+<p><img src="https://cdn-images-1.medium.com/max/800/1*ngPggahl55mBGRJ-FGlSRg.png" alt="" /></p>
+
+<p>After clicking that button, you would be shown on this screen:</p>
+
+<p><img src="https://cdn-images-1.medium.com/max/800/1*52i3t0Qhvy239I_MS3GPpA.png" alt="" /></p>
+
+<p>Now in what you have to do is:</p>
+
+<ol>
+  <li>Choose the <strong>organization</strong> you want to install.</li>
+  <li>Click install.</li>
+</ol>
+
+<h4 id="2-installing-the-nelitfyplugin">2. Installing the Nelitfy plugin</h4>
+
+<p>Install the <a href="https://marketplace.visualstudio.com/items?itemName=aliencube.netlify-cli-extensions">Netlify plugin for DevOps</a>. Thanks, <a href="https://marketplace.visualstudio.com/publishers/aliencube">Aliencube</a> for doing the heavy work! We can use this tool for our purpose.</p>
+
+<p><img src="https://cdn-images-1.medium.com/max/800/1*jv3I_5-xsOTw5rvU9OwA8A.png" alt="" /></p>
+
+<p>After clicking that button, you would be shown on this screen:</p>
+
+<p><img src="https://cdn-images-1.medium.com/max/800/1*MuPn6jiFUqW8KnVkxl4Xww.jpeg" alt="" /></p>
+
+<p>Now in what you have to do is:</p>
+
+<ol>
+  <li>Choose the <strong>organization</strong> you want to install.</li>
+  <li>Click install.</li>
+</ol>
+
+<h3 id="creating-your-netlifysite">Creating your Netlify site</h3>
+
+<p>This section will discuss how you can create an empty Netlify site using Netlify CLI. We will be using npm to install it for us. In my case, I use Ubuntu 18.04 as the host OS for the npm installation.</p>
+
+<h4 id="1-install-netlifycli">1. Install Netlify CLI</h4>
+
+<p>To install Netlify CLI you just need to run:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>npm install netlify-cli -g
+</code></pre></div></div>
+
+<p>After the installation is complete, check if it’s installed correctly by running this command:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>netlify
+</code></pre></div></div>
+
+<h4 id="2-log-in-to-netlify-from-thecli">2. Log in to Netlify from the CLI</h4>
+
+<p>Before you can start using the CLI, Netlify needs you to authenticate yourself.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>netlify login
+</code></pre></div></div>
+
+<p>Then a browser window will open:</p>
+
+<p><img src="https://cdn-images-1.medium.com/max/800/0*4FnW4DUyG4w5_kPC.png" alt="" /></p>
+
+<h4 id="3-creating-a-blanksite">3. Creating a blank site</h4>
+
+<p>After finishing your login, create a blank site using this command:</p>
+
+<p>netlify sites:create –name _<site name="">_</site></p>
+
+<h4 id="4-retrieving-your-site-id-and-personal-accesstoken">4. Retrieving your Site ID and personal access token</h4>
+
+<p>To run continuous development remotely you would need both your site ID and personal access token to help you</p>
+
+<p><img src="https://cdn-images-1.medium.com/max/800/1*PxWjk8axlVeVwmUt33_gQw.png" alt="" /></p>
+
+<p>Retrieve your Site ID by:</p>
+
+<ol>
+  <li>Going into the site settings.</li>
+  <li>Copy the API ID value.</li>
+</ol>
+
+<p>The next step would be to retrieve the personal access token.</p>
+
+<p><img src="https://cdn-images-1.medium.com/max/800/1*tbk9PgZpJudHMFp6kUvdvg.png" alt="" /></p>
+
+<p>Go to the User settings.</p>
+
+<p><img src="https://cdn-images-1.medium.com/max/800/1*AKe8XmKjoeIzeCfples1MA.png" alt="" /></p>
+
+<p>To get an access token, you would have to make a new one:</p>
+
+<ol>
+  <li>Go to the Applications tab.</li>
+  <li>Click <strong>New access token</strong>.</li>
+</ol>
+
+<p>Copy and save the access token shown on the next screen, and save it because you will need it for later.</p>
+
+<h3 id="creating-the-cicdpipeline">Creating the CI/CD Pipeline</h3>
+
+<p>This part is my favorite because it uses Azure DevOps. I honestly love the pipeline building experience using the UI (e.g the classic editor). But how do you build Flutter projects using Azure DevOps you ask?</p>
+
+<h4 id="1-creating-the-cipipeline">1. Creating the CI pipeline</h4>
+
+<p>If you are using Azure DevOps there is no way we can attach a CI/CD pipeline from Netlify’s side as with Github, Gitlab, or Bitbucket. So, we have to get down and dirty and do it ourselves (well with a little help).</p>
+
+<p><img src="https://cdn-images-1.medium.com/max/800/1*tlnoTcTVMomfdREqv4-3gg.png" alt="" /></p>
+
+<p>First, create your pipeline:</p>
+
+<ol>
+  <li>Click on <strong>Pipelines</strong> on the left pane.</li>
+  <li>Open the <strong>Pipelines</strong> directory.</li>
+  <li>Click <strong>New pipeline</strong>.</li>
+</ol>
+
+<p>Now the beautiful thing about Azure DevOps is they have a UI for all of this, so you don’t need to use YAML at all. Though you can generate YAML code from the UI. Using the classic editor, you don’t have two remember YAML syntaxes and can easily make deployment steps using the visuals.</p>
+
+<p><img src="https://cdn-images-1.medium.com/max/800/1*QedkUDLpwccXAdxvYegBYg.png" alt="" /></p>
+
+<p>You can always configure using YAML in other services, but let’s face it, using UI is so much better. To enable pipeline configurations using the UI, when you are creating your pipeline click the small <strong>use classic editor</strong> link below:</p>
+
+<p><img src="https://cdn-images-1.medium.com/max/800/1*kkHm8ht19fXaH29NTHqcyw.png" alt="" /></p>
+
+<p>After selecting the classic editor, configure your project:</p>
+
+<p><img src="https://cdn-images-1.medium.com/max/800/1*eKEEhy8lVmAWILNp5D8kcg.png" alt="" /></p>
+
+<p>These configurations would be needed to state which project you will be using in the pipeline, start by:</p>
+
+<ol>
+  <li>Selecting Azure Repos Git, to select repositories from Azure DevOps.</li>
+  <li>Selecting your team project.</li>
+  <li>Selecting the repository you want to CI.</li>
+  <li>Select the repository branch.</li>
+  <li>Click continue.</li>
+</ol>
+
+<p><img src="https://cdn-images-1.medium.com/max/800/1*Xy65VtOhVJU4j-Td-3Pk7w.png" alt="" /></p>
+
+<p>Select the <strong>Empty job</strong> button to create a clean slate for our Flutter deployment configuration.</p>
+
+<p><img src="https://cdn-images-1.medium.com/max/800/1*TS7XNzRgBE7XTmMSC879Jw.png" alt="" /></p>
+
+<p>After <strong>Agent job 1</strong> show up you need to:</p>
+
+<ol>
+  <li>Click the <strong>+</strong> button to add new tasks in the pipeline.</li>
+  <li>Search for <strong>Flutter Install</strong>.</li>
+  <li>Click <strong>Flutter Install</strong>.</li>
+</ol>
+
+<p><img src="https://cdn-images-1.medium.com/max/800/1*XGnxKbjSWXkEBuElDjgNAg.png" alt="" /></p>
+
+<p>After adding Flutter install we can add the Flutter test task to enable testing in our pipeline before being built and deployed. But because I prepared a small app and I am focusing on deployments I wouldn’t be adding testing to the task list.</p>
+
+<p><img src="https://cdn-images-1.medium.com/max/800/1*1wCLnwZr7P-flEIcxA3W8g.png" alt="" /></p>
+
+<p>Next, add two <strong>Flutter Command</strong> tasks to the pipeline. FYI, tasks are forms of stages deliberately visualizing how our CI/CD pipeline connects.</p>
+
+<blockquote>
+  <p>Let’s face it, using UI is so much better.</p>
+</blockquote>
+
+<p><img src="https://cdn-images-1.medium.com/max/800/1*EFSPGRwA00ZhLFDP72DNrQ.png" alt="" /></p>
+
+<p>The first <strong>Flutter Command</strong> task will be to enable web configurations (i.e allow builds for web projects).</p>
+
+<ol>
+  <li>Click the <strong>Flutter Command</strong> task.</li>
+  <li>Change the display name to <strong>Flutter Enable Web</strong> (optional).</li>
+  <li>Add the Flutter arguments to enable web configurations:</li>
+</ol>
+
+<p>config –enable-web</p>
+
+<p><img src="https://cdn-images-1.medium.com/max/800/1*oeQhNtLL0XWYoPA0Uzh51Q.png" alt="" /></p>
+
+<p>To build the web project, we have to run it manually using the <strong>Flutter Command</strong> task.</p>
+
+<ol>
+  <li>Click the <strong>Flutter Command</strong> task.</li>
+  <li>Change the display name to <strong>Flutter Run Build Web</strong> (optional).</li>
+  <li>Add the Flutter arguments to build web projects:</li>
+</ol>
+
+<p>build web</p>
+
+<p><img src="https://cdn-images-1.medium.com/max/800/1*xsFcjMbriYuUmwspfakwLw.png" alt="" /></p>
+
+<p>Add a new task to <strong>Copy files</strong>:</p>
+
+<ol>
+  <li>Click the <strong>+</strong> button to add a new task.</li>
+  <li>Search for <strong>copy files</strong>.</li>
+  <li>Add the <strong>Copy files</strong> task.</li>
+</ol>
+
+<p><img src="https://cdn-images-1.medium.com/max/800/1*JcHH8-BvCC1_pmuI7oDiNQ.png" alt="" /></p>
+
+<p>After we build the project, build files will need to be copied to the artifacts directory:</p>
+
+<ol>
+  <li>Click the <strong>Copy Files</strong> task.</li>
+  <li>Change the source folder to <strong>$(Build.SourcesDirectory)/build/web</strong>.</li>
+  <li>Change the target folder to <strong>$(Build.ArtifactStagingDirectory)</strong>.</li>
+</ol>
+
+<p><img src="https://cdn-images-1.medium.com/max/800/1*i2HONWrqH04lMo1WEatx0w.png" alt="" /></p>
+
+<p>Add a new task to <strong>Publish build artifacts</strong>:</p>
+
+<ol>
+  <li>Click the <strong>+</strong> button to add a new task.</li>
+  <li>Search for <strong>publish build artifact</strong>.</li>
+  <li>Add the <strong>Publish build artifacts</strong> task.</li>
+</ol>
+
+<p><img src="https://cdn-images-1.medium.com/max/800/1*K1sbK9jzcue5qpJNITm3iw.png" alt="" /></p>
+
+<p>After adding the <strong>Publish build artifacts</strong> task you can change the name of the artifact after publishing in this case I changed it to <strong>ci-artifact</strong>.</p>
+
+<p><img src="https://cdn-images-1.medium.com/max/800/1*WSvqzb2DlskuGHlrnIE8qw.png" alt="" /></p>
+
+<p>When all is done, save the CI pipeline.</p>
+
+<p><strong>TL;DR</strong> <strong>If you want to use YAML you can copy and paste this YAML file here:</strong></p>
+
+<p>undefined
+undefined</p>
+
+<h4 id="2-creating-the-cdpipeline">2. Creating the CD pipeline</h4>
+
+<p>The continuous deployment section will be used to push our builds directly to Netlify. This part is similar to most JAMStack apps such as React, Vue, Next, and Flutter Web. <a href="https://codeburst.io/deploying-a-site-to-netlify-with-azure-devops-2743abb61db0">An article by Clyde D’Souza</a> influenced this particular section. But of course, I modified it slightly because the project we’re using is a Flutter project.</p>
+
+<p><img src="https://cdn-images-1.medium.com/max/800/1*OygcnF5mrnsRGgLFKBMisg.png" alt="" /></p>
+
+<p>Open the releases pipeline, click on the Releases tab on the left side of the screen:</p>
+
+<ol>
+  <li>Click the <strong>Pipelines</strong> on the left side of the tab.</li>
+  <li>Open <strong>Releases</strong>.</li>
+  <li>Click <strong>New</strong>.</li>
+  <li>Click <strong>New release pipeline</strong>.</li>
+</ol>
+
+<p><img src="https://cdn-images-1.medium.com/max/800/1*9jXOfo-ozzfogunzdGCO_A.png" alt="" /></p>
+
+<p>Create an empty job.</p>
+
+<p><img src="https://cdn-images-1.medium.com/max/800/1*H8SF23SAP0kioaI358_YTA.png" alt="" /></p>
+
+<p>Connect your CD pipeline with your CI pipeline:</p>
+
+<ol>
+  <li>Add an artifact.</li>
+  <li>Select your project.</li>
+  <li>Choose your CI pipeline</li>
+  <li>Add the pipeline.</li>
+</ol>
+
+<p><img src="https://cdn-images-1.medium.com/max/800/1*4TAHp-48BRxcxNa7805bPQ.png" alt="" /></p>
+
+<p>Enable the continuous deployment trigger to start after a successful build:</p>
+
+<ol>
+  <li>Click the lightning logo to open the trigger page.</li>
+  <li>Click the <strong>Enabled</strong> button.</li>
+</ol>
+
+<p><img src="https://cdn-images-1.medium.com/max/800/1*ZnM9xtSoIvqoer3DITJUmw.png" alt="" /></p>
+
+<p>Add a new task to the new CD pipeline:</p>
+
+<ol>
+  <li>Open your <strong>Tasks</strong> tab.</li>
+  <li>Click the <strong>+</strong> button.</li>
+  <li>Search for <strong>Extract files</strong>.</li>
+  <li>Add the task to the pipeline.</li>
+</ol>
+
+<p><img src="https://cdn-images-1.medium.com/max/800/1*Yuz4WMvTXt9tQm_4pj3MZQ.png" alt="" /></p>
+
+<p>Extract the artifacts according to the build Id.</p>
+
+<p><img src="https://cdn-images-1.medium.com/max/800/1*w341jpMUhSmQmu0DVNk3SA.png" alt="" /></p>
+
+<p>Add a new task to the new CD pipeline:</p>
+
+<ol>
+  <li>Click the <strong>+</strong> button.</li>
+  <li>Search for <strong>Netlify</strong>.</li>
+  <li>Add the <strong>Install Netlify CLI</strong> task to the pipeline.</li>
+</ol>
+
+<p><img src="https://cdn-images-1.medium.com/max/800/1*Z9Vq4cGKp6rd1U0YeKSbZQ.png" alt="" /></p>
+
+<p>Add a new task to the new CD pipeline:</p>
+
+<ol>
+  <li>Click the <strong>+</strong> button.</li>
+  <li>Search for <strong>Netlify</strong>.</li>
+  <li>Add the <strong>Deploy Website</strong> task to the pipeline.</li>
+</ol>
+
+<p>To connect our CD pipeline to our Netlify site, we need to have our access tokens and our site ID. We utilize pipeline variables to make it more accessible and provide secrecy to the token.</p>
+
+<p><img src="https://cdn-images-1.medium.com/max/800/1*tEpST9H8SwhfhWj8z-NsyQ.png" alt="" /></p>
+
+<p>Click the <strong>+ Add</strong> button twice.</p>
+
+<p><img src="https://cdn-images-1.medium.com/max/800/1*HKk674mSac5xSASz-rfr2A.png" alt="" /></p>
+
+<p>You will be shown with 4 input boxes. Put the name of the variable inside the left boxes and the values in the right. For convenience name the access token variable PAT, and name the other variable SiteID respectively.</p>
+
+<p><img src="https://cdn-images-1.medium.com/max/800/1*6Qamra986ORQOxI7nLyg8w.png" alt="" /></p>
+
+<p>Change the deployment configuration:</p>
+
+<ol>
+  <li>Click <strong>Deploy to Netlify</strong>.</li>
+  <li>Insert your access token.</li>
+  <li>Insert the Site ID.</li>
+  <li>Select the build source directory.</li>
+</ol>
+
+<p>Your CD pipeline should be finished, save the pipeline and try running it yourself! You can check the dummy site I deployed <a href="https://miniature-flutter-milkstore.netlify.app/#/">here</a>.</p>
+
+<h3 id="summary">Summary</h3>
+
+<p>In this tutorial, you have learned how to Flutter web deployments using CI/CD and Azure DevOps. We then deployed the site on Netlify.</p>
+
+<p>To recap what we have done:</p>
+
+<ul>
+  <li>Installed the Flutter and Netlify dependencies.</li>
+  <li>Created a blank site on Netlify.</li>
+  <li>Retrieved the authorization token and site ID from Netlify.</li>
+  <li>Prepared the CI/CD Pipelines.</li>
+</ul>
+
+<p>You now have an open playbook to use when you want to automate deployments. In the next tutorial, we will be looking into how we can utilize <a href="https://link.medium.com/mI4Cq5Y9Acb">Github Actions to make a CI/CD pipeline for Flutter Web and Netlify.</a></p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+
+
+        
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2021-01-20T21:44:42+07:00">January 20, 2021</time></p>
+
+
+      </footer>
+
+      <section class="page__share">
+  
+
+  <a href="https://twitter.com/intent/tweet?text=How+to+Deploy+Flutter+Web+to+Netlify+Using+CI%2FCD+and+Azure+Pipelines%20https%3A%2F%2Fagustinustheo.github.io%2Ftech%2F2021%2F01%2F20%2Fhow-to-deploy-flutter-web-to-netlify-using-ci-cd-and-azure-pipelines.html" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fagustinustheo.github.io%2Ftech%2F2021%2F01%2F20%2Fhow-to-deploy-flutter-web-to-netlify-using-ci-cd-and-azure-pipelines.html" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=https%3A%2F%2Fagustinustheo.github.io%2Ftech%2F2021%2F01%2F20%2Fhow-to-deploy-flutter-web-to-netlify-using-ci-cd-and-azure-pipelines.html" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+
+      
+  <nav class="pagination">
+    
+      <a href="/tech/2021/01/20/setting-up-multinode-rabbitmq-cluster-on-linux.html" class="pagination--pager" title="Setting Up A Multinode RabbitMQ Cluster On Linux
+">Previous</a>
+    
+    
+      <a href="#" class="pagination--pager disabled">Next</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h4 class="page__related-title">You May Also Enjoy</h4>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="https://cdn-images-1.medium.com/max/800/0*noAgkXTihXU2PYuu" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/tech/2021/01/20/setting-up-multinode-rabbitmq-cluster-on-linux.html" rel="permalink">Setting Up A Multinode RabbitMQ Cluster On Linux
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          5 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">Installing RabbitMq on multiple remote servers can be a hassle. To connect multiple instances into one cluster we must first install RabbitMq on each remote ...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="https://cdn-images-1.medium.com/max/800/0*VzeqoAS5yZrIpeZQ" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/tech/2020/12/31/the-microservice-architecture-perspective.html" rel="permalink">The Microservice Architecture Perspective
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          8 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">Making software that serves more than a couple of thousand users can be hard. The difficulty is not in making the app itself but in how we make the app relia...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="https://miro.medium.com/max/700/0*rjDmgSKL-lNurUpp" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/tech/2020/12/28/automating-flutter-web-deployments-to-netlify-using-github-actions.html" rel="permalink">Automating Flutter Web Deployments to Netlify Using GitHub Actions
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          4 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">Lately, there has been a lot of fuss over Flutter. Some people call it the future, while some say it’s overrated. But I think it’s a good framework to learn ...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="https://cdn-images-1.medium.com/max/800/0*zCSfGwYvrx7hc3DY" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/tech/2020/12/10/automate-your-linux-deployment-using-azure-devops.html" rel="permalink">Automate Your Linux Deployment Using Azure DevOps
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          8 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">Feel like you have been logging into your Linux servers too much lately? Good, this might be the right article for you. In teams, either large or small manua...</p>
+  </article>
+</div>
+
+        
+      </div>
+    </div>
+  
+  
+</div>
+
+    </div>
+
+    
+      <div class="search-content">
+        <div class="search-content__inner-wrap"><form class="search-content__form" onkeydown="return event.key != 'Enter';">
+    <label class="sr-only" for="search">
+      Enter your search term...
+    </label>
+    <input type="search" id="search" class="search-input" tabindex="-1" placeholder="Enter your search term..." />
+  </form>
+  <div id="results" class="results"></div></div>
+
+      </div>
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+      
+        
+          <li><a href="https://id.linkedin.com/in/agustinus-theodorus" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i> LinkedIn</a></li>
+        
+      
+        
+          <li><a href="https://agustinustheoo.medium.com" rel="nofollow noopener noreferrer"><i class="fab fa-medium" aria-hidden="true"></i> Medium</a></li>
+        
+      
+        
+          <li><a href="https://github.com/agustinustheo" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+        
+      
+        
+          <li><a href="https://dev.to/agustinustheo" rel="nofollow noopener noreferrer"><i class="fab fa-dev" aria-hidden="true"></i> Dev.to</a></li>
+        
+      
+    
+
+    <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2021 Agustinus Theodorus. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+<script src="/assets/js/lunr/lunr.min.js"></script>
+<script src="/assets/js/lunr/lunr-store.js"></script>
+<script src="/assets/js/lunr/lunr-en.js"></script>
+
+
+
+
+
+
+
+  </body>
+</html>

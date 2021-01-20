@@ -100,4 +100,28 @@ var store = [{
         "tags": [],
         "url": "https://agustinustheo.github.io/tech/2020/12/10/automate-your-linux-deployment-using-azure-devops.html",
         "teaser": "https://cdn-images-1.medium.com/max/800/0*zCSfGwYvrx7hc3DY"
+      },{
+        "title": "Automating Flutter Web Deployments to Netlify Using GitHub Actions",
+        "excerpt":"Lately, there has been a lot of fuss over Flutter. Some people call it the future, while some say it’s overrated. But I think it’s a good framework to learn nonetheless. The sheer amount of things that can be done with Flutter is unbelievable, including Android, iOS, desktop, and web...","categories": ["tech"],
+        "tags": [],
+        "url": "https://agustinustheo.github.io/tech/2020/12/28/automating-flutter-web-deployments-to-netlify-using-github-actions.html",
+        "teaser": "https://miro.medium.com/max/700/0*rjDmgSKL-lNurUpp"
+      },{
+        "title": "The Microservice Architecture Perspective",
+        "excerpt":"Making software that serves more than a couple of thousand users can be hard. The difficulty is not in making the app itself but in how we make the app reliable. Microservices is a solution to messy problems like these. Instead of relying on one large server, we use a...","categories": ["tech"],
+        "tags": [],
+        "url": "https://agustinustheo.github.io/tech/2020/12/31/the-microservice-architecture-perspective.html",
+        "teaser": "https://cdn-images-1.medium.com/max/800/0*VzeqoAS5yZrIpeZQ"
+      },{
+        "title": "Setting Up A Multinode RabbitMQ Cluster On Linux",
+        "excerpt":"Installing RabbitMq on multiple remote servers can be a hassle. To connect multiple instances into one cluster we must first install RabbitMq on each remote server. These next two steps will walk through how we can install RabbitMq instances. In this tutorial, we will be installing RabbitMq using a Centos...","categories": ["tech"],
+        "tags": [],
+        "url": "https://agustinustheo.github.io/tech/2021/01/20/setting-up-multinode-rabbitmq-cluster-on-linux.html",
+        "teaser": "https://cdn-images-1.medium.com/max/800/0*noAgkXTihXU2PYuu"
+      },{
+        "title": "How to Deploy Flutter Web to Netlify Using CI/CD and Azure Pipelines",
+        "excerpt":"Developing web apps has become easier over the years. With Flutter it became very easy and fun. But to be honest, deploying it is sometimes a pain. Most services are not ready for Flutter projects being hosted on the web. Sure, some are but it needs a bit of tinkering....","categories": ["tech"],
+        "tags": [],
+        "url": "https://agustinustheo.github.io/tech/2021/01/20/how-to-deploy-flutter-web-to-netlify-using-ci-cd-and-azure-pipelines.html",
+        "teaser": "https://cdn-images-1.medium.com/max/800/0*Zuxm0Houm1FyBdTE"
       }]

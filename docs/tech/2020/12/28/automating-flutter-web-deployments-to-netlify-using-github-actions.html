@@ -1,0 +1,859 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.21.0 by Michael Rose
+  Copyright 2013-2020 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Automating Flutter Web Deployments to Netlify Using GitHub Actions - Agustinus Theodorus</title>
+<meta name="description" content="A step-by-step guide on how to deploy Flutter to Netlify using GitHub Actions">
+
+
+  <meta name="author" content="Agustinus Theodorus">
+  
+  <meta property="article:author" content="Agustinus Theodorus">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Agustinus Theodorus">
+<meta property="og:title" content="Automating Flutter Web Deployments to Netlify Using GitHub Actions">
+<meta property="og:url" content="https://agustinustheo.github.io/tech/2020/12/28/automating-flutter-web-deployments-to-netlify-using-github-actions.html">
+
+
+  <meta property="og:description" content="A step-by-step guide on how to deploy Flutter to Netlify using GitHub Actions">
+
+
+
+  <meta property="og:image" content="https://miro.medium.com/max/700/0*rjDmgSKL-lNurUpp">
+
+
+
+
+
+  <meta property="article:published_time" content="2020-12-28T23:18:18+07:00">
+
+
+
+
+
+
+<link rel="canonical" href="https://agustinustheo.github.io/tech/2020/12/28/automating-flutter-web-deployments-to-netlify-using-github-actions.html">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": "Agustinus Theodorus",
+      "url": "https://agustinustheo.github.io/"
+    
+  }
+</script>
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+<link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Agustinus Theodorus Feed">
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css">
+
+<!--[if IE]>
+  <style>
+    /* old IE unsupported flexbox fixes */
+    .greedy-nav .site-title {
+      padding-right: 3em;
+    }
+    .greedy-nav button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+    }
+  </style>
+<![endif]-->
+
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/img/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/assets/img/favicon-16x16.png">
+<link rel="manifest" href="/assets/img/site.webmanifest">
+<link rel="mask-icon" href="/assets/img/safari-pinned-tab.svg" color="#5bbad5">
+<link rel="shortcut icon" href="/assets/img/favicon.ico">
+<meta name="msapplication-TileColor" content="#da532c">
+<meta name="msapplication-config" content="/assets/img/browserconfig.xml">
+<meta name="theme-color" content="#ffffff">
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single">
+    <nav class="skip-links">
+  <h2 class="screen-reader-text">Skip links</h2>
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/">
+          Agustinus Theodorus
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/tech-articles">Articles</a>
+            </li><li class="masthead__menu-item">
+              <a href="/about">Profile</a>
+            </li></ul>
+        
+        <button class="search__toggle" type="button">
+          <span class="visually-hidden">Toggle search</span>
+          <svg class="icon" width="16" height="16" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15.99 16">
+            <path d="M15.5,13.12L13.19,10.8a1.69,1.69,0,0,0-1.28-.55l-0.06-.06A6.5,6.5,0,0,0,5.77,0,6.5,6.5,0,0,0,2.46,11.59a6.47,6.47,0,0,0,7.74.26l0.05,0.05a1.65,1.65,0,0,0,.5,1.24l2.38,2.38A1.68,1.68,0,0,0,15.5,13.12ZM6.4,2A4.41,4.41,0,1,1,2,6.4,4.43,4.43,0,0,1,6.4,2Z" transform="translate(-.01)"></path>
+          </svg>
+        </button>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person">
+
+  
+    <div class="author__avatar">
+      
+        <img src="/assets/img/bio-photo.jpg" alt="Agustinus Theodorus" itemprop="image">
+      
+    </div>
+  
+
+  <div class="author__content">
+    
+      <h3 class="author__name" itemprop="name">Agustinus Theodorus</h3>
+    
+    
+      <div class="author__bio" itemprop="description">
+        <p>I am primarily a web app developer. Most of my coding time is spent making new web apps, web APIs or bug fixing. My current hobby is writing, I usually spare time to write every month.</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+
+      
+        
+          
+            <li><a href="https://id.linkedin.com/in/agustinus-theodorus" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span class="label">LinkedIn</span></a></li>
+          
+        
+          
+            <li><a href="https://agustinustheoo.medium.com" rel="nofollow noopener noreferrer"><i class="fab fa-medium" aria-hidden="true"></i><span class="label">Medium</span></a></li>
+          
+        
+          
+            <li><a href="https://github.com/agustinustheo" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i><span class="label">GitHub</span></a></li>
+          
+        
+          
+            <li><a href="https://dev.to/agustinustheo" rel="nofollow noopener noreferrer"><i class="fab fa-dev" aria-hidden="true"></i><span class="label">Dev.to</span></a></li>
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Automating Flutter Web Deployments to Netlify Using GitHub Actions">
+    <meta itemprop="description" content="Lately, there has been a lot of fuss over Flutter. Some people call it the future, while some say it’s overrated. But I think it’s a good framework to learn nonetheless. The sheer amount of things that can be done with Flutter is unbelievable, including Android, iOS, desktop, and web programming.">
+    <meta itemprop="datePublished" content="2020-12-28T23:18:18+07:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">Automating Flutter Web Deployments to Netlify Using GitHub Actions
+</h1>
+          
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          4 minute read
+        
+      </span>
+    
+  </p>
+
+
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <p>Lately, there has been a lot of fuss over Flutter. Some people call it the future, while some say it’s overrated. But I think it’s a good framework to learn nonetheless. The sheer amount of things that can be done with Flutter is unbelievable, including Android, iOS, desktop, and web programming.</p>
+
+<p><img src="https://miro.medium.com/max/700/0*rjDmgSKL-lNurUpp" alt="" /></p>
+
+<p>Here in this tutorial, I’m going to share how to implement your Flutter web deployments using GitHub Actions. Also, we’re going to use Netlify. Why Netlify? Because, honestly, Netlify is very easy to use. Now, without further ado, let’s get to it.</p>
+
+<h3 id="creating-your-netlifysite">Creating Your Netlify Site</h3>
+
+<p>This section will discuss how you can create an empty Netlify site using the Netlify CLI. We’ll be using npm to install it for us. In my case, I use Ubuntu 18.04 as the host OS for the npm installation.</p>
+
+<h4 id="1-install-the-netlifycli">1. Install the Netlify CLI</h4>
+
+<p>To install the Netlify CLI, you just need to run:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>npm install netlify-cli -g
+</code></pre></div></div>
+
+<p>After the installation is complete, check if it’s installed correctly by running this command:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>netlify
+</code></pre></div></div>
+
+<h4 id="2-log-in-to-netlify-from-thecli">2. Log in to Netlify from the CLI</h4>
+
+<p>Before you can start using the CLI, Netlify needs you to authenticate yourself.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>netlify login
+</code></pre></div></div>
+
+<p>Then a browser window will open:</p>
+
+<p><img src="https://miro.medium.com/max/700/0*4FnW4DUyG4w5_kPC.png" alt="" /></p>
+
+<h4 id="3-creating-a-blanksite">3. Creating a blank site</h4>
+
+<p>After finishing your login, create a blank site using this command:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>netlify sites:create --name _&lt;site name&gt;_
+</code></pre></div></div>
+
+<h4 id="4-retrieving-your-site-id-and-personal-accesstoken">4. Retrieving your Site ID and personal access token</h4>
+
+<p>To run continuous development remotely, you need both your site ID and your personal access token to help you.</p>
+
+<p><img src="https://miro.medium.com/max/700/1*PxWjk8axlVeVwmUt33_gQw.png" alt="" /></p>
+
+<p>Retrieve your site ID by:</p>
+
+<ol>
+  <li>Going into the site settings.</li>
+  <li>Copy the API ID value.</li>
+</ol>
+
+<p>The next step would be to retrieve the personal access token.</p>
+
+<p><img src="https://miro.medium.com/max/328/1*tbk9PgZpJudHMFp6kUvdvg.png" alt="" /></p>
+
+<p>Go to the user settings.</p>
+
+<p><img src="https://miro.medium.com/max/700/1*AKe8XmKjoeIzeCfples1MA.png" alt="" /></p>
+
+<p>To get an access token, you have to make a new one:</p>
+
+<ol>
+  <li>Go to the Applications tab.</li>
+  <li>Click “New access token.”</li>
+</ol>
+
+<p>Copy and save the access token shown on the next screen, and save it because you’ll need it later.</p>
+
+<h3 id="set-repository-secrets">Set Repository Secrets</h3>
+
+<p>After we’ve retrieved the access tokens and site ID, we’ll save them inside the repository secret.</p>
+
+<p><strong>Note:</strong> Why do we need to use repository secrets? To prevent sensitive IDs or tokens from being pushed to the repository.</p>
+
+<p><img src="https://miro.medium.com/max/700/1*ZmJUTolPTUB9jV4wEESG1g.png" alt="" /></p>
+
+<p>To create a secret:</p>
+
+<ol>
+  <li>Go to the repository settings.</li>
+  <li>Click Secrets on the left-side tab.</li>
+  <li>Click “New repository secret.”</li>
+</ol>
+
+<p><img src="https://miro.medium.com/max/700/1*q7bhT-rvvr43-Ica5V5qeg.png" alt="" /></p>
+
+<p>On the “New secret” page input the secret name and value. When finished, click the “Add secret” button.</p>
+
+<p><img src="https://miro.medium.com/max/700/1*wsVX08jtCaYK8_qixHKKiw.png" alt="" /></p>
+
+<p>In its entirety, we’ve added about three secrets: the GitHub personal access token, the Netlify personal access token, and the Netlify site ID.</p>
+
+<h3 id="retrieving-the-github-accesstoken">Retrieving the GitHub Access Token</h3>
+
+<p>Because we’re going to automate deployments using GitHub Actions, a personal access token would be required. You’d need to open your <a href="https://github.com/settings/tokens">GitHub Developer Settings here</a>.</p>
+
+<p><img src="https://miro.medium.com/max/700/1*FIAEH_LGk_2ExSWE0hKyAw.png" alt="" /></p>
+
+<p>After opening your developer settings page:</p>
+
+<ol>
+  <li>Open the personal access tokens page.</li>
+  <li>Generate a new token for GitHub Actions.</li>
+</ol>
+
+<p><img src="https://miro.medium.com/max/700/1*2TbMqTdUDUbTJ7pwaz2p8A.png" alt="" /></p>
+
+<p>The next steps would be:</p>
+
+<ol>
+  <li>Input a name for your token.</li>
+  <li>Check the workflow to give access to GitHub Actions.</li>
+  <li>Scroll to the bottom of the page.</li>
+  <li>Click the “Generate token” button.</li>
+</ol>
+
+<p><img src="https://miro.medium.com/max/700/1*iL5anhz6IvIigtRGPfiF7A.png" alt="" /></p>
+
+<p>Copy the access token and save it somewhere because it’ll be used later on.</p>
+
+<h3 id="creating-the-cicdworkflow">Creating the CI/CD Workflow</h3>
+
+<p>CI/CD using GitHub Actions is fairly simple. It requires us to make a YAML file. This YAML file is called a <em>workflow</em> in GitHub Actions because it defines the steps needed to form a CI/CD.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>name: Flutter-CI
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+  workflow_dispatch:
+</code></pre></div></div>
+
+<p>To start our workflow, we must enable builds to start after push/pull requests to the master branch, assuming all deployments would be from the master.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: subosito/flutter-action@v1
+      with:
+        channel: beta
+    - run: flutter config --enable-web
+    - run: flutter build web
+</code></pre></div></div>
+
+<p>For the Flutter building process, I used an action made by subosito. You can check the <a href="https://github.com/marketplace/actions/flutter-action">Flutter Actions detail here</a>. For Flutter web, we first have to initialize the configurations to enable web builds. Thus, we ran:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>flutter config --enable-web
+</code></pre></div></div>
+
+<p>Then if you want to add tests to the workflow, you can by adding the command:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>flutter test
+</code></pre></div></div>
+
+<p>Finally, build the app using:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>flutter build web
+</code></pre></div></div>
+
+<p>The results of the build will be in the <code class="language-plaintext highlighter-rouge">build/web</code> folder.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    - name: Deploy to Netlify
+      uses: nwtgck/actions-netlify@v1.1
+      with:
+        publish-dir: './build/web'
+        production-branch: master
+        github-token: $
+        deploy-message: "Deploy from GitHub Actions"
+        enable-pull-request-comment: false
+        enable-commit-comment: true
+        overwrites-pull-request-comment: true
+      env:
+        NETLIFY_AUTH_TOKEN: $
+        NETLIFY_SITE_ID: $
+      timeout-minutes: 1
+</code></pre></div></div>
+
+<p>After a successful build, deploy the files to Netlify manually. Here’s a snippet I used by nwtgck. I changed a few variables to be able to publish Flutter apps, but you can check <a href="https://github.com/marketplace/actions/netlify-actions">Netlify Actions here</a>.</p>
+
+<p>In this last workflow, you’ll access the secrets we previously stored on our repository settings. The entire workflow can be copied from this gist below:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>name: CI
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: subosito/flutter-action@v1
+      with:
+        channel: beta
+    - run: flutter config --enable-web
+    - run: flutter build web
+
+    - name: Deploy to Netlify
+      uses: nwtgck/actions-netlify@v1.1
+      with:
+        publish-dir: './build/web'
+        production-branch: master
+        github-token: $
+        deploy-message: "Deploy from GitHub Actions"
+        enable-pull-request-comment: false
+        enable-commit-comment: true
+        overwrites-pull-request-comment: true
+      env:
+        NETLIFY_AUTH_TOKEN: $
+        NETLIFY_SITE_ID: $
+      timeout-minutes: 1
+</code></pre></div></div>
+
+<p>Your CI/CD workflow should be finished. Save the workflow inside <code class="language-plaintext highlighter-rouge">.github/workflows</code>, and try running it yourself! You can check the dummy site I deployed <a href="https://miniature-flutter-milkstore.netlify.app/#/">here</a>.</p>
+
+<h3 id="summary">Summary</h3>
+
+<p>We’ve successfully created a CI/CD pipeline for Flutter web using Github Actions. To summarize our steps:</p>
+
+<ol>
+  <li>Create a blank Netlify site.</li>
+  <li>Retrieve the personal access token from Netlify and the site ID.</li>
+  <li>Retrieve the personal access token from GitHub.</li>
+  <li>Set the secrets inside the repository settings.</li>
+  <li>Create a GitHub Action YAML file inside <code class="language-plaintext highlighter-rouge">.github/workflows</code>.</li>
+</ol>
+
+<p>Voila! We’ve finished our tutorial. Now you have an open playbook to deploy your future Flutter web apps using GitHub Actions.</p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+
+
+        
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2020-12-28T23:18:18+07:00">December 28, 2020</time></p>
+
+
+      </footer>
+
+      <section class="page__share">
+  
+
+  <a href="https://twitter.com/intent/tweet?text=Automating+Flutter+Web+Deployments+to+Netlify+Using+GitHub+Actions%20https%3A%2F%2Fagustinustheo.github.io%2Ftech%2F2020%2F12%2F28%2Fautomating-flutter-web-deployments-to-netlify-using-github-actions.html" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fagustinustheo.github.io%2Ftech%2F2020%2F12%2F28%2Fautomating-flutter-web-deployments-to-netlify-using-github-actions.html" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=https%3A%2F%2Fagustinustheo.github.io%2Ftech%2F2020%2F12%2F28%2Fautomating-flutter-web-deployments-to-netlify-using-github-actions.html" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+
+      
+  <nav class="pagination">
+    
+      <a href="/tech/2020/12/10/automate-your-linux-deployment-using-azure-devops.html" class="pagination--pager" title="Automate Your Linux Deployment Using Azure DevOps
+">Previous</a>
+    
+    
+      <a href="/tech/2020/12/31/the-microservice-architecture-perspective.html" class="pagination--pager" title="The Microservice Architecture Perspective
+">Next</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h4 class="page__related-title">You May Also Enjoy</h4>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="https://cdn-images-1.medium.com/max/800/0*Zuxm0Houm1FyBdTE" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/tech/2021/01/20/how-to-deploy-flutter-web-to-netlify-using-ci-cd-and-azure-pipelines.html" rel="permalink">How to Deploy Flutter Web to Netlify Using CI/CD and Azure Pipelines
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          8 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">Developing web apps has become easier over the years. With Flutter it became very easy and fun. But to be honest, deploying it is sometimes a pain. Most serv...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="https://cdn-images-1.medium.com/max/800/0*noAgkXTihXU2PYuu" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/tech/2021/01/20/setting-up-multinode-rabbitmq-cluster-on-linux.html" rel="permalink">Setting Up A Multinode RabbitMQ Cluster On Linux
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          5 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">Installing RabbitMq on multiple remote servers can be a hassle. To connect multiple instances into one cluster we must first install RabbitMq on each remote ...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="https://cdn-images-1.medium.com/max/800/0*VzeqoAS5yZrIpeZQ" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/tech/2020/12/31/the-microservice-architecture-perspective.html" rel="permalink">The Microservice Architecture Perspective
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          8 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">Making software that serves more than a couple of thousand users can be hard. The difficulty is not in making the app itself but in how we make the app relia...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="https://cdn-images-1.medium.com/max/800/0*zCSfGwYvrx7hc3DY" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/tech/2020/12/10/automate-your-linux-deployment-using-azure-devops.html" rel="permalink">Automate Your Linux Deployment Using Azure DevOps
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          8 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">Feel like you have been logging into your Linux servers too much lately? Good, this might be the right article for you. In teams, either large or small manua...</p>
+  </article>
+</div>
+
+        
+      </div>
+    </div>
+  
+  
+</div>
+
+    </div>
+
+    
+      <div class="search-content">
+        <div class="search-content__inner-wrap"><form class="search-content__form" onkeydown="return event.key != 'Enter';">
+    <label class="sr-only" for="search">
+      Enter your search term...
+    </label>
+    <input type="search" id="search" class="search-input" tabindex="-1" placeholder="Enter your search term..." />
+  </form>
+  <div id="results" class="results"></div></div>
+
+      </div>
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+      
+        
+          <li><a href="https://id.linkedin.com/in/agustinus-theodorus" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i> LinkedIn</a></li>
+        
+      
+        
+          <li><a href="https://agustinustheoo.medium.com" rel="nofollow noopener noreferrer"><i class="fab fa-medium" aria-hidden="true"></i> Medium</a></li>
+        
+      
+        
+          <li><a href="https://github.com/agustinustheo" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+        
+      
+        
+          <li><a href="https://dev.to/agustinustheo" rel="nofollow noopener noreferrer"><i class="fab fa-dev" aria-hidden="true"></i> Dev.to</a></li>
+        
+      
+    
+
+    <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2021 Agustinus Theodorus. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+<script src="/assets/js/lunr/lunr.min.js"></script>
+<script src="/assets/js/lunr/lunr-store.js"></script>
+<script src="/assets/js/lunr/lunr-en.js"></script>
+
+
+
+
+
+
+
+  </body>
+</html>

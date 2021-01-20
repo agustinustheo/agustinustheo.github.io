@@ -1,0 +1,740 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.21.0 by Michael Rose
+  Copyright 2013-2020 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>The Microservice Architecture Perspective - Agustinus Theodorus</title>
+<meta name="description" content="How sheer numbers can become high performing solutions, an explanation on Microservices.">
+
+
+  <meta name="author" content="Agustinus Theodorus">
+  
+  <meta property="article:author" content="Agustinus Theodorus">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Agustinus Theodorus">
+<meta property="og:title" content="The Microservice Architecture Perspective">
+<meta property="og:url" content="https://agustinustheo.github.io/tech/2020/12/31/the-microservice-architecture-perspective.html">
+
+
+  <meta property="og:description" content="How sheer numbers can become high performing solutions, an explanation on Microservices.">
+
+
+
+  <meta property="og:image" content="https://cdn-images-1.medium.com/max/800/0*VzeqoAS5yZrIpeZQ">
+
+
+
+
+
+  <meta property="article:published_time" content="2020-12-31T23:51:07+07:00">
+
+
+
+
+
+
+<link rel="canonical" href="https://agustinustheo.github.io/tech/2020/12/31/the-microservice-architecture-perspective.html">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": "Agustinus Theodorus",
+      "url": "https://agustinustheo.github.io/"
+    
+  }
+</script>
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+<link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Agustinus Theodorus Feed">
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css">
+
+<!--[if IE]>
+  <style>
+    /* old IE unsupported flexbox fixes */
+    .greedy-nav .site-title {
+      padding-right: 3em;
+    }
+    .greedy-nav button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+    }
+  </style>
+<![endif]-->
+
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/img/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/assets/img/favicon-16x16.png">
+<link rel="manifest" href="/assets/img/site.webmanifest">
+<link rel="mask-icon" href="/assets/img/safari-pinned-tab.svg" color="#5bbad5">
+<link rel="shortcut icon" href="/assets/img/favicon.ico">
+<meta name="msapplication-TileColor" content="#da532c">
+<meta name="msapplication-config" content="/assets/img/browserconfig.xml">
+<meta name="theme-color" content="#ffffff">
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single">
+    <nav class="skip-links">
+  <h2 class="screen-reader-text">Skip links</h2>
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/">
+          Agustinus Theodorus
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/tech-articles">Articles</a>
+            </li><li class="masthead__menu-item">
+              <a href="/about">Profile</a>
+            </li></ul>
+        
+        <button class="search__toggle" type="button">
+          <span class="visually-hidden">Toggle search</span>
+          <svg class="icon" width="16" height="16" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15.99 16">
+            <path d="M15.5,13.12L13.19,10.8a1.69,1.69,0,0,0-1.28-.55l-0.06-.06A6.5,6.5,0,0,0,5.77,0,6.5,6.5,0,0,0,2.46,11.59a6.47,6.47,0,0,0,7.74.26l0.05,0.05a1.65,1.65,0,0,0,.5,1.24l2.38,2.38A1.68,1.68,0,0,0,15.5,13.12ZM6.4,2A4.41,4.41,0,1,1,2,6.4,4.43,4.43,0,0,1,6.4,2Z" transform="translate(-.01)"></path>
+          </svg>
+        </button>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person">
+
+  
+    <div class="author__avatar">
+      
+        <img src="/assets/img/bio-photo.jpg" alt="Agustinus Theodorus" itemprop="image">
+      
+    </div>
+  
+
+  <div class="author__content">
+    
+      <h3 class="author__name" itemprop="name">Agustinus Theodorus</h3>
+    
+    
+      <div class="author__bio" itemprop="description">
+        <p>I am primarily a web app developer. Most of my coding time is spent making new web apps, web APIs or bug fixing. My current hobby is writing, I usually spare time to write every month.</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+
+      
+        
+          
+            <li><a href="https://id.linkedin.com/in/agustinus-theodorus" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span class="label">LinkedIn</span></a></li>
+          
+        
+          
+            <li><a href="https://agustinustheoo.medium.com" rel="nofollow noopener noreferrer"><i class="fab fa-medium" aria-hidden="true"></i><span class="label">Medium</span></a></li>
+          
+        
+          
+            <li><a href="https://github.com/agustinustheo" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i><span class="label">GitHub</span></a></li>
+          
+        
+          
+            <li><a href="https://dev.to/agustinustheo" rel="nofollow noopener noreferrer"><i class="fab fa-dev" aria-hidden="true"></i><span class="label">Dev.to</span></a></li>
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="The Microservice Architecture Perspective">
+    <meta itemprop="description" content="Making software that serves more than a couple of thousand users can be hard. The difficulty is not in making the app itself but in how we make the app reliable. Microservices is a solution to messy problems like these. Instead of relying on one large server, we use a bunch of small ones to solve our problem. To elaborate on this subject further here are a few perspectives I have on the microservices architecture.">
+    <meta itemprop="datePublished" content="2020-12-31T23:51:07+07:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">The Microservice Architecture Perspective
+</h1>
+          
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          8 minute read
+        
+      </span>
+    
+  </p>
+
+
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <p>Making software that serves more than a couple of thousand users can be hard. The difficulty is not in making the app itself but in how we make the app reliable. Microservices is a solution to messy problems like these. Instead of relying on one large server, we use a bunch of small ones to solve our problem. To elaborate on this subject further here are a few perspectives I have on the microservices architecture.</p>
+
+<p><img src="https://cdn-images-1.medium.com/max/800/0*VzeqoAS5yZrIpeZQ" alt="" /></p>
+
+<h3 id="one-down-many-more-togo">One Down, Many More To Go</h3>
+
+<p>In my honest opinion, one of the reasons I go with a microservice is the reliability factor. With multiple servers, this can be the case. We add reliability to the service by adding more of them. This technique is called <a href="https://www.citrix.com/en-id/glossary/load-balancing.html#:~:text=Load%20balancing%20is%20defined%20as,server%20capable%20of%20fulfilling%20them.">load balancing.</a></p>
+
+<p><img src="https://cdn-images-1.medium.com/max/800/0*trVIG9l2V7inAkov.png" alt="" /></p>
+
+<p>Instead of burdening all the traffic to one server, you can balance it to multiple servers. So it can be nearly impossible to down the service. The best part of this is that you don’t need to have expensive high throughput servers to make this happen. For example, you can host your server on a few <a href="https://www.digitalocean.com/products/droplets/">digital ocean droplets</a>, instead of one large one.</p>
+
+<p>Though load balancing alone cannot determine a microservice, there are other characteristics that would need to be fulfilled. This is but only one of the advantages of the microservice pattern.</p>
+
+<p>If you are using a monolith pattern logically you can still use load balancing, the only downside would be that you would need multiple high throughput servers to serve your app. Multiplying the cost.</p>
+
+<h3 id="pay-for-what-youneed">Pay For What You Need</h3>
+
+<p>Before I start, let me say. This section is debatable. I am explaining this from my point of view and my previous experiences. Because when your entire service is determined by small services, it can be easy to cut costs. We can buy only the things that we need.</p>
+
+<p><img src="https://cdn-images-1.medium.com/max/800/1*rTd5CdXZV626QTVDZuK_EA.png" alt="" /></p>
+
+<p>For explanation purposes let’s say a 1 GB droplet can handle about 1k users. So to handle 5k users you probably would need to use the 8GB droplet for the price of $40 a month.</p>
+
+<p>Instead, you can use 3 droplets. Two 1 GB droplets and one 4 GB droplet for $30 a month. We buy two 1 GB droplets so we can use one for the service and use the other one for load balancing. With this scheme, you saved $10 a month.</p>
+
+<p>This is a very simple example. A better one would be when we have separate microservices that connect to each other, we can tune the prices to our exact use of computing power.</p>
+
+<p>For example, the donuts API may have more load than the coffee API. We can then scale up the donuts API server to be able to handle those requests. Being able to specify upgrades by service can help reduce costs tremendously.</p>
+
+<h3 id="separate-your-interests">Separate Your Interests</h3>
+
+<p>Monoliths have this habit of merging all services together, related or not. This causes a problem when one of the services goes down, it will take the entire app down with it. If you value reliability, you wouldn’t want that.</p>
+
+<p>Using the microservice architecture each service can be separated, making it independent of one another. This type of API development is called domain driven development or DDD. It is a very interesting way of designing systems small that can scale big. <a href="https://www.confluent.io/blog/microservices-apache-kafka-domain-driven-design/#:~:text=Microservices%20have%20a%20symbiotic%20relationship,that%20makes%20the%20system%20work.">You can read more about DDD here</a>. Reading more into this topic might lead you to cool system design patterns like <a href="https://microservices.io/patterns/data/cqrs.html">CQRS</a>, <a href="https://microservices.io/patterns/data/database-per-service.html">Database per service</a>, and <a href="https://microservices.io/patterns/data/api-composition.html">API Composition</a>.</p>
+
+<p><img src="https://cdn-images-1.medium.com/max/800/1*kKsAICXGDY_KbwOpgxSaBQ.jpeg" alt="" /></p>
+
+<p>The picture above explains my point perfectly. Connections from the client would be made to a gateway/edge API. The edge API would then connect to the multiple microservices available for each specific request. With the corresponding databases behind each specific API.</p>
+
+<p>Say, the user wants some books, of course, the data would be retrieved from the books API. After seeing the catalog of books, the user made up their mind and wishes to check out. The user is then connected to the check out API. Notice that all the services are independent of each other it does not coincide with one another other than the edge API. It adds reliability to the app.</p>
+
+<h3 id="scale-more">Scale More!</h3>
+
+<p>Why does this section have an exclamation mark? Because this is the main gist of using microservices. It is the best feature anyone could have asked for. Put reliability and scalability together and what do you have? A great user experience.</p>
+
+<p>Not all companies might need the blessing of microservices but for those that do it really does make a huge difference. All the sections before this one support this. Separable domains, cost-effectiveness, and reliability.</p>
+
+<p>But you do not need to scale everything. When you are building a team of services using microservices will help you in the long run, but when you are making an MVP or some other small apps you would not need to implement microservices at all. It might even slow you down!</p>
+
+<p>Microservices is not the grand bullet for everything, even though it has both reliability and scalability to its name. It has good things to offer for select cases, not for everyone.</p>
+
+<h3 id="small-andcompact">Small and Compact</h3>
+
+<p>Microservices like the name entails are very small apps that communicate with each other. With specificity in mind, teams can deploy new services quickly without breaking another.</p>
+
+<p>This coincides perfectly with agile teams that want to reach a certain target. Deployments are easy because it allows for easy and straightforward testing. You only need to test the things that you deploy, there is no need to test the other services along with it.</p>
+
+<p>Almost all the articles I’ve read about microservices applaud the ease of deployments this architecture has to offer. Though that’s not all the benefits of being small and compact.</p>
+
+<p>Maintainability wise, it will be much easier than monoliths. The functions are simple because the folders aren’t merged into one project. Honestly from my own experience handling a monolith, traversing the folders was very difficult. Filenames can sometimes be similar in a way that I confuse which service is which.</p>
+
+<p>Sure, people can say that a confusing monolith project reeks of bad code management. When you have more than 100 features in a project it does tend to get a little messy. Add to the number of teams responsible for different features contributing to the <strong>same codebase</strong> 🤯.</p>
+
+<blockquote>
+  <p>I can only imagine the number of branches that repo has…</p>
+</blockquote>
+
+<h3 id="more-autonomy-and-faster-development-speeds">More Autonomy and Faster Development Speeds</h3>
+
+<p>With microservice, this doesn’t have to be. Microservice brings more autonomy to the team. Working together between teams is not easy. We have our own schedules that we need to attend. But when we use the microservices concept, the pain of inter-team management becomes invisible.</p>
+
+<p>All you need would be a coding standard, and you would be good to go. Though more autonomy, coupled with faster development could lead to trouble <strong>if you don’t have good documentation</strong>.</p>
+
+<p>Let me make this clear, working autonomously is great and all. But in the end, you still need to communicate. What better way to miscommunicate other than having no documentation. Believe me, I have experienced these kinds of things first hand. Microservices does not solve problems like these.</p>
+
+<p>With more autonomy teams can be more business-oriented with their goals, timelines become much shorter and development can focus more on new features.</p>
+
+<h3 id="with-great-power-comes-great-documentation">With Great Power Comes Great Documentation</h3>
+
+<p>Elaborating from the previous section, a good analogy for microservices would be “With great power comes great responsibility”. I am not kidding, when you have tons of services you would <strong>wish</strong> <strong>for good documentation</strong>. For a good perspective here is an illustration of the Netflix microservice backend.</p>
+
+<p><img src="https://cdn-images-1.medium.com/max/800/0*d9cZNb3AX_fOgC-y.jpg" alt="" /></p>
+
+<p>Now imagine, how much of that would you remember. The answer is none. That’s why documentation is important. Probably using Netflix as an example is a huge exaggeration — <em>but hey it gets the point across.</em></p>
+
+<p>Now I know — <em>every application needs documentation</em>. That’s true but it becomes double for microservices. There are benefits to good documentation though. The better documented the microservice is, the reusable probability of each service will be increased. This brings us to the next point.</p>
+
+<h3 id="reusability">Reusability</h3>
+
+<p>What I love about writing code is how much less of it I have to write. Get what I am saying? Reusable components, reusable APIs, reusable <em>everything</em>! I would integrate every one of my apps into one large system, and if I can reuse some parts of it for another app I would do it without notice.</p>
+
+<p>The part that I like about microservices is that it’s very portable, I mean one service can be accessed by many. That’s why I usually try to make microservices as general as I can make it — <em>doesn’t mean that I won’t make it specific when I need to</em>. It just comes as a natural thing to do to reuse things you made.</p>
+
+<h3 id="conclusion">Conclusion</h3>
+
+<p>To summarize microservice architectures are usually used to help increase the reliability of a system. The benefits of using a microservice architecture are as follows:</p>
+
+<ul>
+  <li>Made to be reliable.</li>
+  <li>Pay for what you need.</li>
+  <li>Write separate applications for each domain.</li>
+  <li>Have a nature to scale.</li>
+  <li>Small and compact.</li>
+  <li>Separated development for teams that wants to move fast.</li>
+  <li>Reusability factor.</li>
+</ul>
+
+<p>Though the microservice architecture does come with its faults. The disadvantages of using a microservice are as follows:</p>
+
+<ul>
+  <li>With great power, comes great documentation.</li>
+  <li>Small companies with few teams are not suitable for this architecture.</li>
+  <li>Does not fit every business model (e.g monoliths are better for MVPs).</li>
+  <li>Because it has a nature to scale, it can become bloated if not checked. We can’t all be like Netflix.</li>
+</ul>
+
+<p>This was my perspective regarding microservices. I hope it was clear enough of an explanation.</p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+
+
+        
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2020-12-31T23:51:07+07:00">December 31, 2020</time></p>
+
+
+      </footer>
+
+      <section class="page__share">
+  
+
+  <a href="https://twitter.com/intent/tweet?text=The+Microservice+Architecture+Perspective%20https%3A%2F%2Fagustinustheo.github.io%2Ftech%2F2020%2F12%2F31%2Fthe-microservice-architecture-perspective.html" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fagustinustheo.github.io%2Ftech%2F2020%2F12%2F31%2Fthe-microservice-architecture-perspective.html" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=https%3A%2F%2Fagustinustheo.github.io%2Ftech%2F2020%2F12%2F31%2Fthe-microservice-architecture-perspective.html" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+
+      
+  <nav class="pagination">
+    
+      <a href="/tech/2020/12/28/automating-flutter-web-deployments-to-netlify-using-github-actions.html" class="pagination--pager" title="Automating Flutter Web Deployments to Netlify Using GitHub Actions
+">Previous</a>
+    
+    
+      <a href="/tech/2021/01/20/setting-up-multinode-rabbitmq-cluster-on-linux.html" class="pagination--pager" title="Setting Up A Multinode RabbitMQ Cluster On Linux
+">Next</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h4 class="page__related-title">You May Also Enjoy</h4>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="https://cdn-images-1.medium.com/max/800/0*Zuxm0Houm1FyBdTE" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/tech/2021/01/20/how-to-deploy-flutter-web-to-netlify-using-ci-cd-and-azure-pipelines.html" rel="permalink">How to Deploy Flutter Web to Netlify Using CI/CD and Azure Pipelines
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          8 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">Developing web apps has become easier over the years. With Flutter it became very easy and fun. But to be honest, deploying it is sometimes a pain. Most serv...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="https://cdn-images-1.medium.com/max/800/0*noAgkXTihXU2PYuu" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/tech/2021/01/20/setting-up-multinode-rabbitmq-cluster-on-linux.html" rel="permalink">Setting Up A Multinode RabbitMQ Cluster On Linux
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          5 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">Installing RabbitMq on multiple remote servers can be a hassle. To connect multiple instances into one cluster we must first install RabbitMq on each remote ...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="https://miro.medium.com/max/700/0*rjDmgSKL-lNurUpp" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/tech/2020/12/28/automating-flutter-web-deployments-to-netlify-using-github-actions.html" rel="permalink">Automating Flutter Web Deployments to Netlify Using GitHub Actions
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          4 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">Lately, there has been a lot of fuss over Flutter. Some people call it the future, while some say it’s overrated. But I think it’s a good framework to learn ...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="https://cdn-images-1.medium.com/max/800/0*zCSfGwYvrx7hc3DY" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/tech/2020/12/10/automate-your-linux-deployment-using-azure-devops.html" rel="permalink">Automate Your Linux Deployment Using Azure DevOps
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          8 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">Feel like you have been logging into your Linux servers too much lately? Good, this might be the right article for you. In teams, either large or small manua...</p>
+  </article>
+</div>
+
+        
+      </div>
+    </div>
+  
+  
+</div>
+
+    </div>
+
+    
+      <div class="search-content">
+        <div class="search-content__inner-wrap"><form class="search-content__form" onkeydown="return event.key != 'Enter';">
+    <label class="sr-only" for="search">
+      Enter your search term...
+    </label>
+    <input type="search" id="search" class="search-input" tabindex="-1" placeholder="Enter your search term..." />
+  </form>
+  <div id="results" class="results"></div></div>
+
+      </div>
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+      
+        
+          <li><a href="https://id.linkedin.com/in/agustinus-theodorus" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i> LinkedIn</a></li>
+        
+      
+        
+          <li><a href="https://agustinustheoo.medium.com" rel="nofollow noopener noreferrer"><i class="fab fa-medium" aria-hidden="true"></i> Medium</a></li>
+        
+      
+        
+          <li><a href="https://github.com/agustinustheo" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+        
+      
+        
+          <li><a href="https://dev.to/agustinustheo" rel="nofollow noopener noreferrer"><i class="fab fa-dev" aria-hidden="true"></i> Dev.to</a></li>
+        
+      
+    
+
+    <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2021 Agustinus Theodorus. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+<script src="/assets/js/lunr/lunr.min.js"></script>
+<script src="/assets/js/lunr/lunr-store.js"></script>
+<script src="/assets/js/lunr/lunr-en.js"></script>
+
+
+
+
+
+
+
+  </body>
+</html>
