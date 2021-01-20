@@ -94,7 +94,9 @@ Then a browser window will open:
 
 After finishing your login, create a blank site using this command:
 
+```
 netlify sites:create --name _<site name>_
+```
 
 #### 4\. Retrieving your Site ID and personal access token
 
@@ -188,7 +190,9 @@ The first **Flutter Command** task will be to enable web configurations (i.e all
 2.  Change the display name to **Flutter Enable Web** (optional).
 3.  Add the Flutter arguments to enable web configurations:
 
+```
 config --enable-web
+```
 
 ![](https://cdn-images-1.medium.com/max/800/1*oeQhNtLL0XWYoPA0Uzh51Q.png)
 
@@ -198,7 +202,9 @@ To build the web project, we have to run it manually using the **Flutter Command
 2.  Change the display name to **Flutter Run Build Web** (optional).
 3.  Add the Flutter arguments to build web projects:
 
+```
 build web
+```
 
 ![](https://cdn-images-1.medium.com/max/800/1*xsFcjMbriYuUmwspfakwLw.png)
 
@@ -234,8 +240,34 @@ When all is done, save the CI pipeline.
 
 **TL;DR** **If you want to use YAML you can copy and paste this YAML file here:**
 
-undefined
-undefined
+```
+pool:
+  name: Azure Pipelines
+steps:
+- task: aloisdeniel.flutter.flutter-install.FlutterInstall@0
+  displayName: 'Flutter Install'
+
+- task: aloisdeniel.flutter.flutter-command.FlutterCommand@0
+  displayName: 'Flutter Enable Web'
+  inputs:
+    arguments: 'config --enable-web'
+
+- task: aloisdeniel.flutter.flutter-command.FlutterCommand@0
+  displayName: 'Flutter Run Build Web'
+  inputs:
+    arguments: 'build web'
+
+- task: CopyFiles@2
+  displayName: 'Copy Files'
+  inputs:
+    SourceFolder: '$(Build.SourcesDirectory)/build/web'
+    TargetFolder: '$(Build.ArtifactStagingDirectory)'
+
+- task: PublishBuildArtifacts@1
+  displayName: 'Publish Artifact: ci-artifact'
+  inputs:
+    ArtifactName: 'ci-artifact'
+```
 
 #### 2\. Creating the CD pipeline
 

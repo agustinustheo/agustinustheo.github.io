@@ -401,7 +401,8 @@
 
 <p>After finishing your login, create a blank site using this command:</p>
 
-<p>netlify sites:create –name _<site name="">_</site></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>netlify sites:create --name _&lt;site name&gt;_
+</code></pre></div></div>
 
 <h4 id="4-retrieving-your-site-id-and-personal-accesstoken">4. Retrieving your Site ID and personal access token</h4>
 
@@ -509,7 +510,8 @@
   <li>Add the Flutter arguments to enable web configurations:</li>
 </ol>
 
-<p>config –enable-web</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>config --enable-web
+</code></pre></div></div>
 
 <p><img src="https://cdn-images-1.medium.com/max/800/1*oeQhNtLL0XWYoPA0Uzh51Q.png" alt="" /></p>
 
@@ -521,7 +523,8 @@
   <li>Add the Flutter arguments to build web projects:</li>
 </ol>
 
-<p>build web</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>build web
+</code></pre></div></div>
 
 <p><img src="https://cdn-images-1.medium.com/max/800/1*xsFcjMbriYuUmwspfakwLw.png" alt="" /></p>
 
@@ -563,8 +566,33 @@
 
 <p><strong>TL;DR</strong> <strong>If you want to use YAML you can copy and paste this YAML file here:</strong></p>
 
-<p>undefined
-undefined</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>pool:
+  name: Azure Pipelines
+steps:
+- task: aloisdeniel.flutter.flutter-install.FlutterInstall@0
+  displayName: 'Flutter Install'
+
+- task: aloisdeniel.flutter.flutter-command.FlutterCommand@0
+  displayName: 'Flutter Enable Web'
+  inputs:
+    arguments: 'config --enable-web'
+
+- task: aloisdeniel.flutter.flutter-command.FlutterCommand@0
+  displayName: 'Flutter Run Build Web'
+  inputs:
+    arguments: 'build web'
+
+- task: CopyFiles@2
+  displayName: 'Copy Files'
+  inputs:
+    SourceFolder: '$(Build.SourcesDirectory)/build/web'
+    TargetFolder: '$(Build.ArtifactStagingDirectory)'
+
+- task: PublishBuildArtifacts@1
+  displayName: 'Publish Artifact: ci-artifact'
+  inputs:
+    ArtifactName: 'ci-artifact'
+</code></pre></div></div>
 
 <h4 id="2-creating-the-cdpipeline">2. Creating the CD pipeline</h4>
 
