@@ -23,6 +23,9 @@
   .page__content h1:first-child { margin-top: 0.5em; }
   .page__content h2 { margin-top: 1.75em; }
   .feature__wrapper { margin-bottom: 0.5em; border-bottom: none; }
+  @media (min-width: 37.5em) {
+    .feature__wrapper .feature__item { width: calc(50% - 1em); }
+  }
   .feature__item .archive__item-teaser img {
     width: 100%;
     height: 190px;
