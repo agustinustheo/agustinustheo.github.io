@@ -5,33 +5,56 @@ hidden: true
 header:
   overlay_color: "#5e616c"
 excerpt: >
-  Welcome to my personal site. I re-post my tech articles, and share my portfolios here.<br />
+  Rust engineer working on blockchain and zero-knowledge cryptography. Core Runtime Engineer at Parity Technologies and founder of Mitratek Labs.<br />
 feature_row:
-  - image_path: /assets/img/steego-link.png
-    alt: "steego link"
-    title: "Steego Link"
-    excerpt: "Steego is a URL organizing website. Steego allows to save single and multiple links. Single links result in a URL redirect while saving multiple links can result in an orderly list of links."
-    url: https://steego.link/
+  - image_path: /assets/img/bitsentry.png
+    alt: "BitSentry"
+    title: "BitSentry"
+    excerpt: "Operational intelligence for the agentic era. BitSentry safely automates incident response and production investigations with AI agents — running only pre-approved checks and fixes, with a full audit trail."
+    url: https://bitsentry.ai/
     btn_class: "btn--primary"
-    btn_label: "See project"
-  - image_path: /assets/img/booksjs.gif
-    alt: "booksjs"
-    title: "BooksJS"
-    excerpt: "📖 BooksJS or books.js is an open-source JavaScript library for building interactive book previews on the web. The code is licensed under the MIT License."
-    url: https://booksjs.github.io/
+    btn_label: "Visit site"
+  - image_path: /assets/img/mitratek-labs.png
+    alt: "Mitratek Labs"
+    title: "Mitratek Labs"
+    excerpt: "A B2B firm providing consulting and contracting for blockchain companies worldwide — blockchain consulting, enterprise solutions, smart contracts, and web/mobile development. Clients include Parity Technologies, Baliola, Mandala Chain, and Jagad."
+    url: http://mitrateklabs.com/
     btn_class: "btn--primary"
-    btn_label: "See project"
-  - image_path: /assets/img/portluv.png
-    alt: "portluv"
-    title: "Portluv"
-    excerpt: "Portluv is a portfolio sharing app, I made this because I feel I needed a platform to share my designs. It can be integrated with LinkedIn."
-    url: https://portluv.herokuapp.com/
-    btn_class: "btn--primary"
-    btn_label: "See project"    
+    btn_label: "Visit site"
 ---
 
 <h1>Portfolio</h1>
 {% include feature_row %}
+
+<h1>Open Source</h1>
+<ul>
+  <li><a href="https://github.com/agustinustheo/polkadot-linter"><strong>polkadot-linter</strong></a> — An external Rust linter for Polkadot SDK codebases.</li>
+  <li><a href="https://github.com/agustinustheo/polkameter"><strong>polkameter</strong></a> — A stress-testing workbench for Polkadot SDK chains, modeled on JMeter.</li>
+  <li><a href="https://github.com/paritytech/individuality-community"><strong>individuality-community</strong></a> — Pallets and a runtime to manage Proof-of-Personhood (PoP) and related on-chain logic.</li>
+  <li><a href="https://github.com/myriadsocial/myriad-node-parachain"><strong>myriad-node-parachain</strong></a> — Substrate-based parachain node for Myriad, a decentralized social platform.</li>
+  <li><a href="https://github.com/debionetwork/debio-node"><strong>debio-node</strong></a> — Substrate-based blockchain node for DeBio Network, an anonymous platform for biomedical data.</li>
+  <li><a href="https://github.com/agustinustheo/groth16-py"><strong>groth16-py</strong></a> — An implementation of the Groth16 zk-SNARK proving system in Python.</li>
+  <li><a href="https://github.com/agustinustheo/icp-subaccount-indexer"><strong>icp-subaccount-indexer</strong></a> — Manages and indexes sub-accounts within the Internet Computer (ICP) ecosystem.</li>
+  <li><a href="https://github.com/wartegbirutech/exercise-pose-evaluation-machine"><strong>exercise-pose-evaluation-machine</strong></a> — Deep-learning engine for detecting and counting repetitive exercises — the model behind the Fitcam paper.</li>
+  <li><a href="https://github.com/wartegbirutech/sentiment-analysis-model"><strong>sentiment-analysis-model</strong></a> — A machine-learning model for sentiment analysis.</li>
+</ul>
+<p><a href="https://github.com/agustinustheo">See more on GitHub &rarr;</a></p>
+
+<h1>GitHub Activity</h1>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-calendar@2.3.4/dist/github-calendar-responsive.css"/>
+<div class="calendar" style="max-width: 100%;">
+  Loading contribution graph&hellip;
+</div>
+<script src="https://cdn.jsdelivr.net/npm/github-calendar@2.3.4/dist/github-calendar.min.js"></script>
+<script>
+  GitHubCalendar(".calendar", "agustinustheo", { responsive: true });
+</script>
+
+<h1>Publications</h1>
+<ul>
+  <li><a href="https://link.springer.com/article/10.1186/s40537-024-00915-8"><em>Fitcam: detecting and counting repetitive exercises with deep learning</em></a> — Journal of Big Data (Springer), 2024.</li>
+  <li><a href="https://ieeexplore.ieee.org/document/9431859/"><em>Short Message Service (SMS) Spam Filtering using Machine Learning in Bahasa Indonesia</em></a> — IEEE, 2021.</li>
+</ul>
 
 <h1><a href="/tech-articles" style="text-decoration: none; color: #3D4144">Latest Tech Articles</a></h1>
 {% for post in site.posts limit:5 %}

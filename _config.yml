@@ -22,7 +22,7 @@ title: Agustinus Theodorus
 name: Agustinus Theodorus
 email: agustinustheoo@gmail.com
 description: >- # this means to ignore newlines until "baseurl:"
-  I am primarily a web app developer. Most of my coding time is spent making new web apps, web APIs or bug fixing. My current hobby is writing, I usually spare time to write every month.
+  Rust engineer working on blockchain and zero-knowledge cryptography. Core Runtime Engineer at Parity Technologies and founder of Mitratek Labs. I share my work and tech writing here.
 baseurl: "/" # the subpath of your site, e.g. /blog
 url: "https://agustinustheo.github.io" # the base hostname & protocol for your site, e.g. http://example.com
 twitter_username: agustinustheoo
@@ -50,32 +50,38 @@ search: true
 author:
   name     : "Agustinus Theodorus"
   avatar   : "/assets/img/bio-photo.jpg"
-  bio      : "I am primarily a web app developer. Most of my coding time is spent making new web apps, web APIs or bug fixing. My current hobby is writing, I usually spare time to write every month."
+  bio      : "Rust engineer working on blockchain and zero-knowledge cryptography. Core Runtime Engineer at Parity Technologies and founder of Mitratek Labs."
   links:
+    - label: "Mitratek Labs"
+      icon: "fas fa-fw fa-link"
+      url: "http://mitrateklabs.com/"
     - label: "LinkedIn"
       icon: "fab fa-fw fa-linkedin"
-      url: "https://id.linkedin.com/in/agustinus-theodorus"
-    - label: "Medium"
-      icon: "fab fa-medium"
-      url: "https://agustinustheoo.medium.com"
+      url: "https://www.linkedin.com/in/agustinus-theodorus/"
     - label: "GitHub"
       icon: "fab fa-fw fa-github"
       url: "https://github.com/agustinustheo"
+    - label: "Medium"
+      icon: "fab fa-medium"
+      url: "https://agustinustheoo.medium.com"
     - label: "Dev.to"
       icon: "fab fa-dev"
       url: "https://dev.to/agustinustheo"
 
 footer:
   links:
+    - label: "Mitratek Labs"
+      icon: "fas fa-fw fa-link"
+      url: "http://mitrateklabs.com/"
     - label: "LinkedIn"
       icon: "fab fa-fw fa-linkedin"
-      url: "https://id.linkedin.com/in/agustinus-theodorus"
-    - label: "Medium"
-      icon: "fab fa-medium"
-      url: "https://agustinustheoo.medium.com"
+      url: "https://www.linkedin.com/in/agustinus-theodorus/"
     - label: "GitHub"
       icon: "fab fa-fw fa-github"
       url: "https://github.com/agustinustheo"
+    - label: "Medium"
+      icon: "fab fa-medium"
+      url: "https://agustinustheoo.medium.com"
     - label: "Dev.to"
       icon: "fab fa-dev"
       url: "https://dev.to/agustinustheo"
