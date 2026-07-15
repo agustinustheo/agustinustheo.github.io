@@ -104,6 +104,28 @@
 <meta name="msapplication-config" content="/assets/img/browserconfig.xml">
 <meta name="theme-color" content="#ffffff">
 
+<style>
+  /* --- spacing & component fixes --- */
+  .page__content h1 {
+    font-size: 1.563em;
+    margin-top: 2em;
+    margin-bottom: 0.75em;
+    padding-bottom: 0.5em;
+    border-bottom: 1px solid #f2f3f3;
+  }
+  .page__content h1:first-child { margin-top: 0.5em; }
+  .page__content h2 { margin-top: 1.75em; }
+  .feature__wrapper { margin-bottom: 0.5em; border-bottom: none; }
+  .feature__item .archive__item-teaser img {
+    width: 100%;
+    height: 190px;
+    object-fit: cover;
+    object-position: top;
+    border: 1px solid #f2f3f3;
+    border-radius: 4px;
+  }
+</style>
+
 <!-- end custom head snippets -->
 
   </head>
@@ -280,14 +302,9 @@
 <p><a href="https://github.com/agustinustheo">See more on GitHub &rarr;</a></p>
 
 <h1>GitHub Activity</h1>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-calendar@2.3.4/dist/github-calendar-responsive.css"/>
-<div class="calendar" style="max-width: 100%;">
-  Loading contribution graph&hellip;
-</div>
-<script src="https://cdn.jsdelivr.net/npm/github-calendar@2.3.4/dist/github-calendar.min.js"></script>
-<script>
-  GitHubCalendar(".calendar", "agustinustheo", { responsive: true });
-</script>
+<a href="https://github.com/agustinustheo" title="See my GitHub profile">
+  <img src="https://ghchart.rshah.org/40c463/agustinustheo" alt="agustinustheo's GitHub contribution chart" style="width: 100%;" />
+</a>
 
 <h1>Publications</h1>
 <ul>
